@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour
     {
         EASY,
         NORMAL,
-        HARD
+        HARD,
+        ENDLESS
     }
 
     public enum GameMode
