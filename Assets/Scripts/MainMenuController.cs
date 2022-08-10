@@ -1,25 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
     // Declare Variables
-    public GameObject mainMenuUI;
-    public GameObject optionsUI;
-    public GameObject creditsUI;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    public GameObject MainMenuUI;
+    public GameObject OptionsUI;
+    public GameObject CreditsUI;
+    //public GameObject ModeSelectUI;
+    //public GameObject DifficultySelectUI;
+    public GameObject NewGameUI;
 
     //Quit game
     public void QuitGame()
@@ -27,33 +19,54 @@ public class MainMenuController : MonoBehaviour
         Application.Quit();
     }
 
+    //Start Game
+    public void StartGame()
+    {
+        SceneManager.LoadScene(1);
+    }    
+
     //Open options screen
     public void OpenOptions()
     {
-        mainMenuUI.SetActive(false);
-        optionsUI.SetActive(true);
+        MainMenuUI.SetActive(false);
+        OptionsUI.SetActive(true);
     }
 
     //Open credits screen
     public void OpenCredits()
     {
-        mainMenuUI.SetActive(false);
-        creditsUI.SetActive(true);
+        MainMenuUI.SetActive(false);
+        CreditsUI.SetActive(true);
+    }
+
+    //Open mode select screen
+    public void OpenModeSelect()
+    {
+        MainMenuUI.SetActive(false);
+        NewGameUI.transform.Find("ModeSelectUI").gameObject.SetActive(true);
+    }
+
+    //Open difficulty select screen
+    public void OpenDifficultySelect()
+    {
+        NewGameUI.transform.Find("ModeSelectUI").gameObject.SetActive(false);
+        NewGameUI.transform.Find("DifficultySelectUI").gameObject.SetActive(true);
+        //ModeSelectUI.SetActive(false);
+        //DifficultySelectUI.SetActive(true);
     }
 
     //Close options screen
     public void CloseOptions()
     {
-        optionsUI.SetActive(false);
-        mainMenuUI.SetActive(true);
+        OptionsUI.SetActive(false);
+        MainMenuUI.SetActive(true);
         
     }
 
     //Close credits screen
     public void CloseCredits()
     {
-        creditsUI.SetActive(false);
-        mainMenuUI.SetActive(true);
-        
+        CreditsUI.SetActive(false);
+        MainMenuUI.SetActive(true);
     }
 }
