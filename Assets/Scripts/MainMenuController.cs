@@ -9,8 +9,6 @@ public class MainMenuController : MonoBehaviour
     public GameObject MainMenuUI;
     public GameObject OptionsUI;
     public GameObject CreditsUI;
-    //public GameObject ModeSelectUI;
-    //public GameObject DifficultySelectUI;
     public GameObject NewGameUI;
 
     //Quit game
@@ -51,22 +49,14 @@ public class MainMenuController : MonoBehaviour
     {
         NewGameUI.transform.Find("ModeSelectUI").gameObject.SetActive(false);
         NewGameUI.transform.Find("DifficultySelectUI").gameObject.SetActive(true);
-        //ModeSelectUI.SetActive(false);
-        //DifficultySelectUI.SetActive(true);
     }
 
-    //Close options screen
-    public void CloseOptions()
+    public void OpenMainMenu()
     {
+        MainMenuUI.SetActive(true);
         OptionsUI.SetActive(false);
-        MainMenuUI.SetActive(true);
-        
-    }
-
-    //Close credits screen
-    public void CloseCredits()
-    {
         CreditsUI.SetActive(false);
-        MainMenuUI.SetActive(true);
+        NewGameUI.transform.Find("ModeSelectUI").gameObject.SetActive(false);
+        NewGameUI.transform.Find("DifficultySelectUI").gameObject.SetActive(false);
     }
 }
