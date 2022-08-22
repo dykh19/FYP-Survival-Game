@@ -42,8 +42,17 @@ public class Health : MonoBehaviour
     public void HandleDeath()
     {
         //If player, end game
+        if(this.tag == "Player")
+        {
+            //Do player dies things here
+        }
 
         //If enemy, call enemy death function
+        if(this.tag == "Enemy")
+        {
+            Destroy(this.gameObject);
+            Debug.Log("Enemy Dead");
+        }
     }
 
 }

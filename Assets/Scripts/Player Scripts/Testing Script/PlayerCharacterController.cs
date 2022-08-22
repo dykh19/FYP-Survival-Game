@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class PlayerCharacterController : MonoBehaviour
 {
@@ -80,8 +82,10 @@ public class PlayerCharacterController : MonoBehaviour
     [Tooltip("Sound played for footsteps")]
     public AudioClip FootstepSfx;
 
-    [Tooltip("Sound played when jumping")] public AudioClip JumpSfx;
-    [Tooltip("Sound played when landing")] public AudioClip LandSfx;
+    [Tooltip("Sound played when jumping")] 
+    public AudioClip JumpSfx;
+    [Tooltip("Sound played when landing")] 
+    public AudioClip LandSfx;
 
     [Tooltip("Sound played when taking damage froma fall")]
     public AudioClip FallDamageSfx;
@@ -102,7 +106,7 @@ public class PlayerCharacterController : MonoBehaviour
     [Tooltip("Damage recieved when falling at the maximum speed")]
     public float FallDamageAtMaxSpeed = 50f;
 
-    //public UnityAction<bool> OnStanceChanged;
+    public UnityAction<bool> OnStanceChanged;
 
      public Vector3 CharacterVelocity { get; set; }
      public bool IsGrounded { get; private set; }
@@ -214,7 +218,7 @@ public class PlayerCharacterController : MonoBehaviour
         HandleCharacterMovement();
     }
 
-    void OnDie()
+    /*void OnDie()
     {
         IsDead = true;
 
@@ -222,7 +226,7 @@ public class PlayerCharacterController : MonoBehaviour
         //m_WeaponsManager.SwitchToWeaponIndex(-1, true);
 
         //EventManager.Broadcast(Events.PlayerDeathEvent);
-    }
+    }*/
 
     void GroundCheck()
     {
@@ -463,10 +467,10 @@ public class PlayerCharacterController : MonoBehaviour
             m_TargetCharacterHeight = CapsuleHeightStanding;
         }
 
-        /*if (OnStanceChanged != null)
+        if (OnStanceChanged != null)
         {
             OnStanceChanged.Invoke(crouched);
-        }*/
+        }
 
         IsCrouching = crouched;
         return true;

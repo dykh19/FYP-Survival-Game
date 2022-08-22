@@ -89,7 +89,7 @@ public class WeaponController : MonoBehaviour
     public float AmmoReloadDelay = 2f;
 
     [Tooltip("Should the player have infinite ammo reserve")]
-    public bool NoMaxAmmo = false;
+    public bool InfiniteAmmo = false;
 
     [Tooltip("Maximum amount of ammo player can carry")]
     public int MaxAmmo = 900;
@@ -200,11 +200,16 @@ public class WeaponController : MonoBehaviour
 
     public void Reload()
     {
-        Debug.Log("Attempted Reload");
-        if (m_CarriedPhysicalBullets > 0)
+        if(!InfiniteAmmo)
         {
-            m_CurrentAmmoInClip = Mathf.Min(m_CarriedPhysicalBullets, ClipSize);
-            Debug.Log("Reloaded");
+            if (m_CarriedPhysicalBullets > 0)
+                {
+                    m_CurrentAmmoInClip = Mathf.Min(m_CarriedPhysicalBullets, ClipSize);
+                }
+        }
+        else
+        {
+            m_CurrentAmmoInClip = ClipSize;
         }
 
         IsReloading = false;
@@ -239,14 +244,7 @@ public class WeaponController : MonoBehaviour
             StartReloadAnimation();
         }
 
-        if (MaxAmmo == Mathf.Infinity)
-        {
-            CurrentAmmoRatio = 1f;
-        }
-        else
-        {
-            CurrentAmmoRatio = m_CurrentAmmoInClip / ClipSize;
-        }
+        CurrentAmmoRatio = m_CurrentAmmoInClip / ClipSize;
     }
 
     void UpdateContinuousShootSound()
