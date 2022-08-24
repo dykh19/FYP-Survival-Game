@@ -125,7 +125,6 @@ public class PlayerWeaponsManager : MonoBehaviour
         {
             if (m_InputHandler.GetReloadButtonDown() && activeWeapon.CurrentAmmoRatio < 1.0f)
             {
-                Debug.Log("Pressed R");
                 IsAiming = false;
                 activeWeapon.StartReloadAnimation();
                 return;

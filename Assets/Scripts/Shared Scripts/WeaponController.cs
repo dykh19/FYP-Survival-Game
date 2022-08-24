@@ -120,8 +120,8 @@ public class WeaponController : MonoBehaviour
     public UnityAction OnShoot;
     public event Action OnShootProcessed;
 
-    float m_CarriedPhysicalBullets;
-    float m_CurrentAmmoInClip;
+    public float m_CarriedPhysicalBullets;
+    public float m_CurrentAmmoInClip;
     float m_LastTimeShot = Mathf.NegativeInfinity;
     public float LastChargeTriggerTimestamp { get; private set; }
     Vector3 m_LastMuzzlePosition;
@@ -200,12 +200,17 @@ public class WeaponController : MonoBehaviour
 
     public void Reload()
     {
-        if(!InfiniteAmmo)
+        if(InfiniteAmmo == false)
         {
             if (m_CarriedPhysicalBullets > 0)
-                {
-                    m_CurrentAmmoInClip = Mathf.Min(m_CarriedPhysicalBullets, ClipSize);
-                }
+            {
+                //Check if there is enough for full clip if not reload all remaining ammo
+                float AmmoAvailableToReload = Mathf.Min(m_CarriedPhysicalBullets, ClipSize);  
+                //Deduct the ammo from the total count
+                m_CarriedPhysicalBullets -= (Mathf.Min(ClipSize - m_CurrentAmmoInClip, m_CarriedPhysicalBullets));
+                //Add the ammo into the clip
+                m_CurrentAmmoInClip = AmmoAvailableToReload;
+            }
         }
         else
         {
@@ -356,11 +361,11 @@ public class WeaponController : MonoBehaviour
             Destroy(muzzleFlashInstance, 2f);
         }
 
-        if (HasPhysicalBullets)
+        /*if (HasPhysicalBullets)
         {
             ShootShell();
             m_CarriedPhysicalBullets--;
-        }
+        }*/
 
         m_LastTimeShot = Time.time;
 
