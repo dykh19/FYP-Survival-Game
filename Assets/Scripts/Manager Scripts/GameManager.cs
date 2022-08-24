@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 // Game Manager is in-charge of the overall game state
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class GameManager : MonoBehaviour
     public GameMode CurrentGameMode;
     public Difficulty CurrentDifficulty;
     public GameState CurrentGameState;
+    public int NumberOfWaves;
+    public int TimeToNextWave;
 
     void Awake()
     {
@@ -23,10 +26,9 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        SceneManager.sceneLoaded += OnNewGameLevelLoaded;
     }
 
     // Update is called once per frame
@@ -76,5 +78,12 @@ public class GameManager : MonoBehaviour
     public void LoseGame()
     {
 
+    }
+
+    public void OnNewGameLevelLoaded(Scene scene, LoadSceneMode aMode)
+    {
+        //Perform Initial Loading Stuff Here
+        //Eg. Generate Map, Choose Base Location
+        CurrentGameState = GameState.INGAME;
     }
 }
