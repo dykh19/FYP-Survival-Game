@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
+    //When Scene changes to the game level, run the OnNewGameLevelLoaded function
     private void Start()
     {
         SceneManager.sceneLoaded += OnNewGameLevelLoaded;
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Temporary Pause Function, toggle pause with escape
         if(Input.GetKeyDown("escape"))
         {
             if(CurrentGameState == GameState.INGAME)
@@ -60,26 +62,31 @@ public class GameManager : MonoBehaviour
         CurrentDifficulty = (Difficulty)newDifficulty;
     }
 
+    //Set Time Scale to 1 to resume normal game speed
     public void ResumeGame()
     {
         Time.timeScale = 1f;
     }
 
+    //Set Time Scale to 0 to pause game speed
     public void PauseGame()
     {
         Time.timeScale = 0f;
     }
 
+    //Function to run when the player completes the game objective
     public void WinGame()
     {
 
     }
 
+    //Function to run when the base is destroyed
     public void LoseGame()
     {
 
     }
 
+    //This function will be called by the game manager when the game level is loaded
     public void OnNewGameLevelLoaded(Scene scene, LoadSceneMode aMode)
     {
         //Perform Initial Loading Stuff Here

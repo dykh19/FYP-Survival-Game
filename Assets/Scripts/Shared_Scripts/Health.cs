@@ -14,6 +14,7 @@ public class Health : MonoBehaviour
         CurrentHealth = MaxHealth;
     }
 
+    //Heal the entity by given argument
     public void Heal(float HealthHealed)
     {
         CurrentHealth += HealthHealed;
@@ -23,6 +24,7 @@ public class Health : MonoBehaviour
         }
     }
 
+    //Damage the entity by given argument, if health reaches 0, kill the entity
     public void TakeDamage(float DamageTaken)
     {
         CurrentHealth -= DamageTaken;
@@ -33,12 +35,14 @@ public class Health : MonoBehaviour
         }
     }
 
+    //Force kill the entity
     public void ForceKill()
     {
         CurrentHealth = 0;
         HandleDeath();
     }
 
+    //Checks if entity is player or enemy, and handle death accordingly
     public void HandleDeath()
     {
         //If player, end game
@@ -51,8 +55,14 @@ public class Health : MonoBehaviour
         if(this.tag == "Enemy")
         {
             Destroy(this.gameObject);
-            Debug.Log("Enemy Dead");
         }
+    }
+
+    //Change the Health from default value
+    public void SetHealth(float newHealth)
+    {
+        MaxHealth = newHealth;
+        CurrentHealth = newHealth;
     }
 
 }

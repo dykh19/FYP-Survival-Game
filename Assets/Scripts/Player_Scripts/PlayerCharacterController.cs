@@ -108,20 +108,20 @@ public class PlayerCharacterController : MonoBehaviour
 
     public UnityAction<bool> OnStanceChanged;
 
-     public Vector3 CharacterVelocity { get; set; }
-     public bool IsGrounded { get; private set; }
-     public bool HasJumpedThisFrame { get; private set; }
-     public bool IsDead { get; private set; }
-     public bool IsCrouching { get; private set; }
+    public Vector3 CharacterVelocity { get; set; }
+    public bool IsGrounded { get; private set; }
+    public bool HasJumpedThisFrame { get; private set; }
+    public bool IsDead { get; private set; }
+    public bool IsCrouching { get; private set; }
 
     public float RotationMultiplier
     {
         get
         {
-            /*if (m_WeaponsManager.IsAiming)
+            if (m_WeaponsManager.IsAiming)
             {
                 return AimingRotationMultiplier;
-            }*/
+            }
 
             return 1f;
         }
@@ -130,7 +130,7 @@ public class PlayerCharacterController : MonoBehaviour
     Health m_Health;
     PlayerInputHandler m_InputHandler;
     CharacterController m_Controller;
-    //PlayerWeaponsManager m_WeaponsManager;
+    PlayerWeaponsManager m_WeaponsManager;
     //Actor m_Actor;
     Vector3 m_GroundNormal;
     Vector3 m_CharacterVelocity;
@@ -157,7 +157,7 @@ public class PlayerCharacterController : MonoBehaviour
 
         m_InputHandler = GetComponent<PlayerInputHandler>();
 
-        //m_WeaponsManager = GetComponent<PlayerWeaponsManager>();
+        m_WeaponsManager = GetComponent<PlayerWeaponsManager>();
 
         m_Health = GetComponent<Health>();
 

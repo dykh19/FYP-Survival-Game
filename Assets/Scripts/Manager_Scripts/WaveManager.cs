@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Possibly Redundant
 public class WaveManager : MonoBehaviour
 {
     public int NumberOfWaves;
