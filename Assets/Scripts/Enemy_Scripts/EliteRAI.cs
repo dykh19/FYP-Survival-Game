@@ -23,7 +23,7 @@ public class EliteRAI : EnemyBehavior
     {
         parent_MonSpawn = GetComponentInParent<Monster_Spawner>();  //set parent's Monster_Spawner script
         player = GameObject.FindGameObjectWithTag("Player").transform;  //set player object
-        baseObj = GameObject.FindGameObjectWithTag("base").transform; //set base object
+        baseObj = GameObject.FindGameObjectWithTag("Base").transform; //set base object
         agent = GetComponent<NavMeshAgent>();   //set NavMesh agent
     }
 
@@ -89,7 +89,7 @@ public class EliteRAI : EnemyBehavior
         if (playerInSightRange && playerInAttackRange && playerSpotted && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave)
         {
             print("Attacking Player(!isWave)");
-            Attack(player);
+            Attack(player); 
         }
     }
 

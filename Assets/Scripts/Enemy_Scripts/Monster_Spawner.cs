@@ -50,13 +50,13 @@ public class Monster_Spawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        baseObj = GameObject.FindWithTag("base");
+        baseObj = GameObject.FindWithTag("Base");
         basexPosMin = baseObj.transform.position.x - 10; //replace with regards to base size afterwards
         basexPosMax = baseObj.transform.position.x + 10; //replace with regards to base size afterwards
         basezPosMin = baseObj.transform.position.z - 10; //replace with regards to base size afterwards
         basezPosMax = baseObj.transform.position.z + 10; //replace with regards to base size afterwards
 
-        map = GameObject.FindWithTag("ground");
+        map = GameObject.FindWithTag("Ground");
         mapxPosMin = map.transform.position.x - 10; //replace with regards to map size afterwards
         mapxPosMax = map.transform.position.x + 10; //replace with regards to map size afterwards
         mapzPosMin = map.transform.position.z - 10; //replace with regards to map size afterwards

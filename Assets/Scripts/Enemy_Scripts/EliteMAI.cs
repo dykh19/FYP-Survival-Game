@@ -23,7 +23,7 @@ public class EliteMAI : EnemyBehavior
     {
         parent_MonSpawn = GetComponentInParent<Monster_Spawner>();  //set parent's Monster_Spawner script
         player = GameObject.FindGameObjectWithTag("Player").transform;  //set player object
-        baseObj = GameObject.FindGameObjectWithTag("base").transform; //set base object
+        baseObj = GameObject.FindGameObjectWithTag("Base").transform; //set base object
         agent = GetComponent<NavMeshAgent>();   //set NavMesh agent
     }
 
