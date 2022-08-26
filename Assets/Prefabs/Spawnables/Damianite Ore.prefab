@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 657730607230096447}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -37, y: 184, z: 5.66}
 --- !u!33 &7319068190077661866
 MeshFilter:
@@ -142,7 +142,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a3653cb1920544805828c54c99312a1b, type: 3}
+  m_audioClip: {fileID: 8300000, guid: c56837223aa5b714cbeba6f0c84c5bf2, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -237,8 +237,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 4780728482505725590}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24dac55907846478585a56b2a08a9c27, type: 3}
+  m_Script: {fileID: 11500000, guid: 3c1522cd38f1f414aacde7644596bebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropItem: {fileID: 11400000, guid: e6dd632f1ad1340e8925c4b6c56ce65d, type: 2}
+  dropItem: {fileID: 0}
   durability: 50

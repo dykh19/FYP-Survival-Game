@@ -12,6 +12,13 @@ public class GameManager : MonoBehaviour
     public int NumberOfWaves;
     public int TimeToNextWave;
 
+
+    //Player Inventory
+    public Inventory playerInventory;
+
+    public GameItem[] startingItems;
+
+
     void Awake()
     {
         // Make sure there is only one instance of GameManager and prevent it from being destroyed
@@ -23,6 +30,8 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        playerInventory = new Inventory();
         DontDestroyOnLoad(this);
     }
 
@@ -92,5 +101,8 @@ public class GameManager : MonoBehaviour
         //Perform Initial Loading Stuff Here
         //Eg. Generate Map, Choose Base Location
         CurrentGameState = GameState.INGAME;
+
+        foreach (var item in startingItems) // For testing.
+            playerInventory.AddItem(item);
     }
 }
