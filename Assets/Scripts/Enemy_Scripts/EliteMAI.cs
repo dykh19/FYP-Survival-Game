@@ -15,11 +15,10 @@ public class EliteMAI : EnemyBehavior
     //Attacking Variables
     public float timeBetweenAttacks;
     bool alreadyAttacked;
-    public GameObject bullet;
 
     Monster_Spawner spawn;
 
-    public void Awake()
+    public void Start()
     {
         parent_MonSpawn = GetComponentInParent<Monster_Spawner>();  //set parent's Monster_Spawner script
         player = GameObject.FindGameObjectWithTag("Player").transform;  //set player object
@@ -162,10 +161,11 @@ public class EliteMAI : EnemyBehavior
     //Code for points given on enemy kill goes here inside the eliteMDie() in MonsterSpawner.cs
     public override void Die()
     {
+        print("Elite Melee Dying");
         parent_MonSpawn.eliteMDie();
         if (gameObject != null)
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 }

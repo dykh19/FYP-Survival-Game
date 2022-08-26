@@ -15,11 +15,10 @@ public class CreepAI : EnemyBehavior
     //Attacking Variables
     public float timeBetweenAttacks;
     bool alreadyAttacked;
-    public GameObject bullet;
 
     Monster_Spawner spawn;
 
-    public void Awake()
+    public void Start()
     {
         parent_MonSpawn = GetComponentInParent<Monster_Spawner>();  //set parent's Monster_Spawner script
         player = GameObject.FindGameObjectWithTag("Player").transform;  //set player object
@@ -150,6 +149,8 @@ public class CreepAI : EnemyBehavior
     //Code for points given on enemy kill goes here inside the MonsterSpawner.cs
     public override void Die()
     {
+        print("Creep Dying");
+        parent_MonSpawn.creepDie();
         if (gameObject != null)
         {
             Destroy(gameObject);

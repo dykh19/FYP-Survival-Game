@@ -62,7 +62,9 @@ public class Monster_Spawner : MonoBehaviour
         mapzPosMin = map.transform.position.z - 10; //replace with regards to map size afterwards
         mapzPosMax = map.transform.position.z + 10; //replace with regards to map size afterwards
 
-        spawnEliteR(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
+        yPos = map.transform.position.y;
+
+        //spawnEliteR(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
     }
 
     // Update is called once per frame
@@ -93,7 +95,7 @@ public class Monster_Spawner : MonoBehaviour
     //Spawning mechanic when !isWave
     public void OpenWorldSpawn()
     {
-        creepSpawn = 0;
+        creepSpawn = 0; //Change value here
         creepKilled = 0;
 
         for(int i = 0; i < creepSpawn; i++)
@@ -177,6 +179,11 @@ public class Monster_Spawner : MonoBehaviour
         {
             spawnEliteR(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
         }
+    }
+
+    public void creepDie()
+    {
+        creepKilled += 1;
     }
 
     public void eliteRDie()

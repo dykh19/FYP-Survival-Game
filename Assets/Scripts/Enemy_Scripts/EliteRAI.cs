@@ -19,7 +19,7 @@ public class EliteRAI : EnemyBehavior
 
     Monster_Spawner spawn;
 
-    public void Awake()
+    public void Start()
     {
         parent_MonSpawn = GetComponentInParent<Monster_Spawner>();  //set parent's Monster_Spawner script
         player = GameObject.FindGameObjectWithTag("Player").transform;  //set player object
@@ -168,10 +168,11 @@ public class EliteRAI : EnemyBehavior
     //Code for points given on enemy kill goes here inside the EliteRDie() in MonsterSpawner.cs
     public override void Die()
     {
-        parent_MonSpawn.eliteRKilled +=1;
-        if (gameObject != null)
+        print("Elite Range Dying");
+        parent_MonSpawn.eliteRDie();
+        if (this.gameObject != null)
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 }

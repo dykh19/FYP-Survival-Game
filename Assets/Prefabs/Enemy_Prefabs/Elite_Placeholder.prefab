@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 4041477907259022178}
   - component: {fileID: -2420814311744178623}
   - component: {fileID: -5383027351259246352}
+  - component: {fileID: -8754276627231981341}
   m_Layer: 0
   m_Name: Elite_Placeholder
-  m_TagString: eRange
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -161,3 +162,17 @@ MonoBehaviour:
   walkPointRange: 5
   timeBetweenAttacks: 0.5
   bullet: {fileID: 0}
+--- !u!114 &-8754276627231981341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40404658589720726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20c9f1186dfdc6e42bbcffd4fd5781ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 80
+  CurrentHealth: 0

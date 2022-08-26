@@ -5,11 +5,17 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
-  - eRange
   - Weapon
   - Ground
   - Base
   - Spawner
+  - SecondCamera
+  - BulletSpawn
+  - MElite
+  - RElite
+  - Boss
+  - Creep
+  - eRange
   layers:
   - Default
   - TransparentFX
