@@ -50,7 +50,7 @@ public class Health : MonoBehaviour
         //If enemy, call enemy death function
         if(this.tag == "Enemy")
         {
-            Destroy(this.gameObject);
+            this.GetComponent<EnemyBehavior>().Die();
             Debug.Log("Enemy Dead");
         }
     }
