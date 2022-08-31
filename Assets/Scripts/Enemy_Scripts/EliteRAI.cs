@@ -16,6 +16,7 @@ public class EliteRAI : EnemyBehavior
     public float timeBetweenAttacks;
     bool alreadyAttacked;
     public GameObject bullet;
+    private float lastAttackTime = -1f;
 
     Monster_Spawner spawn;
 
@@ -49,26 +50,26 @@ public class EliteRAI : EnemyBehavior
         if ((!playerInSightRange && !playerInAttackRange && !playerSpotted && !baseInSightRange && !baseInAttackRange && isWave) ||
             (!playerInSightRange && !playerInAttackRange && !playerSpotted && baseInSightRange && !baseInAttackRange && isWave))
         {
-            print("Finding Base(isWave)");
+            //print("Finding Base(isWave)");
             findBase();
         }
         //If during wave, player not spotted and base within sight and attack range. Attack Base.
         if (!playerInSightRange && !playerInAttackRange && !playerSpotted && baseInSightRange && baseInAttackRange && isWave)
         {
-            print("Attacking Base(isWave)");
+            //print("Attacking Base(isWave)");
             Attack(baseObj);
         }
         //If during wave, player is spotted while elite mob is hitting/spotted/has not spotted base. Chase player.
         if ((playerInSightRange && !playerInAttackRange && !playerSpotted && (baseInSightRange || !baseInSightRange) && (baseInAttackRange || !baseInAttackRange) && isWave) ||
             (playerInSightRange && !playerInAttackRange && playerSpotted && (baseInSightRange || !baseInSightRange) && (baseInAttackRange || !baseInAttackRange) && isWave))
         {
-            print("Chasing Player(isWave)");
+            //print("Chasing Player(isWave)");
             Chase();
         }
         //If during wave, player is within attack range. Attack player.
         if (playerInSightRange && playerInAttackRange && playerSpotted && (baseInSightRange || !baseInSightRange) && (baseInAttackRange || !baseInAttackRange) && isWave)
         {
-            print("Attacking Player(isWave)");
+            //print("Attacking Player(isWave)");
             Attack(player);
         }
 
@@ -140,7 +141,7 @@ public class EliteRAI : EnemyBehavior
     }
 
     //When player is within monster attack range, monster stops moving and hits the player
-    public override void Attack(Transform target)
+    /*public override void Attack(Transform target)
     {
         agent.SetDestination(transform.position);
         transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
@@ -155,6 +156,26 @@ public class EliteRAI : EnemyBehavior
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        }
+    }*/
+
+    public override void Attack(Transform target)
+    {
+        agent.SetDestination(transform.position);
+        transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
+
+        if (Time.time > lastAttackTime + timeBetweenAttacks)
+        {
+            //~~~~~~~~~~~~~~~~~~~~Attack Code Here~~~~~~~~~~~~~~~~~~~~//
+            Rigidbody rb = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+
+            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
+            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            Destroy(rb.gameObject, 10);
+            Debug.Log("Attacking " + target.name);
+
+            alreadyAttacked = true;
+            lastAttackTime = Time.time;
         }
     }
 

@@ -13,11 +13,11 @@ GameObject:
   - component: {fileID: 3071363579399703091}
   - component: {fileID: 4041477907259022178}
   - component: {fileID: -2420814311744178623}
-  - component: {fileID: -5383027351259246352}
   - component: {fileID: -8754276627231981341}
-  m_Layer: 0
-  m_Name: Elite_Placeholder
-  m_TagString: Enemy
+  - component: {fileID: -6128264813378169247}
+  m_Layer: 10
+  m_Name: Elite_Melee_Placeholder
+  m_TagString: RElite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,46 +122,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &-5383027351259246352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40404658589720726}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fb269ddcc4596a4c8175a9828dfc0f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  player: {fileID: 0}
-  baseObj: {fileID: 0}
-  isGround:
-    serializedVersion: 2
-    m_Bits: 128
-  isPlayer:
-    serializedVersion: 2
-    m_Bits: 256
-  isBase:
-    serializedVersion: 2
-    m_Bits: 512
-  currHealth: 10
-  maxHealth: 10
-  isDead: 0
-  isWave: 0
-  sightRange: 15
-  attackRange: 1
-  playerInSightRange: 0
-  playerInAttackRange: 0
-  baseInSightRange: 0
-  baseInAttackRange: 0
-  playerSpotted: 0
-  parent_MonSpawn: {fileID: 0}
-  walkPoint: {x: 0, y: 0, z: 0}
-  walkPointRange: 5
-  timeBetweenAttacks: 0.5
-  bullet: {fileID: 0}
 --- !u!114 &-8754276627231981341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,3 +136,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 80
   CurrentHealth: 0
+--- !u!114 &-6128264813378169247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40404658589720726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2939fd8f4e257b47a08f1bbf5dbf22e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  player: {fileID: 0}
+  baseObj: {fileID: 0}
+  isGround:
+    serializedVersion: 2
+    m_Bits: 0
+  isPlayer:
+    serializedVersion: 2
+    m_Bits: 0
+  isBase:
+    serializedVersion: 2
+    m_Bits: 0
+  currHealth: 0
+  maxHealth: 0
+  isDead: 0
+  isWave: 0
+  sightRange: 0
+  attackRange: 0
+  playerInSightRange: 0
+  playerInAttackRange: 0
+  baseInSightRange: 0
+  baseInAttackRange: 0
+  playerSpotted: 0
+  walkPoint: {x: 0, y: 0, z: 0}
+  walkPointRange: 0
+  timeBetweenAttacks: 0
