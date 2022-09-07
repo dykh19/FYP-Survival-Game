@@ -10,8 +10,9 @@ public class TestEnemyProjectile : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            other.gameObject.GetComponent<Health>().TakeDamage(Damage);
             Destroy(this.gameObject);
+            other.gameObject.GetComponent<Health>().TakeDamage(Damage);
+            
             Debug.Log("Hit Player");
         }
     }

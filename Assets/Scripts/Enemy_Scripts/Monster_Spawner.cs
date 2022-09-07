@@ -132,7 +132,7 @@ public class Monster_Spawner : MonoBehaviour
     public void StartWave()
     {
         waveNumber = 0;
-        eliteRSpawn = 2; //To change based on specs
+        eliteRSpawn = 1; //To change based on specs
         eliteRKilled = 0;
         isWave = true;
         inWave = true;

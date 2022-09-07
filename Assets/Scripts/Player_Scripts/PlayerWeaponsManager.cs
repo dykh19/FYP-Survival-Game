@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
 
 
 [RequireComponent(typeof(PlayerInputHandler))]
@@ -91,9 +92,14 @@ public class PlayerWeaponsManager : MonoBehaviour
     WeaponSwitchState m_WeaponSwitchState;
     int m_WeaponSwitchNewWeaponIndex;
 
+    TMP_Text AmmoCountUI;
+
+
+
     void Start()
     {
         ActiveWeaponIndex = -1;
+
         m_WeaponSwitchState = WeaponSwitchState.Down;
 
         m_InputHandler = GetComponent<PlayerInputHandler>();
@@ -181,6 +187,9 @@ public class PlayerWeaponsManager : MonoBehaviour
                 }
             }
         }
+
+        AmmoCountUI = GameObject.Find("AmmoCountUI").GetComponent<TMP_Text>();
+        AmmoCountUI.text = GetActiveWeapon().m_CurrentAmmoInClip.ToString("F0");
     }
 
 

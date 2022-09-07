@@ -130,7 +130,7 @@ public class PlayerCharacterController : MonoBehaviour
     Health m_Health;
     PlayerInputHandler m_InputHandler;
     CharacterController m_Controller;
-    //PlayerWeaponsManager m_WeaponsManager;
+    PlayerWeaponsManager m_WeaponsManager;
     //Actor m_Actor;
     Vector3 m_GroundNormal;
     Vector3 m_CharacterVelocity;
@@ -157,7 +157,7 @@ public class PlayerCharacterController : MonoBehaviour
 
         m_InputHandler = GetComponent<PlayerInputHandler>();
 
-        //m_WeaponsManager = GetComponent<PlayerWeaponsManager>();
+        m_WeaponsManager = GetComponent<PlayerWeaponsManager>();
 
         m_Health = GetComponent<Health>();
 
@@ -165,7 +165,7 @@ public class PlayerCharacterController : MonoBehaviour
 
         m_Controller.enableOverlapRecovery = true;
 
-        //m_Health.OnDie += OnDie;
+        GameManager.Instance.OnPlayerDie += OnDie;
 
         // force the crouch state to false when starting
         SetCrouchingState(false, true);
@@ -218,15 +218,15 @@ public class PlayerCharacterController : MonoBehaviour
         HandleCharacterMovement();
     }
 
-    /*void OnDie()
+    void OnDie()
     {
         IsDead = true;
 
         // Tell the weapons manager to switch to a non-existing weapon in order to lower the weapon
-        //m_WeaponsManager.SwitchToWeaponIndex(-1, true);
+        m_WeaponsManager.SwitchToWeaponIndex(-1, true);
 
         //EventManager.Broadcast(Events.PlayerDeathEvent);
-    }*/
+    }
 
     void GroundCheck()
     {

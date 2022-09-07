@@ -170,7 +170,7 @@ public class EliteRAI : EnemyBehavior
             Rigidbody rb = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
 
             rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            rb.AddForce(transform.up * 4f, ForceMode.Impulse);
             Destroy(rb.gameObject, 10);
             Debug.Log("Attacking " + target.name);
 

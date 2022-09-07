@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
     public float MaxHealth;
 
     public float CurrentHealth;
+
+    //public UnityAction OnPlayerDie;
+
+    public bool IsDead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -25,11 +30,15 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float DamageTaken)
     {
-        CurrentHealth -= DamageTaken;
-        if(CurrentHealth <= 0)
+        if (!IsDead)
         {
-            // Entity is dead
-            HandleDeath();
+            CurrentHealth -= DamageTaken;
+            if(CurrentHealth <= 0)
+            {
+                // Entity is dead
+                IsDead = true;
+                HandleDeath();
+            }
         }
     }
 
@@ -45,6 +54,7 @@ public class Health : MonoBehaviour
         if(this.tag == "Player")
         {
             //Do player dies things here
+            GameManager.Instance.OnPlayerDie?.Invoke();
         }
 
         //If enemy, call enemy death function
@@ -53,6 +63,8 @@ public class Health : MonoBehaviour
             this.GetComponent<EnemyBehavior>().Die();
             Debug.Log("Enemy Dead");
         }
+
+        //Handle Base death
     }
 
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 // Game Manager is in-charge of the overall game state
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class GameManager : MonoBehaviour
     public GameState CurrentGameState;
     public int NumberOfWaves;
     public int TimeToNextWave;
+
+    public UnityAction OnPlayerDie;
 
     void Awake()
     {
@@ -24,11 +27,13 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
         DontDestroyOnLoad(this);
+
+        OnPlayerDie += LoseGame;
     }
 
     private void Start()
     {
-        SceneManager.sceneLoaded += OnNewGameLevelLoaded;
+        SceneManager.sceneLoaded += LoadNewScene;
     }
 
     // Update is called once per frame
@@ -77,13 +82,18 @@ public class GameManager : MonoBehaviour
 
     public void LoseGame()
     {
-
+        Debug.Log("Player is Dead");
+        SceneManager.LoadScene(2);
     }
 
-    public void OnNewGameLevelLoaded(Scene scene, LoadSceneMode aMode)
+    public void LoadNewScene(Scene scene, LoadSceneMode aMode)
     {
         //Perform Initial Loading Stuff Here
         //Eg. Generate Map, Choose Base Location
-        CurrentGameState = GameState.INGAME;
+        if (SceneManager.GetActiveScene().name == "GamePlay")
+        {
+            CurrentGameState = GameState.INGAME;
+        }
+        
     }
 }
