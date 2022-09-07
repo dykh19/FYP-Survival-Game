@@ -13,9 +13,34 @@ public class Health : MonoBehaviour
 
     public bool IsDead = false;
 
+    private void Awake()
+    {
+        //If owner of this health script is enemy, adjust the health based on difficulty and mob type
+        if (this.tag == "Enemy")
+        {
+            if (this.GetComponent("Creep") != null)
+            {
+                MaxHealth = GameStats.BaseEnemyHealth[0] * GameStats.EnemyHealthModifier[(int)GameManager.Instance.CurrentDifficulty];
+            }
+            else if (this.GetComponent("EliteMAI") != null)
+            {
+                MaxHealth = GameStats.BaseEnemyHealth[1] * GameStats.EnemyHealthModifier[(int)GameManager.Instance.CurrentDifficulty];
+            }
+            else if (this.GetComponent("EliteRAI") != null)
+            {
+                MaxHealth = GameStats.BaseEnemyHealth[2] * GameStats.EnemyHealthModifier[(int)GameManager.Instance.CurrentDifficulty];
+            }
+            else if (this.GetComponent("Boss") != null)
+            {
+                MaxHealth = GameStats.BaseEnemyHealth[3] * GameStats.EnemyHealthModifier[(int)GameManager.Instance.CurrentDifficulty];
+            }
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        // Set Current health to Max Health set in awake
         CurrentHealth = MaxHealth;
     }
 
