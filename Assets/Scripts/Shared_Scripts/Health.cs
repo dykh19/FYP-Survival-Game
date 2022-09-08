@@ -18,7 +18,7 @@ public class Health : MonoBehaviour
         //If owner of this health script is enemy, adjust the health based on difficulty and mob type
         if (this.tag == "Enemy")
         {
-            if (this.GetComponent("Creep") != null)
+            if (this.GetComponent("CreepAI") != null)
             {
                 MaxHealth = GameStats.BaseEnemyHealth[0] * GameStats.EnemyHealthModifier[(int)GameManager.Instance.CurrentDifficulty];
             }

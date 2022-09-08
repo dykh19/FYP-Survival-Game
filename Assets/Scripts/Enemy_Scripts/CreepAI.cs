@@ -60,7 +60,7 @@ public class CreepAI : EnemyBehavior
 
         //When !isWave (Creeps will target the player)
         //If not in wave and player not in sight while base in sight/attack range, monster wanders.
-        if ((!playerInSightRange && !playerInAttackRange && !playerSpotted && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave))
+        if ((!playerInSightRange && !playerInAttackRange && (!playerSpotted || playerSpotted) && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave))
         {
             print("Wandering(!isWave)");
             Wandering();

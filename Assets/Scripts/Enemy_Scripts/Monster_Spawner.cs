@@ -81,12 +81,12 @@ public class Monster_Spawner : MonoBehaviour
                 NextWave();
             }
 
-            if (eliteRKilled == eliteRSpawned && eliteMKilled == eliteMSpawned && bossKilled == bossSpawned)
+            if (creepKilled == creepSpawned && eliteRKilled == eliteRSpawned && eliteMKilled == eliteMSpawned && bossKilled == bossSpawned)
             {
                 EndWave();
             }
         }
-        if(!isWave && !inWave && (creepSpawned == 0))
+        if(!isWave && !inWave && ((creepSpawned == 0) || (creepSpawn == creepKilled)))
         {
             OpenWorldSpawn();
         }
@@ -95,7 +95,7 @@ public class Monster_Spawner : MonoBehaviour
     //Spawning mechanic when !isWave
     public void OpenWorldSpawn()
     {
-        creepSpawn = 0; //Change value here
+        creepSpawn = 30; //Change value here
         creepKilled = 0;
 
         for(int i = 0; i < creepSpawn; i++)
@@ -131,21 +131,33 @@ public class Monster_Spawner : MonoBehaviour
     //Function to start the wave and spawn monsters
     public void StartWave()
     {
-        waveNumber = 0;
-        eliteRSpawn = 1; //To change based on specs
+        waveNumber = 1;
+        eliteRSpawn = 0; //To change based on specs
         eliteRKilled = 0;
+        eliteMSpawn = 0;
+        eliteMKilled = 0;
+        creepSpawn = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
+        creepKilled = 0;
         isWave = true;
         inWave = true;
 
         foreach (Transform child in transform)
         {
-            GameObject.Destroy(child.gameObject);
+            GameObject.Destroy(child.gameObject); //Destroys all existing mobs
         }
 
         for (int i = 0; i < eliteRSpawn; i++)
         {
             spawnEliteR(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
             /*~~~~~~~~Add spawn timer here if want~~~~~~~~*/
+        }
+        for (int i = 0; i < creepSpawn; i++)
+        {
+            spawnCreep(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
+        }
+        for (int i = 0; i < eliteMSpawn; i++)
+        {
+            spawnEliteM(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
         }
     }
 
@@ -154,6 +166,8 @@ public class Monster_Spawner : MonoBehaviour
     {
         inWave = false;
         waveNumber += 1;
+        creepKilled = 0;
+        creepSpawned = 0;
         eliteRSpawned = 0;
         eliteRKilled = 0;
         eliteMSpawned = 0;
@@ -166,9 +180,14 @@ public class Monster_Spawner : MonoBehaviour
     //Function to start the next wave
     public void NextWave()
     {
-        waveNumber += 1;
+        isWave = true;
         inWave = true;
-        eliteRSpawn = eliteRSpawn + 2; //replace the 2 with the formula
+        creepSpawn = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
+        if(creepSpawn > 100)
+        {
+            creepSpawn = 100;
+        }
+        //eliteRSpawn = eliteRSpawn + 2; //replace the 2 with the formula
 
         foreach (Transform child in transform)
         {
@@ -178,6 +197,14 @@ public class Monster_Spawner : MonoBehaviour
         for (int i = 0; i < eliteRSpawn; i++)
         {
             spawnEliteR(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
+        }
+        for (int i = 0; i < creepSpawn; i++)
+        {
+            spawnCreep(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
+        }
+        for (int i = 0; i < eliteMSpawn; i++)
+        {
+            spawnEliteM(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
         }
     }
 
