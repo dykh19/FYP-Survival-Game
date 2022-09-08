@@ -15,6 +15,7 @@ public class CreepAI : EnemyBehavior
     //Attacking Variables
     public float timeBetweenAttacks;
     bool alreadyAttacked;
+    public float Damage;
 
     Monster_Spawner spawn;
 
@@ -24,6 +25,7 @@ public class CreepAI : EnemyBehavior
         player = GameObject.FindGameObjectWithTag("Player").transform;  //set player object
         baseObj = GameObject.FindGameObjectWithTag("Base").transform; //set base object
         agent = GetComponent<NavMeshAgent>();   //set NavMesh agent
+        Damage = GameStats.BaseEnemyDamage[0] * GameStats.EnemyHealthModifier[(int)GameManager.Instance.CurrentDifficulty];
     }
 
     // Update is called once per frame
@@ -48,13 +50,13 @@ public class CreepAI : EnemyBehavior
         if (((!playerInSightRange || playerInSightRange) && (!playerInAttackRange || playerInAttackRange) && (playerSpotted || !playerSpotted) && !baseInSightRange && !baseInAttackRange && isWave) ||
             ((!playerInSightRange || playerInSightRange) && (!playerInAttackRange || playerInAttackRange) && (playerSpotted || !playerSpotted) && baseInSightRange && !baseInAttackRange && isWave))
         {
-            print("Finding Base(isWave)");
+            //print("Finding Base(isWave)");
             findBase();
         }
         //If during wave, player not spotted and base within sight and attack range. Attack Base.
         if ((!playerInSightRange || playerInSightRange) && (!playerInAttackRange || playerInAttackRange) && (playerSpotted || !playerSpotted) && baseInSightRange && baseInAttackRange && isWave)
         {
-            print("Attacking Base(isWave)");
+            //print("Attacking Base(isWave)");
             Attack(baseObj);
         }
 
@@ -62,19 +64,19 @@ public class CreepAI : EnemyBehavior
         //If not in wave and player not in sight while base in sight/attack range, monster wanders.
         if ((!playerInSightRange && !playerInAttackRange && (!playerSpotted || playerSpotted) && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave))
         {
-            print("Wandering(!isWave)");
+            //print("Wandering(!isWave)");
             Wandering();
         }
         //If player is in range of enemy's sight, monster will chase.
         if ((playerInSightRange && !playerInAttackRange && (playerSpotted || !playerSpotted) && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave))
         {
-            print("Chasing Player(!isWave)");
+            //print("Chasing Player(!isWave)");
             Chase();
         }
         //If player is in attack range and in sight range, monster will attack.
         if (playerInSightRange && playerInAttackRange && playerSpotted && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave)
         {
-            print("Attacking Player(!isWave)");
+            //print("Attacking Player(!isWave)");
             Attack(player);
         }
     }
@@ -133,6 +135,19 @@ public class CreepAI : EnemyBehavior
 
         if(!alreadyAttacked)
         {
+            if (target.gameObject.tag == "Player")
+            {
+                target.gameObject.GetComponent<Health>().TakeDamage(Damage);
+
+                Debug.Log("Hit Player");
+            }
+
+            if (target.gameObject.tag == "Base")
+            {
+                target.gameObject.GetComponent<Health>().TakeDamage(Damage);
+
+                Debug.Log("Hit Base");
+            }
             //~~~~~~~~~~~~~~~~~~~~Attack Code Here~~~~~~~~~~~~~~~~~~~~//
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
+using System.Collections;
 
 public enum WeaponShootType
 {
@@ -222,7 +223,13 @@ public class WeaponController : MonoBehaviour
         {
             m_CurrentAmmoInClip = ClipSize;
         }
+        StartCoroutine(ReloadDelay());
+        //IsReloading = false;
+    }
 
+    IEnumerator ReloadDelay()
+    {
+        yield return new WaitForSeconds(AmmoReloadDelay);
         IsReloading = false;
     }
 
@@ -250,7 +257,7 @@ public class WeaponController : MonoBehaviour
 
     void UpdateAmmo()
     {
-        if (AutomaticReload && m_LastTimeShot + AmmoReloadDelay < Time.time && m_CurrentAmmoInClip == 0)
+        if (AutomaticReload && m_CurrentAmmoInClip == 0)
         {
             StartReloadAnimation();
         }

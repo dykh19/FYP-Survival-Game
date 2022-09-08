@@ -137,6 +137,7 @@ public class Monster_Spawner : MonoBehaviour
         eliteMSpawn = 0;
         eliteMKilled = 0;
         creepSpawn = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
+        creepSpawned = 0;
         creepKilled = 0;
         isWave = true;
         inWave = true;
@@ -175,6 +176,7 @@ public class Monster_Spawner : MonoBehaviour
         bossSpawned = 0;
         bossKilled = 0;
         isWave = false;
+        WaveTimerManager.Instance.StartNewWaveTimer();
     }
 
     //Function to start the next wave
@@ -182,6 +184,7 @@ public class Monster_Spawner : MonoBehaviour
     {
         isWave = true;
         inWave = true;
+        creepSpawned = 0;
         creepSpawn = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
         if(creepSpawn > 100)
         {

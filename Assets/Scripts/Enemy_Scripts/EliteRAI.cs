@@ -17,6 +17,7 @@ public class EliteRAI : EnemyBehavior
     bool alreadyAttacked;
     public GameObject bullet;
     private float lastAttackTime = -1f;
+    public float Damage;
 
     Monster_Spawner spawn;
 
@@ -26,6 +27,7 @@ public class EliteRAI : EnemyBehavior
         player = GameObject.FindGameObjectWithTag("Player").transform;  //set player object
         baseObj = GameObject.FindGameObjectWithTag("Base").transform; //set base object
         agent = GetComponent<NavMeshAgent>();   //set NavMesh agent
+        Damage = GameStats.BaseEnemyDamage[2] * GameStats.EnemyHealthModifier[(int)GameManager.Instance.CurrentDifficulty];
     }
 
     // Update is called once per frame
@@ -168,7 +170,7 @@ public class EliteRAI : EnemyBehavior
         {
             //~~~~~~~~~~~~~~~~~~~~Attack Code Here~~~~~~~~~~~~~~~~~~~~//
             Rigidbody rb = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-
+            bullet.GetComponent<RangedEnemyProjectile>().SetDamage(Damage);
             rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
             rb.AddForce(transform.up * 4f, ForceMode.Impulse);
             Destroy(rb.gameObject, 10);
