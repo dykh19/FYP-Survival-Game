@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public int NumberOfWaves;
     public int TimeToNextWave;
 
+    public PlayerStatistics PlayerStats;
+
     public UnityAction OnPlayerDie;
 
     void Awake()
@@ -27,7 +29,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
         DontDestroyOnLoad(this);
-
+        PlayerStats = new PlayerStatistics();
         OnPlayerDie += LoseGame;
     }
 
