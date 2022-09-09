@@ -235,7 +235,7 @@ public class WeaponController : MonoBehaviour
 
     public void StartReloadAnimation()
     {
-        if (m_CurrentAmmoInClip < m_CarriedPhysicalBullets)
+        if (m_CurrentAmmoInClip < m_CarriedPhysicalBullets && !Owner.GetComponent<PlayerWeaponsManager>().IsAiming)
         {
             //GetComponent<Animator>().SetTrigger("Reload");
             IsReloading = true;

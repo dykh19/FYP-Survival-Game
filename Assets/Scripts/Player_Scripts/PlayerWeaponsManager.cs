@@ -129,15 +129,16 @@ public class PlayerWeaponsManager : MonoBehaviour
 
         if (activeWeapon != null && m_WeaponSwitchState == WeaponSwitchState.Up)
         {
-            if (m_InputHandler.GetReloadButtonDown() && activeWeapon.CurrentAmmoRatio < 1.0f)
+            // handle aiming down sights
+            IsAiming = m_InputHandler.GetAimInputHeld();
+
+            if (!IsAiming && m_InputHandler.GetReloadButtonDown() && activeWeapon.CurrentAmmoRatio < 1.0f)
             {
                 IsAiming = false;
                 activeWeapon.StartReloadAnimation();
                 return;
             }
-            // handle aiming down sights
-            IsAiming = m_InputHandler.GetAimInputHeld();
-
+            
             // handle shooting
             bool hasFired = activeWeapon.HandleShootInputs(
                 m_InputHandler.GetFireInputDown(),

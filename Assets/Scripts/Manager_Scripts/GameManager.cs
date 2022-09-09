@@ -85,6 +85,8 @@ public class GameManager : MonoBehaviour
     public void LoseGame()
     {
         Debug.Log("Player is Dead");
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         SceneManager.LoadScene(2);
     }
 
@@ -97,5 +99,15 @@ public class GameManager : MonoBehaviour
             CurrentGameState = GameState.INGAME;
         }
         
+    }
+
+    public void UpdatePlayerStatistics()
+    {
+        PlayerStats.currentDifficutly = CurrentDifficulty;
+        PlayerStats.currentGameMode = CurrentGameMode;
+
+        PlayerStats.CurrentHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().CurrentHealth;
+        PlayerStats.MaxHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().MaxHealth;
+
     }
 }
