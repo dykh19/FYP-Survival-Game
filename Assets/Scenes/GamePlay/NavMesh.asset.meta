@@ -1,15 +1,8 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Prefabs/GameItems/Eddirite.asset.meta
-guid: ec71282a1d0251940821fab0bce3d0ce
-NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 0
-========
-guid: d955d79f9026793429ba0c934e7acfae
+guid: 921799231c3b2c74488af0688beadee1
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 23800000
->>>>>>>> main:Assets/Scenes/GamePlay/NavMesh.asset.meta
   userData: 
   assetBundleName: 
   assetBundleVariant: 

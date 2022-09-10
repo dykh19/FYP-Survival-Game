@@ -141,6 +141,7 @@ public class Monster_Spawner : MonoBehaviour
         creepKilled = 0;
         isWave = true;
         inWave = true;
+        WaveTimerManager.Instance.HideTimer();
 
         foreach (Transform child in transform)
         {
@@ -176,6 +177,7 @@ public class Monster_Spawner : MonoBehaviour
         bossSpawned = 0;
         bossKilled = 0;
         isWave = false;
+        WaveTimerManager.Instance.ShowTimer();
         WaveTimerManager.Instance.StartNewWaveTimer();
     }
 
@@ -186,6 +188,7 @@ public class Monster_Spawner : MonoBehaviour
         inWave = true;
         creepSpawned = 0;
         creepSpawn = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
+        WaveTimerManager.Instance.HideTimer();
         if(creepSpawn > 100)
         {
             creepSpawn = 100;
