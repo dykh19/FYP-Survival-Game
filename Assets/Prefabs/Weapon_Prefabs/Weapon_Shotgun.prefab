@@ -170,7 +170,7 @@ MonoBehaviour:
   ShellCasingEjectionForce: 2
   ShellPoolSize: 1
   AmmoReloadRate: 1
-  AmmoReloadDelay: 2
+  AmmoReloadDelay: 1.5
   InfiniteAmmo: 1
   MaxAmmo: 48
   WeaponAnimator: {fileID: 0}
@@ -182,6 +182,8 @@ MonoBehaviour:
   ContinuousShootStartSfx: {fileID: 0}
   ContinuousShootLoopSfx: {fileID: 0}
   ContinuousShootEndSfx: {fileID: 0}
+  m_CarriedPhysicalBullets: 0
+  m_CurrentAmmoInClip: 0
 --- !u!82 &8090847488450120274
 AudioSource:
   m_ObjectHideFlags: 0

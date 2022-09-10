@@ -5,7 +5,7 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using TMPro;
 
-public class OptionsController : MonoBehaviour
+public class OptionsManager : MonoBehaviour
 {
     public AudioMixer AudioMixer;
     public TMP_Dropdown resolutionDropdown;

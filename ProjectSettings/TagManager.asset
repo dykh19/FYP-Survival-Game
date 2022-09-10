@@ -5,6 +5,17 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Weapon
+  - Ground
+  - Base
+  - Spawner
+  - SecondCamera
+  - BulletSpawn
+  - MElite
+  - RElite
+  - Boss
+  - Creep
+  - eRange
   layers:
   - Default
   - TransparentFX
@@ -13,11 +24,11 @@ TagManager:
   - Water
   - UI
   - FirstPersonLayer
-  - 
-  - 
-  - 
-  - 
-  - 
+  - IsGround
+  - IsPlayer
+  - IsBase
+  - IsEnemy
+  - IsWall
   - 
   - 
   - 

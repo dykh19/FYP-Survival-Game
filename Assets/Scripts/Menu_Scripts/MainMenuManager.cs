@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenuController : MonoBehaviour
+public class MainMenuManager : MonoBehaviour
 {
     // Declare Variables
     public GameObject MainMenuUI;

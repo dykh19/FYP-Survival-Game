@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
+using System.Collections;
 
 public enum WeaponShootType
 {
@@ -147,10 +149,13 @@ public class WeaponController : MonoBehaviour
 
     private Queue<Rigidbody> m_PhysicalAmmoPool;
 
+
+
     void Awake()
     {
         m_CarriedPhysicalBullets = MaxAmmo;
         m_CurrentAmmoInClip = ClipSize;
+
         //m_CarriedPhysicalBullets = HasPhysicalBullets ? ClipSize : 0;
         m_LastMuzzlePosition = WeaponMuzzle.position;
 
@@ -177,6 +182,8 @@ public class WeaponController : MonoBehaviour
                 m_PhysicalAmmoPool.Enqueue(shell.GetComponent<Rigidbody>());
             }*/
         }
+
+
     }
 
     //public void AddCarriablePhysicalBullets(int count) => m_CarriedPhysicalBullets = Mathf.Max(m_CarriedPhysicalBullets + count, MaxAmmo);
@@ -216,13 +223,19 @@ public class WeaponController : MonoBehaviour
         {
             m_CurrentAmmoInClip = ClipSize;
         }
+        StartCoroutine(ReloadDelay());
+        //IsReloading = false;
+    }
 
+    IEnumerator ReloadDelay()
+    {
+        yield return new WaitForSeconds(AmmoReloadDelay);
         IsReloading = false;
     }
 
     public void StartReloadAnimation()
     {
-        if (m_CurrentAmmoInClip < m_CarriedPhysicalBullets)
+        if (m_CurrentAmmoInClip < m_CarriedPhysicalBullets && !Owner.GetComponent<PlayerWeaponsManager>().IsAiming)
         {
             //GetComponent<Animator>().SetTrigger("Reload");
             IsReloading = true;
@@ -244,7 +257,7 @@ public class WeaponController : MonoBehaviour
 
     void UpdateAmmo()
     {
-        if (AutomaticReload && m_LastTimeShot + AmmoReloadDelay < Time.time && m_CurrentAmmoInClip == 0)
+        if (AutomaticReload && m_CurrentAmmoInClip == 0)
         {
             StartReloadAnimation();
         }

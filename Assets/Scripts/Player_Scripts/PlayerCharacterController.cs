@@ -165,7 +165,7 @@ public class PlayerCharacterController : MonoBehaviour
 
         m_Controller.enableOverlapRecovery = true;
 
-        //m_Health.OnDie += OnDie;
+        GameManager.Instance.OnPlayerDie += OnDie;
 
         // force the crouch state to false when starting
         SetCrouchingState(false, true);
@@ -218,15 +218,15 @@ public class PlayerCharacterController : MonoBehaviour
         HandleCharacterMovement();
     }
 
-    /*void OnDie()
+    void OnDie()
     {
         IsDead = true;
 
         // Tell the weapons manager to switch to a non-existing weapon in order to lower the weapon
-        //m_WeaponsManager.SwitchToWeaponIndex(-1, true);
+        m_WeaponsManager.SwitchToWeaponIndex(-1, true);
 
         //EventManager.Broadcast(Events.PlayerDeathEvent);
-    }*/
+    }
 
     void GroundCheck()
     {

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 // Game Manager is in-charge of the overall game state
 public class GameManager : MonoBehaviour
 {
@@ -12,11 +13,13 @@ public class GameManager : MonoBehaviour
     public int NumberOfWaves;
     public int TimeToNextWave;
 
-
     //Player Inventory
     public Inventory playerInventory;
-
     public GameItem[] startingItems;
+
+    public PlayerStatistics PlayerStats;
+
+    public UnityAction OnPlayerDie;
 
 
     void Awake()
@@ -33,12 +36,14 @@ public class GameManager : MonoBehaviour
 
         playerInventory = new Inventory();
         DontDestroyOnLoad(this);
+        PlayerStats = new PlayerStatistics();
+        OnPlayerDie += LoseGame;
     }
 
     //When Scene changes to the game level, run the OnNewGameLevelLoaded function
     private void Start()
     {
-        SceneManager.sceneLoaded += OnNewGameLevelLoaded;
+        SceneManager.sceneLoaded += LoadNewScene;
     }
 
     // Update is called once per frame
@@ -92,17 +97,33 @@ public class GameManager : MonoBehaviour
     //Function to run when the base is destroyed
     public void LoseGame()
     {
-
+        Debug.Log("Player is Dead");
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SceneManager.LoadScene(2);
     }
 
-    //This function will be called by the game manager when the game level is loaded
-    public void OnNewGameLevelLoaded(Scene scene, LoadSceneMode aMode)
+    public void LoadNewScene(Scene scene, LoadSceneMode aMode)
     {
         //Perform Initial Loading Stuff Here
         //Eg. Generate Map, Choose Base Location
-        CurrentGameState = GameState.INGAME;
+        if (SceneManager.GetActiveScene().name == "GamePlay")
+        {
+            CurrentGameState = GameState.INGAME;
 
-        foreach (var item in startingItems) // For testing.
+            foreach (var item in startingItems) // For testing.
             playerInventory.AddItem(item);
+        }
+        
+    }
+
+    public void UpdatePlayerStatistics()
+    {
+        PlayerStats.currentDifficutly = CurrentDifficulty;
+        PlayerStats.currentGameMode = CurrentGameMode;
+
+        PlayerStats.CurrentHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().CurrentHealth;
+        PlayerStats.MaxHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().MaxHealth;
+
     }
 }

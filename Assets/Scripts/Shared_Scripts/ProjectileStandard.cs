@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileStandard : ProjectileBase
@@ -234,7 +234,7 @@ public class ProjectileStandard : ProjectileBase
             }
         }*/
 
-        if(collider.tag == "Enemy")
+        if (collider.tag == "Enemy")
         {
             collider.GetComponent<Health>().TakeDamage(Damage);
             Debug.Log("Hit Enemy");

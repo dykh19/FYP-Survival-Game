@@ -9,9 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3659995153115176982}
-  - component: {fileID: 8556824025552246513}
+  - component: {fileID: -6745138229257183886}
+  - component: {fileID: -5897781426499450463}
+  - component: {fileID: 850513796423076529}
   m_Layer: 0
-  m_Name: Projectile_Blaster
+  m_Name: Enemy_Projectile_Test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,14 +28,30 @@ Transform:
   m_GameObject: {fileID: 3659995153115176983}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 10}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8402172112652589804}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8556824025552246513
+--- !u!54 &-6745138229257183886
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3659995153115176983}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &-5897781426499450463
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,26 +60,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 3659995153115176983}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b07db3780bedcce46b4149e281f23d78, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f839761caf3fce4f8625d0073d46d23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Radius: 0.01
-  Root: {fileID: 3659995153115176982}
-  Tip: {fileID: 1135791333161367127}
-  MaxLifeTime: 5
-  ImpactVfx: {fileID: 7655095426451682942, guid: a7d68b1a502e02a49b8efb1b86a8c931, type: 3}
-  ImpactVfxLifetime: 5
-  ImpactVfxSpawnOffset: 0.1
-  ImpactSfxClip: {fileID: 0}
-  HittableLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  Speed: 250
-  GravityDownAcceleration: 0
-  TrajectoryCorrectionDistance: 1
-  InheritWeaponVelocity: 0
-  Damage: 40
-  RadiusColor: {r: 0, g: 0.2, b: 0.2, a: 0.2}
+  Damage: 10
+--- !u!135 &850513796423076529
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3659995153115176983}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5564024855854763701
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,7 +134,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8402172112652879564}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -134,7 +149,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8402172112652879564}
-  m_Mesh: {fileID: 4300002, guid: dac2420a19d8c8e46b7d36c8e3817523, type: 3}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &8402172112654882828
 MeshRenderer:
   m_ObjectHideFlags: 0

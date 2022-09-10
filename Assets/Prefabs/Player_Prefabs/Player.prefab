@@ -180,7 +180,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 10
+  far clip plane: 300
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -250,9 +250,10 @@ GameObject:
   - component: {fileID: 4029703380950846376}
   - component: {fileID: 4029703380950846377}
   - component: {fileID: 4029703380950848598}
+  - component: {fileID: 6197510655658603820}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -355,6 +356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 0
   CurrentHealth: 0
+  IsDead: 0
 --- !u!143 &4029703380950846376
 CharacterController:
   m_ObjectHideFlags: 0
@@ -503,6 +505,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!136 &6197510655658603820
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4029703380950846368}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  m_Radius: 0.34848133
+  m_Height: 1.8
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &4029703381038330434
 GameObject:
   m_ObjectHideFlags: 0
