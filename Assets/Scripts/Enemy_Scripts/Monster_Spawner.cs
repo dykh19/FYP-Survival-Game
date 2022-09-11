@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Monster_Spawner : MonoBehaviour
 {
@@ -45,22 +46,23 @@ public class Monster_Spawner : MonoBehaviour
     public float mapzPosMin;
     public float mapzPosMax;
     public float zPos;
+    public float mapSize;
 
     public Vector3 enemySpawnPosition;
     // Start is called before the first frame update
     void Start()
     {
         baseObj = GameObject.FindWithTag("Base");
-        basexPosMin = baseObj.transform.position.x - 10; //replace with regards to base size afterwards
-        basexPosMax = baseObj.transform.position.x + 10; //replace with regards to base size afterwards
-        basezPosMin = baseObj.transform.position.z - 10; //replace with regards to base size afterwards
-        basezPosMax = baseObj.transform.position.z + 10; //replace with regards to base size afterwards
+        basexPosMin = baseObj.transform.position.x - mapSize; //replace with regards to base size afterwards
+        basexPosMax = baseObj.transform.position.x + mapSize; //replace with regards to base size afterwards
+        basezPosMin = baseObj.transform.position.z - mapSize; //replace with regards to base size afterwards
+        basezPosMax = baseObj.transform.position.z + mapSize; //replace with regards to base size afterwards
 
         map = GameObject.FindWithTag("Ground");
-        mapxPosMin = map.transform.position.x - 10; //replace with regards to map size afterwards
-        mapxPosMax = map.transform.position.x + 10; //replace with regards to map size afterwards
-        mapzPosMin = map.transform.position.z - 10; //replace with regards to map size afterwards
-        mapzPosMax = map.transform.position.z + 10; //replace with regards to map size afterwards
+        mapxPosMin = map.transform.position.x - mapSize; //replace with regards to map size afterwards
+        mapxPosMax = map.transform.position.x + mapSize; //replace with regards to map size afterwards
+        mapzPosMin = map.transform.position.z - mapSize; //replace with regards to map size afterwards
+        mapzPosMax = map.transform.position.z + mapSize; //replace with regards to map size afterwards
 
         yPos = map.transform.position.y;
 
@@ -86,7 +88,7 @@ public class Monster_Spawner : MonoBehaviour
                 EndWave();
             }
         }
-        if(!isWave && !inWave && ((creepSpawned == 0) || (creepSpawn == creepKilled)))
+        if(!isWave && !inWave && ((creepSpawned == 0) || (creepSpawn != 0 && (creepSpawned == creepKilled))))
         {
             OpenWorldSpawn();
         }
@@ -96,6 +98,7 @@ public class Monster_Spawner : MonoBehaviour
     public void OpenWorldSpawn()
     {
         creepSpawn = 30; //Change value here
+        creepSpawned = 0;
         creepKilled = 0;
 
         for(int i = 0; i < creepSpawn; i++)
@@ -108,24 +111,63 @@ public class Monster_Spawner : MonoBehaviour
     //Function to spawn Creeps (Mainly for waves)
     public void spawnCreep(float xPosMin, float xPosMax, float zPosMin, float zPosMax)
     {
-        GameObject newCreep = Instantiate(creep, new Vector3(Random.Range(xPosMin, xPosMax), yPos, Random.Range(zPosMin, zPosMax)), Quaternion.identity);
-        newCreep.transform.parent = GameObject.Find("Spawner").transform;
-        creepSpawned += 1;
+        var rayOrigin = new Vector3(Random.Range(xPosMin, xPosMax), 100f, Random.Range(zPosMin, zPosMax));
+        var ray = new Ray(rayOrigin, Vector3.down);
+
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            GameObject newCreep = Instantiate(creep);
+            newCreep.transform.position = hit.point + hit.normal;
+            NavMeshHit closestHit;
+            if (NavMesh.SamplePosition(newCreep.transform.position, out closestHit, 500, 1))
+            {
+                newCreep.transform.position = closestHit.position;
+                newCreep.AddComponent<NavMeshAgent>();
+            }
+            newCreep.transform.parent = GameObject.Find("Spawner").transform;
+            creepSpawned += 1;
+        }
     }
 
     //Function to spawn Elite Ranged Monsters
     public void spawnEliteR(float xPosMin, float xPosMax, float zPosMin, float zPosMax)
     {
-        GameObject newEliteR = Instantiate(eliteR, new Vector3(Random.Range(xPosMin, xPosMax), yPos, Random.Range(zPosMin, zPosMax)), Quaternion.identity);
-        newEliteR.transform.parent = GameObject.Find("Spawner").transform;
-        eliteRSpawned += 1;
+        var rayOrigin = new Vector3(Random.Range(xPosMin, xPosMax), 100f, Random.Range(zPosMin, zPosMax));
+        var ray = new Ray(rayOrigin, Vector3.down);
+
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            GameObject newEliteR = Instantiate(eliteR);
+            newEliteR.transform.position = hit.point + hit.normal;
+            NavMeshHit closestHit;
+            if (NavMesh.SamplePosition(newEliteR.transform.position, out closestHit, 500, 1))
+            {
+                newEliteR.transform.position = closestHit.position;
+                newEliteR.AddComponent<NavMeshAgent>();
+            }
+            newEliteR.transform.parent = GameObject.Find("Spawner").transform;
+            eliteRSpawned += 1;
+        }
     }
 
     public void spawnEliteM(float xPosMin, float xPosMax, float zPosMin, float zPosMax)
     {
-        GameObject newEliteM = Instantiate(eliteM, new Vector3(Random.Range(xPosMin, xPosMax), yPos, Random.Range(zPosMin, zPosMax)), Quaternion.identity);
-        newEliteM.transform.parent = GameObject.Find("Spawner").transform;
-        eliteMSpawned += 1;
+        var rayOrigin = new Vector3(Random.Range(xPosMin, xPosMax), 100f, Random.Range(zPosMin, zPosMax));
+        var ray = new Ray(rayOrigin, Vector3.down);
+
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            GameObject newEliteM = Instantiate(eliteM);
+            newEliteM.transform.position = hit.point + hit.normal;
+            NavMeshHit closestHit;
+            if (NavMesh.SamplePosition(newEliteM.transform.position, out closestHit, 500, 1))
+            {
+                newEliteM.transform.position = closestHit.position;
+                newEliteM.AddComponent<NavMeshAgent>();
+            }
+            newEliteM.transform.parent = GameObject.Find("Spawner").transform;
+            eliteRSpawned += 1;
+        }
     }
 
     //Function to start the wave and spawn monsters
