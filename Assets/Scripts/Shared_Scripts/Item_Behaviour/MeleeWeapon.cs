@@ -30,12 +30,12 @@ public class MeleeWeapon : GameItem
     public bool swingSideways;
 
     private Transform modelObject;
-    private MeleeWeaponAnimator animator;
+    private MeleeWeaponAnimator_OLD animator;
 
     public override void OnHoldEnter()
     {
         modelObject = Instantiate(model).transform;
-        animator = new MeleeWeaponAnimator(modelObject, attackSpeed, swingAngle);
+        animator = new MeleeWeaponAnimator_OLD(modelObject, attackSpeed, swingAngle);
 
         // Set the crosshair.
         PlayerHUD.Main.SetCrosshair(crosshair, Vector2.one * crosshairSize, crosshairColour);
@@ -127,7 +127,7 @@ public class MeleeWeapon : GameItem
     }
 }
 
-public class MeleeWeaponAnimator
+public class MeleeWeaponAnimator_OLD
 {
     private readonly Transform modelObject;
     private readonly float attackSpeed;
@@ -136,7 +136,7 @@ public class MeleeWeaponAnimator
     private AnimationState animationState = AnimationState.None;
     private float animationFrame = 0;
 
-    public MeleeWeaponAnimator(Transform modelObject, float attackSpeed, float swingAngle)
+    public MeleeWeaponAnimator_OLD(Transform modelObject, float attackSpeed, float swingAngle)
     {
         this.modelObject = modelObject;
         this.attackSpeed = attackSpeed;

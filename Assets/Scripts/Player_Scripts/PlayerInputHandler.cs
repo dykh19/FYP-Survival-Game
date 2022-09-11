@@ -169,7 +169,7 @@ public class PlayerInputHandler : MonoBehaviour
         return false;
     }
 
-    public int GetSwitchWeaponInput()
+    /*public int GetSwitchWeaponInput()
     {
         if (CanProcessInput())
         {
@@ -190,7 +190,7 @@ public class PlayerInputHandler : MonoBehaviour
         }
 
         return 0;
-    }
+    }*/
 
     public int GetSelectWeaponInput()
     {

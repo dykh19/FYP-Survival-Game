@@ -110,6 +110,8 @@ public class PlayerWeaponsManager : MonoBehaviour
 
         OnSwitchedToWeapon += OnWeaponSwitched;
 
+        AmmoCountUI = GameObject.Find("AmmoCountUI").GetComponent<TMP_Text>();
+
         // Add starting weapons
         foreach (var weapon in StartingWeapons)
         {
@@ -122,75 +124,105 @@ public class PlayerWeaponsManager : MonoBehaviour
     void Update()
     {
         // shoot handling
-        WeaponController activeWeapon = GetActiveWeapon();
+        
 
-        if (activeWeapon != null && activeWeapon.IsReloading)
-            return;
-
-        if (activeWeapon != null && m_WeaponSwitchState == WeaponSwitchState.Up)
+        if (GetActiveWeapon() is RangedWeaponController)
         {
-            // handle aiming down sights
-            IsAiming = m_InputHandler.GetAimInputHeld();
+            RangedWeaponController activeWeapon = (RangedWeaponController)GetActiveWeapon();
 
-            if (!IsAiming && m_InputHandler.GetReloadButtonDown() && activeWeapon.CurrentAmmoRatio < 1.0f)
-            {
-                IsAiming = false;
-                activeWeapon.StartReloadAnimation();
+            if (activeWeapon != null && activeWeapon.IsReloading)
                 return;
-            }
-            
-            // handle shooting
-            bool hasFired = activeWeapon.HandleShootInputs(
-                m_InputHandler.GetFireInputDown(),
-                m_InputHandler.GetFireInputHeld(),
-                m_InputHandler.GetFireInputReleased());
 
-            // Handle accumulating recoil
-            if (hasFired)
+            if (activeWeapon != null && m_WeaponSwitchState == WeaponSwitchState.Up)
             {
-                m_AccumulatedRecoil += Vector3.back * activeWeapon.RecoilForce;
-                m_AccumulatedRecoil = Vector3.ClampMagnitude(m_AccumulatedRecoil, MaxRecoilDistance);
-            }
-        }
+                // handle aiming down sights
+                IsAiming = m_InputHandler.GetAimInputHeld();
 
-        // weapon switch handling
-        if (!IsAiming &&
-            /*(activeWeapon == null || !activeWeapon.IsCharging) &&*/
-            (m_WeaponSwitchState == WeaponSwitchState.Up || m_WeaponSwitchState == WeaponSwitchState.Down))
-        {
-            int switchWeaponInput = m_InputHandler.GetSwitchWeaponInput();
-            if (switchWeaponInput != 0)
-            {
-                bool switchUp = switchWeaponInput > 0;
-                SwitchWeapon(switchUp);
+                if (!IsAiming && m_InputHandler.GetReloadButtonDown() && activeWeapon.CurrentAmmoRatio < 1.0f)
+                {
+                    IsAiming = false;
+                    activeWeapon.StartReloadAnimation();
+                    return;
+                }
+
+                // handle shooting
+                bool hasFired = activeWeapon.HandleShootInputs(
+                    m_InputHandler.GetFireInputDown(),
+                    m_InputHandler.GetFireInputHeld(),
+                    m_InputHandler.GetFireInputReleased());
+
+                // Handle accumulating recoil
+                if (hasFired)
+                {
+                    m_AccumulatedRecoil += Vector3.back * activeWeapon.RecoilForce;
+                    m_AccumulatedRecoil = Vector3.ClampMagnitude(m_AccumulatedRecoil, MaxRecoilDistance);
+                }
             }
-            else
+
+            // weapon switch handling
+            if (!IsAiming &&
+                /*(activeWeapon == null || !activeWeapon.IsCharging) &&*/
+                (m_WeaponSwitchState == WeaponSwitchState.Up || m_WeaponSwitchState == WeaponSwitchState.Down))
             {
-                switchWeaponInput = m_InputHandler.GetSelectWeaponInput();
+                // Commented out to remove scroll wheel swap
+                /*int switchWeaponInput = m_InputHandler.GetSwitchWeaponInput();
+                if (switchWeaponInput != 0)
+                {
+                    bool switchUp = switchWeaponInput > 0;
+                    SwitchWeapon(switchUp);
+                }
+                else
+                {*/
+                int switchWeaponInput = m_InputHandler.GetSelectWeaponInput();
                 if (switchWeaponInput != 0)
                 {
                     if (GetWeaponAtSlotIndex(switchWeaponInput - 1) != null)
+                    {
                         SwitchToWeaponIndex(switchWeaponInput - 1);
+                    }
+                        
                 }
+                //}
             }
-        }
 
-        // Pointing at enemy handling
-        IsPointingAtEnemy = false;
-        if (activeWeapon)
-        {
-            if (Physics.Raycast(WeaponCamera.transform.position, WeaponCamera.transform.forward, out RaycastHit hit,
-                1000, -1, QueryTriggerInteraction.Ignore))
+            // Pointing at enemy handling
+            IsPointingAtEnemy = false;
+            if (activeWeapon)
             {
-                if (hit.collider.GetComponentInParent<Health>() != null)
+                if (Physics.Raycast(WeaponCamera.transform.position, WeaponCamera.transform.forward, out RaycastHit hit,
+                    1000, -1, QueryTriggerInteraction.Ignore))
                 {
-                    IsPointingAtEnemy = true;
+                    if (hit.collider.GetComponentInParent<Health>() != null)
+                    {
+                        IsPointingAtEnemy = true;
+                    }
                 }
+            }
+
+            
+            AmmoCountUI.text = activeWeapon.m_CurrentAmmoInClip.ToString("F0");
+        }
+        else if (GetActiveWeapon() is MeleeWeaponController)
+        {
+            MeleeWeaponController activeWeapon = (MeleeWeaponController)GetActiveWeapon();
+            activeWeapon.HandleShootInputs(
+                    m_InputHandler.GetFireInputDown(),
+                    m_InputHandler.GetFireInputHeld(),
+                    m_InputHandler.GetFireInputReleased());
+            AmmoCountUI.text = "";
+
+            int switchWeaponInput = m_InputHandler.GetSelectWeaponInput();
+            if (switchWeaponInput != 0)
+            {
+                if (GetWeaponAtSlotIndex(switchWeaponInput - 1) != null)
+                {
+                    SwitchToWeaponIndex(switchWeaponInput - 1);
+                }
+
             }
         }
 
-        AmmoCountUI = GameObject.Find("AmmoCountUI").GetComponent<TMP_Text>();
-        AmmoCountUI.text = GetActiveWeapon().m_CurrentAmmoInClip.ToString("F0");
+        
     }
 
 
@@ -287,23 +319,26 @@ public class PlayerWeaponsManager : MonoBehaviour
     // Updates weapon position and camera FoV for the aiming transition
     void UpdateWeaponAiming()
     {
-        if (m_WeaponSwitchState == WeaponSwitchState.Up)
+        if (GetActiveWeapon() is RangedWeaponController)
         {
-            WeaponController activeWeapon = GetActiveWeapon();
-            if (IsAiming && activeWeapon)
+            if (m_WeaponSwitchState == WeaponSwitchState.Up)
             {
-                m_WeaponMainLocalPosition = Vector3.Lerp(m_WeaponMainLocalPosition,
-                    AimingWeaponPosition.localPosition + activeWeapon.AimOffset,
-                    AimingAnimationSpeed * Time.deltaTime);
-                SetFov(Mathf.Lerp(m_PlayerCharacterController.PlayerCamera.fieldOfView,
-                    activeWeapon.AimZoomRatio * DefaultFov, AimingAnimationSpeed * Time.deltaTime));
-            }
-            else
-            {
-                m_WeaponMainLocalPosition = Vector3.Lerp(m_WeaponMainLocalPosition,
-                    DefaultWeaponPosition.localPosition, AimingAnimationSpeed * Time.deltaTime);
-                SetFov(Mathf.Lerp(m_PlayerCharacterController.PlayerCamera.fieldOfView, DefaultFov,
-                    AimingAnimationSpeed * Time.deltaTime));
+                RangedWeaponController activeWeapon = (RangedWeaponController)GetActiveWeapon();
+                if (IsAiming && activeWeapon)
+                {
+                    m_WeaponMainLocalPosition = Vector3.Lerp(m_WeaponMainLocalPosition,
+                        AimingWeaponPosition.localPosition + activeWeapon.AimOffset,
+                        AimingAnimationSpeed * Time.deltaTime);
+                    SetFov(Mathf.Lerp(m_PlayerCharacterController.PlayerCamera.fieldOfView,
+                        activeWeapon.AimZoomRatio * DefaultFov, AimingAnimationSpeed * Time.deltaTime));
+                }
+                else
+                {
+                    m_WeaponMainLocalPosition = Vector3.Lerp(m_WeaponMainLocalPosition,
+                        DefaultWeaponPosition.localPosition, AimingAnimationSpeed * Time.deltaTime);
+                    SetFov(Mathf.Lerp(m_PlayerCharacterController.PlayerCamera.fieldOfView, DefaultFov,
+                        AimingAnimationSpeed * Time.deltaTime));
+                }
             }
         }
     }
@@ -379,39 +414,81 @@ public class PlayerWeaponsManager : MonoBehaviour
         // Handle transiting to new switch state
         if (switchingTimeFactor >= 1f)
         {
-            if (m_WeaponSwitchState == WeaponSwitchState.PutDownPrevious)
+            if (GetWeaponAtSlotIndex(ActiveWeaponIndex) is RangedWeaponController)
             {
-                // Deactivate old weapon
-                WeaponController oldWeapon = GetWeaponAtSlotIndex(ActiveWeaponIndex);
-                if (oldWeapon != null)
+                if (m_WeaponSwitchState == WeaponSwitchState.PutDownPrevious)
                 {
-                    oldWeapon.ShowWeapon(false);
-                }
+                    // Deactivate old weapon
+                    RangedWeaponController oldWeapon = (RangedWeaponController)GetWeaponAtSlotIndex(ActiveWeaponIndex);
+                    if (oldWeapon != null)
+                    {
+                        Debug.Log("Swapping from Ranged");
+                        oldWeapon.ShowWeapon(false);
+                    }
 
-                ActiveWeaponIndex = m_WeaponSwitchNewWeaponIndex;
-                switchingTimeFactor = 0f;
+                    ActiveWeaponIndex = m_WeaponSwitchNewWeaponIndex;
+                    switchingTimeFactor = 0f;
 
-                // Activate new weapon
-                WeaponController newWeapon = GetWeaponAtSlotIndex(ActiveWeaponIndex);
-                if (OnSwitchedToWeapon != null)
-                {
-                    OnSwitchedToWeapon.Invoke(newWeapon);
-                }
+                    // Activate new weapon
+                    WeaponController newWeapon = GetWeaponAtSlotIndex(ActiveWeaponIndex);
+                    if (OnSwitchedToWeapon != null)
+                    {
+                        OnSwitchedToWeapon.Invoke(newWeapon);
+                    }
 
-                if (newWeapon)
-                {
-                    m_TimeStartedWeaponSwitch = Time.time;
-                    m_WeaponSwitchState = WeaponSwitchState.PutUpNew;
+                    if (newWeapon)
+                    {
+                        m_TimeStartedWeaponSwitch = Time.time;
+                        m_WeaponSwitchState = WeaponSwitchState.PutUpNew;
+                    }
+                    else
+                    {
+                        // if new weapon is null, don't follow through with putting weapon back up
+                        m_WeaponSwitchState = WeaponSwitchState.Down;
+                    }
                 }
-                else
+                else if (m_WeaponSwitchState == WeaponSwitchState.PutUpNew)
                 {
-                    // if new weapon is null, don't follow through with putting weapon back up
-                    m_WeaponSwitchState = WeaponSwitchState.Down;
+                    m_WeaponSwitchState = WeaponSwitchState.Up;
                 }
             }
-            else if (m_WeaponSwitchState == WeaponSwitchState.PutUpNew)
+            else if (GetWeaponAtSlotIndex(ActiveWeaponIndex) is MeleeWeaponController)
             {
-                m_WeaponSwitchState = WeaponSwitchState.Up;
+                if (m_WeaponSwitchState == WeaponSwitchState.PutDownPrevious)
+                {
+                    // Deactivate old weapon
+                    MeleeWeaponController oldWeapon = (MeleeWeaponController)GetWeaponAtSlotIndex(ActiveWeaponIndex);
+                    if (oldWeapon != null)
+                    {
+                        Debug.Log("Swapping from Melee");
+                        oldWeapon.ShowWeapon(false);
+                    }
+
+                    ActiveWeaponIndex = m_WeaponSwitchNewWeaponIndex;
+                    switchingTimeFactor = 0f;
+
+                    // Activate new weapon
+                    WeaponController newWeapon = GetWeaponAtSlotIndex(ActiveWeaponIndex);
+                    if (OnSwitchedToWeapon != null)
+                    {
+                        OnSwitchedToWeapon.Invoke(newWeapon);
+                    }
+
+                    if (newWeapon)
+                    {
+                        m_TimeStartedWeaponSwitch = Time.time;
+                        m_WeaponSwitchState = WeaponSwitchState.PutUpNew;
+                    }
+                    else
+                    {
+                        // if new weapon is null, don't follow through with putting weapon back up
+                        m_WeaponSwitchState = WeaponSwitchState.Down;
+                    }
+                }
+                else if (m_WeaponSwitchState == WeaponSwitchState.PutUpNew)
+                {
+                    m_WeaponSwitchState = WeaponSwitchState.Up;
+                }
             }
         }
 
@@ -451,7 +528,11 @@ public class PlayerWeaponsManager : MonoBehaviour
                 // Set owner to this gameObject so the weapon can alter projectile/damage logic accordingly
                 weaponInstance.Owner = gameObject;
                 weaponInstance.SourcePrefab = weaponPrefab.gameObject;
-                weaponInstance.ShowWeapon(false);
+                if (weaponInstance is RangedWeaponController)
+                {
+                    weaponInstance.GetComponent<RangedWeaponController>().ShowWeapon(false);
+                }
+                
 
                 // Assign the first person layer to the weapon
                 int layerIndex =
@@ -555,9 +636,13 @@ public class PlayerWeaponsManager : MonoBehaviour
 
     void OnWeaponSwitched(WeaponController newWeapon)
     {
-        if (newWeapon != null)
+        if (newWeapon != null && newWeapon is RangedWeaponController)
         {
-            newWeapon.ShowWeapon(true);
+            newWeapon.GetComponent<RangedWeaponController>().ShowWeapon(true);
+        }
+        else if (newWeapon != null && newWeapon is MeleeWeaponController)
+        {
+            newWeapon.GetComponent<MeleeWeaponController>().ShowWeapon(true);
         }
     }
 }
