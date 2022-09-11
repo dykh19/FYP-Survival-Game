@@ -143,6 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db44466b7453ec24997987c139f5626b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShootType: 1
   WeaponName: 
   WeaponIcon: {fileID: 0}
   CrosshairDataDefault:
@@ -155,9 +156,8 @@ MonoBehaviour:
     CrosshairColor: {r: 0, g: 0, b: 0, a: 0}
   WeaponRoot: {fileID: 1505447205160222267}
   WeaponMuzzle: {fileID: 8334323006752503713}
-  ShootType: 0
   ProjectilePrefab: {fileID: -9037121540970970623, guid: f05c7e6fbbfbe824388456bb4abff9d4, type: 3}
-  DelayBetweenShots: 0.5
+  DelayBetweenShots: 0.1
   BulletSpreadAngle: 7
   BulletsPerShot: 7
   RecoilForce: 1
@@ -165,7 +165,7 @@ MonoBehaviour:
   AimOffset: {x: 0, y: 0.09, z: 0}
   AutomaticReload: 1
   HasPhysicalBullets: 1
-  ClipSize: 4
+  ClipSize: 8
   EjectionPort: {fileID: 0}
   ShellCasingEjectionForce: 2
   ShellPoolSize: 1

@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 5748186617188858715}
   - component: {fileID: 5748186617188858692}
   - component: {fileID: 5748186617188858693}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: World Generator
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,9 +53,9 @@ MonoBehaviour:
   seed: 0
   offset: {x: 0, y: 0}
   flattenCenter: 1
-  groundLevel: 0
+  groundLevel: 0.5
   radius: 10
-  radialSmoothing: 5
+  radialSmoothing: 10
   autoUpdate: 0
 --- !u!33 &5748186617188858715
 MeshFilter:

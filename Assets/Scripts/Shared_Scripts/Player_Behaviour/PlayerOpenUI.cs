@@ -11,18 +11,20 @@ public class PlayerOpenUI : MonoBehaviour
 
     void Awake()
     {
-        defaultUI = GameManagerJoseph.Main.userInterfaces[0];
+
+        
     }
 
     void Start()
     {
+        defaultUI = GameManager.Instance.userInterfaces[0];
         ClearAllUI();
         SetUIActivity(defaultUI, true);
     }
 
     void Update()
     {
-        if (GameManagerJoseph.Main.isPlaying)
+        if (GameManager.Instance.CurrentGameState == GameState.INGAME)
             PollForOpenUI();
         else
             PollForCloseUI();
@@ -32,7 +34,7 @@ public class PlayerOpenUI : MonoBehaviour
     {
         // Open the UI if the player pressed its respective assigned UI key.
 
-        foreach (var ui in GameManagerJoseph.Main.userInterfaces)
+        foreach (var ui in GameManager.Instance.userInterfaces)
             if ((ui.keyCode != KeyCode.None) && Input.GetKeyDown(ui.keyCode))
                 OpenUI(ui);
     }
@@ -48,29 +50,33 @@ public class PlayerOpenUI : MonoBehaviour
 
     public void OpenUI(UserInterface ui)
     {
-        GameManagerJoseph.Main.isPlaying = false;
+        GameManager.Instance.CurrentGameState = GameState.PAUSED;
+        GameManager.Instance.PauseGame();
         currentlyActive = ui;
 
         SetUIActivity(defaultUI, false);
         SetUIActivity(ui, true);
 
+        Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
 
     public void CloseUI()
     {
-        GameManagerJoseph.Main.isPlaying = true;
+        GameManager.Instance.CurrentGameState = GameState.INGAME;
+        GameManager.Instance.ResumeGame();
         currentlyActive = null;
 
         ClearAllUI();
         SetUIActivity(defaultUI, true);
 
+        Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     private static void ClearAllUI()
     {
-        foreach (var ui in GameManagerJoseph.Main.userInterfaces)
+        foreach (var ui in GameManager.Instance.userInterfaces)
             SetUIActivity(ui, false);
     }
 

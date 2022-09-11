@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     public Inventory playerInventory;
     public GameItem[] startingItems;
 
+    //User Interfaces
+    public UserInterface[] userInterfaces;
+
     public PlayerStatistics PlayerStats;
 
     public UnityAction OnPlayerDie;
@@ -49,21 +52,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Temporary Pause Function, toggle pause with escape
-        if(Input.GetKeyDown("escape"))
-        {
-            if(CurrentGameState == GameState.INGAME)
-            {
-                CurrentGameState = GameState.PAUSED;
-                PauseGame();
-            }
-            else if(CurrentGameState == GameState.PAUSED)
-            {
-                CurrentGameState = GameState.INGAME;
-                ResumeGame();
-            }    
 
-        }
     }
 
     public void SetGameMode(int newMode)

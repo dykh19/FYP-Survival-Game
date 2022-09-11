@@ -138,7 +138,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   prefabSpawner:
-    enableWater: 1
+    enableWater: 0
     expandOcean: 0
     waterLevel: 0.276
     waterMaterial: {fileID: 2100000, guid: 16fc2e5e73d89c14b96511acaa4905cd, type: 2}
