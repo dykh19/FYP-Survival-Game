@@ -81,7 +81,8 @@ public class PlayerHUD : UIController
         var barBackgroundTransform = barBackground.GetComponent<RectTransform>();
         barBackgroundTransform.anchorMin = Vector2.zero;
         barBackgroundTransform.anchorMax = Vector2.zero;
-        barBackgroundTransform.anchoredPosition = position;
+        //barBackgroundTransform.anchoredPosition = position;
+        barBackgroundTransform.anchoredPosition = new Vector2(120.0f, 50.0f);
         barBackgroundTransform.sizeDelta = barSize;
 
         var bar = CreatePanel(name + "Bar", barColour, barSprite, barBackground.transform);
