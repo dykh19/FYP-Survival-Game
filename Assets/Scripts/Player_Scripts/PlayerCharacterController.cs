@@ -90,6 +90,8 @@ public class PlayerCharacterController : MonoBehaviour
     [Tooltip("Sound played when taking damage froma fall")]
     public AudioClip FallDamageSfx;
 
+    public AudioClip HitSound;
+
     [Header("Fall Damage")]
     [Tooltip("Whether the player will recieve damage when hitting the ground at high speed")]
     public bool RecievesFallDamage;
@@ -474,6 +476,11 @@ public class PlayerCharacterController : MonoBehaviour
 
         IsCrouching = crouched;
         return true;
+    }
+
+    public void PlayHitSound()
+    {
+        AudioSource.PlayOneShot(HitSound);
     }
 }
 

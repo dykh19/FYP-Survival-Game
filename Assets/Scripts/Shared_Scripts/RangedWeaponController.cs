@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using TMPro;
 using System.Collections;
 
 
@@ -41,8 +40,6 @@ public class RangedWeaponController : WeaponController
 
     [Tooltip("Tip of the weapon, where the projectiles are shot")]
     public Transform WeaponMuzzle;
-
-    
 
     [Tooltip("The projectile prefab")] public ProjectileBase ProjectilePrefab;
 
@@ -114,6 +111,8 @@ public class RangedWeaponController : WeaponController
     AudioSource m_ContinuousShootAudioSource = null;
     bool m_WantsToShoot = false;
 
+    public AudioClip ReloadCooldownSound;
+
     public UnityAction OnShoot;
     public event Action OnShootProcessed;
 
@@ -150,6 +149,7 @@ public class RangedWeaponController : WeaponController
         m_LastMuzzlePosition = WeaponMuzzle.position;
 
         m_ShootAudioSource = GetComponent<AudioSource>();
+
 
         if (UseContinuousShootSound)
         {
@@ -214,7 +214,24 @@ public class RangedWeaponController : WeaponController
             m_CurrentAmmoInClip = ClipSize;
         }
         StartCoroutine(ReloadDelay());
+        StartCoroutine(AudioFadeOut(m_ShootAudioSource, ReloadCooldownSound, AmmoReloadDelay));
         //IsReloading = false;
+    }
+
+    IEnumerator AudioFadeOut(AudioSource audioSource, AudioClip sound, float FadeTime)
+    {
+        float startVolume = audioSource.volume;
+        audioSource.PlayOneShot(sound);
+
+        while (audioSource.volume > 0)
+        {
+            audioSource.volume -= startVolume * Time.deltaTime / FadeTime;
+
+            yield return null;
+        }
+
+        audioSource.Stop();
+        audioSource.volume = startVolume;
     }
 
     IEnumerator ReloadDelay()

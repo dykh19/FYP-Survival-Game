@@ -12,7 +12,7 @@ public class MeleeWeaponController : WeaponController
     [Header("Attack Settings")]
     public bool canBreakObjects;
     public float damage;
-    [Range(0.1f, 5)] public float attackRange;
+    [Range(2, 10)] public float attackRange;
     [Range(1, 180)] public float attackWidth;
 
     [Header("Animation Settings")]
@@ -20,23 +20,28 @@ public class MeleeWeaponController : WeaponController
     [Range(45, 135)] public float swingAngle = 80;
     public bool swingSideways;
 
-    private Transform modelObject;
+    public Transform modelObject;
     private MeleeWeaponAnimator animator;
 
     public void Awake()
     {
         modelObject = this.transform;
-        //modelObject = Instantiate(model).transform;
         animator = new MeleeWeaponAnimator(modelObject, attackSpeed, swingAngle);
+        
         this.gameObject.SetActive(false);
+    }
+
+    public void Start()
+    {
+        WeaponFollow();
     }
 
     public void Update()
     {
-        
+        animator.UpdateAnimation(swingSideways);
     }
 
-    public void OnHoldStay()
+    /*public void OnHoldStay()
     {
         if (modelObject != null)
         {
@@ -52,12 +57,13 @@ public class MeleeWeaponController : WeaponController
 
         // Unset the crosshair.
         PlayerHUD.Main.RemoveCrosshair();
-    }
+    }*/
 
     public void OnUse()
     {
         if (animator.StartAnimation())
             HitTargets();
+            animator.UpdateAnimation(swingSideways);
     }
 
     private void WeaponFollow()
@@ -69,7 +75,7 @@ public class MeleeWeaponController : WeaponController
         var offsetZ = this.offset.z * camera.forward;
         var offset = offsetX + offsetY + offsetZ;
 
-        modelObject.position = camera.position + offset;
+        modelObject.localPosition = offset;
     }
 
     private void HitTargets()
@@ -88,19 +94,25 @@ public class MeleeWeaponController : WeaponController
                 }
             }
 
-            var strikeable = hit.transform.GetComponentInParent<Strikeable>();
+            /*var strikeable = hit.transform.GetComponentInParent<Strikeable>();
             if (strikeable is not null)
             {
                 strikeable.OnHit(damage);
+            }*/
+
+            if (hit.transform.tag == "Enemy")
+            {
+                hit.transform.GetComponentInParent<Health>().TakeDamage(damage);
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCharacterController>().PlayHitSound();
             }
         }
     }
 
     private RaycastHit[] SectorCast()
     {
-        var origin = GameObject.FindGameObjectWithTag("Player").transform.position;
+        var origin = Camera.main.transform.position; //GameObject.FindGameObjectWithTag("Player").transform.position;
         var camera = Camera.main.transform;
-        var halfWidth = attackWidth / 2;
+        var halfWidth = attackWidth;
 
         var hitList = new List<RaycastHit>();
 
@@ -109,7 +121,7 @@ public class MeleeWeaponController : WeaponController
             var direction = Quaternion.AngleAxis(i, camera.up) * camera.forward;
             var hits = Physics.RaycastAll(origin, direction, attackRange);
 
-            // Debug.DrawRay(origin, direction * attackRange, Color.red, 1, false);
+            Debug.DrawRay(origin, direction * attackRange, Color.red, 1, false);
 
             var uniqueHits = hits
                 .Where(hit => !hitList
@@ -123,7 +135,7 @@ public class MeleeWeaponController : WeaponController
 
     public void HandleShootInputs(bool inputDown, bool inputHeld, bool inputUp)
     {
-        if(inputDown || inputHeld)
+        if(inputDown)
         {
             OnUse();
         }
@@ -164,7 +176,7 @@ public class MeleeWeaponAnimator
     public void UpdateAnimation(bool sideways)
     {
         var camera = Camera.main.transform;
-
+        
         if (animationState == AnimationState.None)
         {
             modelObject.rotation = Quaternion.LookRotation(camera.forward);

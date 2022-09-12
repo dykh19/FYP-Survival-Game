@@ -88,6 +88,11 @@ public class Monster_Spawner : MonoBehaviour
                 EndWave();
             }
         }
+        if (!isWave && !inWave && waveNumber == GameManager.Instance.WaveCountToWin + 1)
+        {
+            GameManager.Instance.WinGame();
+        }
+
         if(!isWave && !inWave && ((creepSpawned == 0) || (creepSpawn != 0 && (creepSpawned == creepKilled))))
         {
             OpenWorldSpawn();
@@ -186,7 +191,7 @@ public class Monster_Spawner : MonoBehaviour
         creepKilled = 0;
         isWave = true;
         inWave = true;
-        WaveTimerManager.Instance.HideTimer();
+        WaveTimerManager.Instance.IncomingWave();
 
         foreach (Transform child in transform)
         {

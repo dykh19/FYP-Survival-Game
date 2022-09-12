@@ -25,11 +25,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 71ba381ce5eb14575b73e91004b43091, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.999749
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 71ba381ce5eb14575b73e91004b43091, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.022404758
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 71ba381ce5eb14575b73e91004b43091, type: 3}
       propertyPath: m_LocalRotation.y
@@ -41,7 +41,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 71ba381ce5eb14575b73e91004b43091, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 2.568
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 71ba381ce5eb14575b73e91004b43091, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -171,11 +171,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShootType: 2
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: 0, y: 0.05, z: 0}
   canBreakObjects: 1
-  damage: 10
-  attackRange: 1.2
+  damage: 70
+  attackRange: 3.1
   attackWidth: 30
   attackSpeed: 8
   swingAngle: 70
   swingSideways: 0
+  modelObject: {fileID: 0}

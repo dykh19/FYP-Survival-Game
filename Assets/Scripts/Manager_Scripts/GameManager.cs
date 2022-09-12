@@ -13,6 +13,12 @@ public class GameManager : MonoBehaviour
     public int NumberOfWaves;
     public int TimeToNextWave;
 
+    public int EasyWaveCount;
+    public int NormalWaveCount;
+    public int HardWaveCount;
+
+    public int WaveCountToWin;
+
     //Player Inventory
     public Inventory playerInventory;
     public GameItem[] startingItems;
@@ -41,6 +47,23 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
         PlayerStats = new PlayerStatistics();
         OnPlayerDie += LoseGame;
+
+        switch (CurrentDifficulty)
+        {
+            case Difficulty.EASY:
+                WaveCountToWin = EasyWaveCount;
+                break;
+            case Difficulty.NORMAL:
+                WaveCountToWin = NormalWaveCount;
+                break;
+            case Difficulty.HARD:
+                WaveCountToWin = HardWaveCount;
+                break;
+            default:
+                WaveCountToWin = 1;
+                break;
+                
+        }
     }
 
     //When Scene changes to the game level, run the OnNewGameLevelLoaded function
@@ -80,7 +103,10 @@ public class GameManager : MonoBehaviour
     //Function to run when the player completes the game objective
     public void WinGame()
     {
-
+        Debug.Log("Player Wins Game");
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SceneManager.LoadScene(3);
     }
 
     //Function to run when the base is destroyed

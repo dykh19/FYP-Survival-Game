@@ -100,6 +100,11 @@ public class WaveTimerManager : MonoBehaviour
         TimerUI.gameObject.SetActive(false);
     }
 
+    public void IncomingWave()
+    {
+        TimerUI.text = "Enemy Wave is here!";
+    }    
+
     void UpdateTimerUI()
     {
         float TimeToDisplay = TimeRemaining + 1;

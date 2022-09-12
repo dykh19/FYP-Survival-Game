@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
+using UnityEngine.UI;
 
 
 [RequireComponent(typeof(PlayerInputHandler))]
@@ -71,6 +72,8 @@ public class PlayerWeaponsManager : MonoBehaviour
     [Tooltip("Layer to set FPS weapon gameObjects to")]
     public LayerMask FpsWeaponLayer;
 
+    public Image Crosshair;
+
     public bool IsAiming { get; private set; }
     public bool IsPointingAtEnemy { get; private set; }
     public int ActiveWeaponIndex { get; private set; }
@@ -124,8 +127,7 @@ public class PlayerWeaponsManager : MonoBehaviour
     void Update()
     {
         // shoot handling
-        
-
+        // if player is holding a ranged weapon
         if (GetActiveWeapon() is RangedWeaponController)
         {
             RangedWeaponController activeWeapon = (RangedWeaponController)GetActiveWeapon();
@@ -189,19 +191,20 @@ public class PlayerWeaponsManager : MonoBehaviour
             IsPointingAtEnemy = false;
             if (activeWeapon)
             {
-                if (Physics.Raycast(WeaponCamera.transform.position, WeaponCamera.transform.forward, out RaycastHit hit,
-                    1000, -1, QueryTriggerInteraction.Ignore))
+                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit,
+                    2000, -1, QueryTriggerInteraction.Ignore))
                 {
-                    if (hit.collider.GetComponentInParent<Health>() != null)
+                    if (hit.collider.tag == "Enemy")
                     {
                         IsPointingAtEnemy = true;
                     }
                 }
             }
-
+            //UpdateCrosshairColor();
             
             AmmoCountUI.text = activeWeapon.m_CurrentAmmoInClip.ToString("F0");
         }
+        // If player is holding a melee weapon
         else if (GetActiveWeapon() is MeleeWeaponController)
         {
             MeleeWeaponController activeWeapon = (MeleeWeaponController)GetActiveWeapon();
@@ -218,7 +221,6 @@ public class PlayerWeaponsManager : MonoBehaviour
                 {
                     SwitchToWeaponIndex(switchWeaponInput - 1);
                 }
-
             }
         }
 
@@ -643,6 +645,18 @@ public class PlayerWeaponsManager : MonoBehaviour
         else if (newWeapon != null && newWeapon is MeleeWeaponController)
         {
             newWeapon.GetComponent<MeleeWeaponController>().ShowWeapon(true);
+        }
+    }
+
+    void UpdateCrosshairColor()
+    {
+        if (IsPointingAtEnemy)
+        {
+            Crosshair.color = new Color(1, 0, 0, 0.7f);
+        }
+        else
+        {
+            Crosshair.color = new Color(1, 1, 1, 0.7f);
         }
     }
 }
