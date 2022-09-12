@@ -27,7 +27,7 @@ public class Monster_Spawner : MonoBehaviour
     public bool isWave = false;
     public bool inWave = false;
 
-    public GameObject creep;
+    public GameObject[] creeps = new GameObject[4];
     public GameObject eliteR;
     public GameObject eliteM;
     public GameObject boss;
@@ -113,10 +113,13 @@ public class Monster_Spawner : MonoBehaviour
     {
         var rayOrigin = new Vector3(Random.Range(xPosMin, xPosMax), 100f, Random.Range(zPosMin, zPosMax));
         var ray = new Ray(rayOrigin, Vector3.down);
-
+        
+        int creepIndex;
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            GameObject newCreep = Instantiate(creep);
+            //Randomly chooses the design of creep to spawn from 4 prefabs
+            creepIndex = Random.Range(0, creeps.Length);
+            GameObject newCreep = Instantiate(creeps[creepIndex]);
             newCreep.transform.position = hit.point + hit.normal;
             NavMeshHit closestHit;
             if (NavMesh.SamplePosition(newCreep.transform.position, out closestHit, 500, 1))
