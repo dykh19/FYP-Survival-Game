@@ -22,6 +22,8 @@ public class PlayerHUD : UIController
     public Vector2 healthBarPosition;
     public Color energyBarColour;
     public Vector2 energyBarPosition;
+    public Color BaseHealthBarColour;
+    public Vector2 BaseHealthBarPosition;
     public float subBarVertialOffset = 50;
 
     [Header("Toolbar Settings")]
@@ -41,6 +43,7 @@ public class PlayerHUD : UIController
 
     private RectTransform healthBar;
     private RectTransform energyBar;
+    private RectTransform BaseHealthBar;
     private GameObject crosshair;
 
     void Awake()
@@ -52,6 +55,7 @@ public class PlayerHUD : UIController
     void Start()
     {
         healthBar = CreateMainBar("Health", healthBarColour, healthBarPosition);
+        BaseHealthBar = CreateMainBar("BaseHealth", BaseHealthBarColour, BaseHealthBarPosition);
         //energyBar = CreateMainBar("Energy", energyBarColour, energyBarPosition);
     }
 
@@ -81,8 +85,8 @@ public class PlayerHUD : UIController
         var barBackgroundTransform = barBackground.GetComponent<RectTransform>();
         barBackgroundTransform.anchorMin = Vector2.zero;
         barBackgroundTransform.anchorMax = Vector2.zero;
-        //barBackgroundTransform.anchoredPosition = position;
-        barBackgroundTransform.anchoredPosition = new Vector2(120.0f, 50.0f);
+        barBackgroundTransform.anchoredPosition = position;
+        //barBackgroundTransform.anchoredPosition = new Vector2(120.0f, 50.0f);
         barBackgroundTransform.sizeDelta = barSize;
 
         var bar = CreatePanel(name + "Bar", barColour, barSprite, barBackground.transform);
@@ -104,8 +108,10 @@ public class PlayerHUD : UIController
         //var energyRatio = GameManagerJoseph.Main.playerStatus.playerEnergy / GameManagerJoseph.Main.playerStatus.maxPlayerEnergy;
 
         var healthRatio = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().CurrentHealth / GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().MaxHealth;
+        var BaseHealthRatio = GameObject.FindGameObjectWithTag("Base").GetComponent<Health>().CurrentHealth / GameObject.FindGameObjectWithTag("Base").GetComponent<Health>().MaxHealth;
 
         healthBar.sizeDelta = new Vector2(barSizeFullX * healthRatio, barSize.y - barDoubleOffsetY);
+        BaseHealthBar.sizeDelta = new Vector2(barSizeFullX * BaseHealthRatio, barSize.y - barDoubleOffsetY);
         //energyBar.sizeDelta = new Vector2(barSizeFullX * energyRatio, barSize.y - barDoubleOffsetY);
     }
 }

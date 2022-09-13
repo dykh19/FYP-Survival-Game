@@ -18,7 +18,7 @@ MonoBehaviour:
     noiseScale: 30
     octaves: 4
     persistance: 0.4
-    lacunarity: 2
+    lacunarity: 1
     enableFalloff: 1
     falloffCurve:
       serializedVersion: 2

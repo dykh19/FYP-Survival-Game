@@ -1,3 +1,4 @@
+using Unity.AI.Navigation;
 using UnityEngine;
 
 // Written by Nicholas Sebastian Hendrata on 12/08/2022.
@@ -29,12 +30,14 @@ public class WorldGenerator : MonoBehaviour
     private MeshRenderer meshRenderer;
     private MeshCollider meshCollider;
 
+    public NavMeshSurface NavMesh;
+
     void Awake()
     {
         meshFilter = GetComponent<MeshFilter>();
         meshRenderer = GetComponent<MeshRenderer>();
         meshCollider = GetComponent<MeshCollider>();
-
+        NavMesh = GetComponent<NavMeshSurface>();
         SetInstance();
     }
 
@@ -49,6 +52,8 @@ public class WorldGenerator : MonoBehaviour
 
         if (displayMode == ShaderMode.CustomTerrainShader)
             terrainPreset.prefabSpawner.SpawnStuff(meshData, transform);
+
+        NavMesh.BuildNavMesh();
     }
 
     public MeshData CreateTerrain()

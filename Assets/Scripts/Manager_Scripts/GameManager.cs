@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
 
     public int WaveCountToWin;
 
+    public WorldGenerator worldgen;
+
     //Player Inventory
     public Inventory playerInventory;
     public GameItem[] startingItems;
@@ -126,8 +128,8 @@ public class GameManager : MonoBehaviour
         {
             CurrentGameState = GameState.INGAME;
 
-            foreach (var item in startingItems) // For testing.
-            playerInventory.AddItem(item);
+            worldgen = GameObject.Find("World Generator").GetComponent<WorldGenerator>();
+            worldgen.CreateWorld();
         }
         
     }
