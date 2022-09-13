@@ -192,6 +192,7 @@ public class Monster_Spawner : MonoBehaviour
         isWave = true;
         inWave = true;
         WaveTimerManager.Instance.IncomingWave();
+        GameManager.Instance.PlayerStats.CurrentWave = waveNumber;
 
         foreach (Transform child in transform)
         {
@@ -216,6 +217,10 @@ public class Monster_Spawner : MonoBehaviour
     //Function to reset variable at end of wave
     public void EndWave()
     {
+        //Store Data into PlayerStatistics
+        GameManager.Instance.PlayerStats.CalculateTotalEnemiesKilled();
+        GameManager.Instance.PlayerStats.WavesCleared = waveNumber;
+
         inWave = false;
         waveNumber += 1;
         creepKilled = 0;
@@ -229,6 +234,7 @@ public class Monster_Spawner : MonoBehaviour
         isWave = false;
         WaveTimerManager.Instance.ShowTimer();
         WaveTimerManager.Instance.StartNewWaveTimer();
+        GameManager.Instance.PlayerStats.CurrentWave = waveNumber;
     }
 
     //Function to start the next wave
@@ -236,7 +242,17 @@ public class Monster_Spawner : MonoBehaviour
     {
         isWave = true;
         inWave = true;
+        //creepSpawned = 0;
+
+        creepKilled = 0;
         creepSpawned = 0;
+        eliteRSpawned = 0;
+        eliteRKilled = 0;
+        eliteMSpawned = 0;
+        eliteMKilled = 0;
+        bossSpawned = 0;
+        bossKilled = 0;
+
         creepSpawn = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
         WaveTimerManager.Instance.HideTimer();
         if(creepSpawn > 100)
@@ -267,20 +283,24 @@ public class Monster_Spawner : MonoBehaviour
     public void creepDie()
     {
         creepKilled += 1;
+        GameManager.Instance.PlayerStats.TotalCreepKilled += 1;
     }
 
     public void eliteRDie()
     {
         eliteRKilled += 1;
+        GameManager.Instance.PlayerStats.TotalEliteRKilled += 1;
     }
 
     public void eliteMDie()
     {
         eliteMKilled += 1;
+        GameManager.Instance.PlayerStats.TotalEliteMKilled += 1;
     }
 
     public void bossDie()
     {
         bossKilled += 1;
+        GameManager.Instance.PlayerStats.TotalBossKilled += 1;
     }
 }
