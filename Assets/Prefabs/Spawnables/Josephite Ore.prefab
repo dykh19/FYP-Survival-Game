@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c1522cd38f1f414aacde7644596bebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropItem: {fileID: 0}
+  dropItem: {fileID: 11400000, guid: 7270d134f65833c45b178e050afbf2d7, type: 2}
   durability: 50
 --- !u!1 &7765288357352144446
 GameObject:

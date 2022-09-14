@@ -113,6 +113,8 @@ public class RangedWeaponController : WeaponController
 
     public AudioClip ReloadCooldownSound;
 
+    public ParticleSystem CooldownEffect;
+
     public UnityAction OnShoot;
     public event Action OnShootProcessed;
 
@@ -222,6 +224,7 @@ public class RangedWeaponController : WeaponController
     {
         float startVolume = audioSource.volume;
         audioSource.PlayOneShot(sound);
+        CooldownEffect.Play();
 
         while (audioSource.volume > 0)
         {
@@ -231,6 +234,7 @@ public class RangedWeaponController : WeaponController
         }
 
         audioSource.Stop();
+        CooldownEffect.Stop();
         audioSource.volume = startVolume;
     }
 

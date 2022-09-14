@@ -43,17 +43,17 @@ public class InventoryUISwapper : UIController
         if (currentlySelected is not null)
         {
             int oldIndex = (int)currentlySelected;
-            int activeIndex = Inventory.Main.activeItemIndex;
+            int activeIndex = GameManager.Instance.playerInventory.activeItemIndex;
             var activeItemSwapped = (oldIndex == activeIndex) || (slotIndex == activeIndex);
 
             // Call the 'OnHoldExit' method if the swapped item is the active item.
             if (activeItemSwapped)
-                Inventory.Main.Items[Inventory.Main.activeItemIndex]?.item.OnHoldExit();
+                GameManager.Instance.playerInventory.Items[GameManager.Instance.playerInventory.activeItemIndex]?.item.OnHoldExit();
 
             // Swap the currently selected item with the item just clicked.
-            var temp = Inventory.Main.Items[slotIndex];
-            Inventory.Main.Items[slotIndex] = Inventory.Main.Items[oldIndex];
-            Inventory.Main.Items[oldIndex] = temp;
+            var temp = GameManager.Instance.playerInventory.Items[slotIndex];
+            GameManager.Instance.playerInventory.Items[slotIndex] = GameManager.Instance.playerInventory.Items[oldIndex];
+            GameManager.Instance.playerInventory.Items[oldIndex] = temp;
 
             // Deselect the selected item and update the UI.
             DeselectItem();
@@ -61,12 +61,12 @@ public class InventoryUISwapper : UIController
 
             // Call the 'OnHoldEnter' method if the swapped item is the active item.
             if (activeItemSwapped)
-                Inventory.Main.Items[Inventory.Main.activeItemIndex]?.item.OnHoldEnter();
+                GameManager.Instance.playerInventory.Items[GameManager.Instance.playerInventory.activeItemIndex]?.item.OnHoldEnter();
         }
         else
         {
             // If the slot isn't empty, select the item.
-            if (Inventory.Main.Items[slotIndex] is not null)
+            if (GameManager.Instance.playerInventory.Items[slotIndex] is not null)
                 SelectItem(slotIndex);
         }
     }
@@ -77,7 +77,7 @@ public class InventoryUISwapper : UIController
         currentlySelected = slotIndex;
 
         var selectedItemSlot = InventoryUI.Main.slots[(int)currentlySelected];
-        var selectedItem = Inventory.Main.Items[(int)currentlySelected];
+        var selectedItem = GameManager.Instance.playerInventory.Items[(int)currentlySelected];
 
         // Hide the item and set the icon to be following the mouse.
         selectedItemSlot.transform.GetChild(0).gameObject.SetActive(false);

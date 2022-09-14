@@ -97,7 +97,7 @@ public class InventoryUITooltip : UIController
         if (slotHasItem)
         {
             TryShowTooltip();
-            DisplayItem(Inventory.Main.Items[(int)slotIndex].item);
+            DisplayItem(GameManager.Instance.playerInventory.Items[(int)slotIndex].item);
         }
         else
         {

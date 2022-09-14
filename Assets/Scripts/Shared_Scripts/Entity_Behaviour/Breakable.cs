@@ -25,16 +25,18 @@ public class Breakable : MonoBehaviour
         hitSoundEffect.Play();
         // TODO: Particles on hit.
 
+        currentDurability -= damage;
+
         if (currentDurability <= 0)
         {
-            Break();
-            return;
+            gameObject.transform.GetChild(0).gameObject.SetActive(false);
+            if (dropItem is not null)
+                GameManager.Instance.playerInventory.AddItem(dropItem);
+            Invoke("Break", 1);
         }
 
         if (durabilityBar is null)
             CreateDurabilityBar();
-
-        currentDurability -= damage;
 
         UpdateDurabilityBar();
     }
@@ -56,7 +58,6 @@ public class Breakable : MonoBehaviour
 
         Destroy(gameObject);
 
-        if (dropItem is not null)
-            Inventory.Main.AddItem(dropItem);
+        
     }
 }

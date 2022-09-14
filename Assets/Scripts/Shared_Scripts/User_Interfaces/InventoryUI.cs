@@ -30,7 +30,7 @@ public class InventoryUI : UIController
     public float tooltipFontSize = 30;
 
     public const float itemIconSize = 80;
-    public const float itemQuantityFontSize = 40;
+    public const float itemQuantityFontSize = 30;
     public static readonly Vector2 itemQuantityOffset = new (28, -18);
 
     private GameObject container;
@@ -70,7 +70,7 @@ public class InventoryUI : UIController
 
     private void CreateContainer()
     {
-        var numberOfColumns = MinimumMultiple(Inventory.Main.Items.Length, slotsPerRow);
+        var numberOfColumns = MinimumMultiple(GameManager.Instance.playerInventory.Items.Length, slotsPerRow);
         var sizeSpacing = slotSize + slotSpacing;
         var doublePadding = containerPadding * 2;
 
@@ -91,7 +91,7 @@ public class InventoryUI : UIController
     private void CreateSlots()
     {
         // Create a slot for every inventory item.
-        slots = new GameObject[Inventory.Main.Items.Length];
+        slots = new GameObject[GameManager.Instance.playerInventory.Items.Length];
 
         for (int i = 0; i < slots.Length; i++)
         {
@@ -108,7 +108,7 @@ public class InventoryUI : UIController
         // Display the icon and quantity for every item in the inventory.
         for (int i = 0; i < slots.Length; i++)
         {
-            var item = Inventory.Main.Items[i];
+            var item = GameManager.Instance.playerInventory.Items[i];
 
             if (item is not null)
             {
@@ -140,11 +140,16 @@ public class InventoryUI : UIController
     public static GameObject DisplayItemQuantity(int quantity, Transform parent)
     {
         var itemQuantity = CreateText("Item Quantity", quantity.ToString(),
-            itemQuantityFontSize, TextAlignmentOptions.Center, FontStyles.Bold, parent);
+            itemQuantityFontSize, TextAlignmentOptions.Right, FontStyles.Bold, parent);
+
 
         var textTransform = itemQuantity.GetComponent<RectTransform>();
         textTransform.localPosition = itemQuantityOffset;
-        
+        textTransform.sizeDelta = new Vector2(60, 20);
+        textTransform.pivot = new Vector2(1, 0);
+        textTransform.anchorMin = new Vector2(1, 0);
+        textTransform.anchorMax = new Vector2(1, 0);
+        textTransform.anchoredPosition = new Vector2(0, 0);
         return itemQuantity;
     }
 

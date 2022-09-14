@@ -215,6 +215,7 @@ MonoBehaviour:
   ContinuousShootLoopSfx: {fileID: 0}
   ContinuousShootEndSfx: {fileID: 0}
   ReloadCooldownSound: {fileID: 8300000, guid: 93331a7c9fe98494a84f18effb358899, type: 3}
+  CooldownEffect: {fileID: 1818117475793052272}
   m_CarriedPhysicalBullets: 0
   m_CurrentAmmoInClip: 0
 --- !u!82 &8090847488450120274
@@ -1282,6 +1283,18 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5338991494728519494, guid: 21c8bd050f24da54285f8a3987ee6253, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338991494728519494, guid: 21c8bd050f24da54285f8a3987ee6253, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338991494728519494, guid: 21c8bd050f24da54285f8a3987ee6253, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338991494728519494, guid: 21c8bd050f24da54285f8a3987ee6253, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}
@@ -1291,7 +1304,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5338991494728519494, guid: 21c8bd050f24da54285f8a3987ee6253, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.415
+      value: -0.513
       objectReference: {fileID: 0}
     - target: {fileID: 5338991494728519494, guid: 21c8bd050f24da54285f8a3987ee6253, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1321,6 +1334,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5338991494728519494, guid: 21c8bd050f24da54285f8a3987ee6253, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5449920494797286051, guid: 21c8bd050f24da54285f8a3987ee6253, type: 3}
       propertyPath: m_Name
       value: VFX_OverheatPrimary
@@ -1331,10 +1348,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5449920494797286051, guid: 21c8bd050f24da54285f8a3987ee6253, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455270613747015080, guid: 21c8bd050f24da54285f8a3987ee6253, type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21c8bd050f24da54285f8a3987ee6253, type: 3}
+--- !u!198 &1818117475793052272 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8455270613747015080, guid: 21c8bd050f24da54285f8a3987ee6253, type: 3}
+  m_PrefabInstance: {fileID: 7812733688514592728}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2772967909889388702 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5338991494728519494, guid: 21c8bd050f24da54285f8a3987ee6253, type: 3}

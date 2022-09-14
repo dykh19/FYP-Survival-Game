@@ -240,5 +240,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c1522cd38f1f414aacde7644596bebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropItem: {fileID: 0}
+  dropItem: {fileID: 11400000, guid: b6c632ef1549af74995340d50e3025b7, type: 2}
   durability: 50

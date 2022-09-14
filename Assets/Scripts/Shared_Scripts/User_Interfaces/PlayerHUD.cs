@@ -86,7 +86,6 @@ public class PlayerHUD : UIController
         barBackgroundTransform.anchorMin = Vector2.zero;
         barBackgroundTransform.anchorMax = Vector2.zero;
         barBackgroundTransform.anchoredPosition = position;
-        //barBackgroundTransform.anchoredPosition = new Vector2(120.0f, 50.0f);
         barBackgroundTransform.sizeDelta = barSize;
 
         var bar = CreatePanel(name + "Bar", barColour, barSprite, barBackground.transform);
@@ -104,14 +103,10 @@ public class PlayerHUD : UIController
         var barSizeFullX = barSize.x - (barOffset.x * 2);
         var barDoubleOffsetY = barOffset.y * 2;
 
-        //var healthRatio = GameManagerJoseph.Main.playerStatus.playerHealth / GameManagerJoseph.Main.playerStatus.maxPlayerHealth;
-        //var energyRatio = GameManagerJoseph.Main.playerStatus.playerEnergy / GameManagerJoseph.Main.playerStatus.maxPlayerEnergy;
-
         var healthRatio = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().CurrentHealth / GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().MaxHealth;
         var BaseHealthRatio = GameObject.FindGameObjectWithTag("Base").GetComponent<Health>().CurrentHealth / GameObject.FindGameObjectWithTag("Base").GetComponent<Health>().MaxHealth;
 
         healthBar.sizeDelta = new Vector2(barSizeFullX * healthRatio, barSize.y - barDoubleOffsetY);
         BaseHealthBar.sizeDelta = new Vector2(barSizeFullX * BaseHealthRatio, barSize.y - barDoubleOffsetY);
-        //energyBar.sizeDelta = new Vector2(barSizeFullX * energyRatio, barSize.y - barDoubleOffsetY);
     }
 }

@@ -57,15 +57,15 @@ MonoBehaviour:
     terrainTypes:
     - name: Sand
       height: 0
-      colour: {r: 0.8490566, g: 0.62069297, b: 0.4285333, a: 1}
+      colour: {r: 0.7924528, g: 0.39404398, b: 0.25792095, a: 1}
       blend: 0
     - name: Grass
       height: 0.335
-      colour: {r: 0.2509804, g: 0.54509807, b: 0.13333334, a: 1}
+      colour: {r: 0.8196079, g: 0.47058827, b: 0.3372549, a: 1}
       blend: 0.001
     - name: Soil
       height: 0.345
-      colour: {r: 0.6415094, g: 0.37567034, b: 0.16642934, a: 1}
+      colour: {r: 0.46274513, g: 0.31764707, b: 0.25882354, a: 1}
       blend: 0.02
     - name: Rock
       height: 0.43
@@ -149,21 +149,21 @@ MonoBehaviour:
       verticalOffset: -1.1
       spawnHeight: 0.45
       spawnRange: 1
-      rarity: 0.8
+      rarity: 0.9
     - name: Tree 2
       model: {fileID: 8777056887307897802, guid: d9703edd962024c5a95d60d19a557b15, type: 3}
       modelScale: -0.6
       verticalOffset: -1
       spawnHeight: 0.45
       spawnRange: 1
-      rarity: 0.8
+      rarity: 0.9
     - name: Tree 3
       model: {fileID: 2522260860184389761, guid: 834e15431ca2b48b8bd4c05e9b743f34, type: 3}
       modelScale: -0.6
       verticalOffset: -0.7
       spawnHeight: 0.7
       spawnRange: 3
-      rarity: 0.2
+      rarity: 0.9
     - name: Rock
       model: {fileID: 5644775033662080400, guid: 417ca92d72d114be6bba7bfac22bfb5f, type: 3}
       modelScale: -0.2
