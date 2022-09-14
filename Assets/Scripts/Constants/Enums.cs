@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+//Difficulty of the game
 public enum Difficulty
 {
     EASY,
@@ -9,12 +10,14 @@ public enum Difficulty
     ENDLESS
 }
 
+//Game Mode of the game
 public enum GameMode
 {
     NORMAL,
     ENDLESS
 }
 
+//Game States
 public enum GameState
 {
     START,

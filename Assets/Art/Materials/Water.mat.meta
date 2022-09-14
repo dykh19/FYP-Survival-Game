@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Art/Materials/Water.mat.meta
+guid: 16fc2e5e73d89c14b96511acaa4905cd
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+========
+guid: 8046088434b38344cab67527c48e8e20
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 23800000
+>>>>>>>> main:Assets/Scenes/Sean GamePlay/NavMesh.asset.meta
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

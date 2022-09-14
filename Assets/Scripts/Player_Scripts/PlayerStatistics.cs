@@ -14,6 +14,11 @@ public class PlayerStatistics
     public int TotalEnemiesKilled;
     public int CurrentWaveEnemiesKilled;
 
+    public int TotalCreepKilled;
+    public int TotalEliteRKilled;
+    public int TotalEliteMKilled;
+    public int TotalBossKilled;
+
     // Stores the number of ores obtained in total and currently stored in base
     public int TotalOresObtained;
     public int CurrentOresInBase;
@@ -36,8 +41,33 @@ public class PlayerStatistics
 
     public PlayerStatistics()
     {
+        TotalEnemiesKilled = 0;
+        CurrentWaveEnemiesKilled = 0;
 
+        TotalCreepKilled = 0;
+        TotalEliteRKilled = 0;
+        TotalEliteMKilled = 0;
+        TotalBossKilled = 0;
+        TotalBossKilled = 0;
+
+        TotalOresObtained = 0;
+        CurrentOresInBase = 0;
+
+        TotalEssenceObtained = 0;
+        CurrentEssenceInBase = 0;
+
+        TotalBossCoresObtained = 0;
+        CurrentBossCoresInBase = 0;
+
+        WavesCleared = 0;
+        CurrentWave = 0;
+
+        MaxHealth = 0;
+        CurrentHealth = 0;
     }
 
-
+    public void CalculateTotalEnemiesKilled()
+    {
+        TotalEnemiesKilled = TotalCreepKilled + TotalEliteRKilled + TotalEliteMKilled + TotalBossKilled;
+    }
 }

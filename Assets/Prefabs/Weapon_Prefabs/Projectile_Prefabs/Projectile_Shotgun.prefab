@@ -50,7 +50,7 @@ MonoBehaviour:
   Tip: {fileID: 1135791333161367127}
   MaxLifeTime: 5
   ImpactVfx: {fileID: 7655095426451682942, guid: 358eca6adc32a89459c54b6b62d9c825, type: 3}
-  ImpactVfxLifetime: 5
+  ImpactVfxLifetime: 1
   ImpactVfxSpawnOffset: 0.1
   ImpactSfxClip: {fileID: 0}
   HittableLayers:

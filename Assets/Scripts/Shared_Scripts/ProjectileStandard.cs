@@ -237,6 +237,7 @@ public class ProjectileStandard : ProjectileBase
         if (collider.tag == "Enemy")
         {
             collider.GetComponent<Health>().TakeDamage(Damage);
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCharacterController>().PlayHitSound();
             Debug.Log("Hit Enemy");
         }
 
@@ -255,6 +256,7 @@ public class ProjectileStandard : ProjectileBase
         if (ImpactSfxClip)
         {
             //AudioUtility.CreateSFX(ImpactSfxClip, point, AudioUtility.AudioGroups.Impact, 1f, 3f);
+            
         }
 
         // Self Destruct

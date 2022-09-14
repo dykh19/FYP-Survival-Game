@@ -88,6 +88,21 @@ public class WaveTimerManager : MonoBehaviour
     public void ResetTimer()
     {
         TimeRemaining = TimeValue;
+    }
+
+    public void ShowTimer()
+    {
+        TimerUI.gameObject.SetActive(true);
+    }
+
+    public void HideTimer()
+    {
+        TimerUI.gameObject.SetActive(false);
+    }
+
+    public void IncomingWave()
+    {
+        TimerUI.text = "Enemy Wave is here!";
     }    
 
     void UpdateTimerUI()
@@ -95,7 +110,9 @@ public class WaveTimerManager : MonoBehaviour
         float TimeToDisplay = TimeRemaining + 1;
         float minutes = Mathf.FloorToInt(TimeToDisplay / 60);
         float seconds = Mathf.FloorToInt(TimeToDisplay % 60);
-        TimerUI.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        TimerUI.text = "";
+        TimerUI.text += "Time until next wave: ";
+        TimerUI.text += string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     public void SkipToNextWave()

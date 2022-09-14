@@ -11,7 +11,7 @@ public abstract class ProjectileBase : MonoBehaviour
 
     public UnityAction OnShoot;
 
-    public void Shoot(WeaponController controller)
+    public void Shoot(RangedWeaponController controller)
     {
         Owner = controller.Owner;
         InitialPosition = transform.position;

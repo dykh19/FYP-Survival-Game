@@ -1106,6 +1106,21 @@ MonoBehaviour:
   CurrentGameState: 0
   NumberOfWaves: 0
   TimeToNextWave: 0
+  EasyWaveCount: 1
+  NormalWaveCount: 5
+  HardWaveCount: 7
+  WaveCountToWin: 0
+  startingItems: []
+  userInterfaces:
+  - name: Default
+    keyCode: 0
+    userInterface: {fileID: 2335797759092880818, guid: d48c4045f3d28404797d048753e41ed4, type: 3}
+  - name: Pause
+    keyCode: 27
+    userInterface: {fileID: 2002561676770484545, guid: c703d7c3b10ab484889027b521e85c15, type: 3}
+  - name: Inventory
+    keyCode: 105
+    userInterface: {fileID: 7195239745950500977, guid: ac78ccb6565ea9e4cb25ca688a5ef7c9, type: 3}
 --- !u!4 &250850452
 Transform:
   m_ObjectHideFlags: 0

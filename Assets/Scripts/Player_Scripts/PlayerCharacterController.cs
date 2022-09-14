@@ -90,6 +90,8 @@ public class PlayerCharacterController : MonoBehaviour
     [Tooltip("Sound played when taking damage froma fall")]
     public AudioClip FallDamageSfx;
 
+    public AudioClip HitSound;
+
     [Header("Fall Damage")]
     [Tooltip("Whether the player will recieve damage when hitting the ground at high speed")]
     public bool RecievesFallDamage;
@@ -108,20 +110,20 @@ public class PlayerCharacterController : MonoBehaviour
 
     public UnityAction<bool> OnStanceChanged;
 
-     public Vector3 CharacterVelocity { get; set; }
-     public bool IsGrounded { get; private set; }
-     public bool HasJumpedThisFrame { get; private set; }
-     public bool IsDead { get; private set; }
-     public bool IsCrouching { get; private set; }
+    public Vector3 CharacterVelocity { get; set; }
+    public bool IsGrounded { get; private set; }
+    public bool HasJumpedThisFrame { get; private set; }
+    public bool IsDead { get; private set; }
+    public bool IsCrouching { get; private set; }
 
     public float RotationMultiplier
     {
         get
         {
-            /*if (m_WeaponsManager.IsAiming)
+            if (m_WeaponsManager.IsAiming)
             {
                 return AimingRotationMultiplier;
-            }*/
+            }
 
             return 1f;
         }
@@ -474,6 +476,11 @@ public class PlayerCharacterController : MonoBehaviour
 
         IsCrouching = crouched;
         return true;
+    }
+
+    public void PlayHitSound()
+    {
+        AudioSource.PlayOneShot(HitSound);
     }
 }
 

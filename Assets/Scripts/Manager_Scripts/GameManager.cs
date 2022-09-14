@@ -13,9 +13,25 @@ public class GameManager : MonoBehaviour
     public int NumberOfWaves;
     public int TimeToNextWave;
 
+    public int EasyWaveCount;
+    public int NormalWaveCount;
+    public int HardWaveCount;
+
+    public int WaveCountToWin;
+
+    public WorldGenerator worldgen;
+
+    //Player Inventory
+    public Inventory playerInventory;
+    public GameItem[] startingItems;
+
+    //User Interfaces
+    public UserInterface[] userInterfaces;
+
     public PlayerStatistics PlayerStats;
 
     public UnityAction OnPlayerDie;
+
 
     void Awake()
     {
@@ -28,11 +44,31 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        playerInventory = new Inventory();
         DontDestroyOnLoad(this);
         PlayerStats = new PlayerStatistics();
         OnPlayerDie += LoseGame;
+
+        switch (CurrentDifficulty)
+        {
+            case Difficulty.EASY:
+                WaveCountToWin = EasyWaveCount;
+                break;
+            case Difficulty.NORMAL:
+                WaveCountToWin = NormalWaveCount;
+                break;
+            case Difficulty.HARD:
+                WaveCountToWin = HardWaveCount;
+                break;
+            default:
+                WaveCountToWin = 1;
+                break;
+                
+        }
     }
 
+    //When Scene changes to the game level, run the OnNewGameLevelLoaded function
     private void Start()
     {
         SceneManager.sceneLoaded += LoadNewScene;
@@ -41,20 +77,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown("escape"))
-        {
-            if(CurrentGameState == GameState.INGAME)
-            {
-                CurrentGameState = GameState.PAUSED;
-                PauseGame();
-            }
-            else if(CurrentGameState == GameState.PAUSED)
-            {
-                CurrentGameState = GameState.INGAME;
-                ResumeGame();
-            }    
 
-        }
     }
 
     public void SetGameMode(int newMode)
@@ -67,21 +90,28 @@ public class GameManager : MonoBehaviour
         CurrentDifficulty = (Difficulty)newDifficulty;
     }
 
+    //Set Time Scale to 1 to resume normal game speed
     public void ResumeGame()
     {
         Time.timeScale = 1f;
     }
 
+    //Set Time Scale to 0 to pause game speed
     public void PauseGame()
     {
         Time.timeScale = 0f;
     }
 
+    //Function to run when the player completes the game objective
     public void WinGame()
     {
-
+        Debug.Log("Player Wins Game");
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SceneManager.LoadScene(3);
     }
 
+    //Function to run when the base is destroyed
     public void LoseGame()
     {
         Debug.Log("Player is Dead");
@@ -97,6 +127,9 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "GamePlay")
         {
             CurrentGameState = GameState.INGAME;
+
+            worldgen = GameObject.Find("World Generator").GetComponent<WorldGenerator>();
+            worldgen.CreateWorld();
         }
         
     }

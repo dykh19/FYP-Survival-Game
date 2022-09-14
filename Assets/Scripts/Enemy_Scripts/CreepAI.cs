@@ -6,11 +6,14 @@ using UnityEngine.AI;
 public class CreepAI : EnemyBehavior
 {
     private Monster_Spawner parent_MonSpawn;
+    private Animator animatorCreep;
 
     //Pathing Variables
     public Vector3 walkPoint;
     bool walkPointSet;
     public float walkPointRange;
+    public float wanderSpeed = 3f;
+    public float chaseSpeed = 7f;
 
     //Attacking Variables
     public float timeBetweenAttacks;
@@ -26,6 +29,7 @@ public class CreepAI : EnemyBehavior
         baseObj = GameObject.FindGameObjectWithTag("Base").transform; //set base object
         agent = GetComponent<NavMeshAgent>();   //set NavMesh agent
         Damage = GameStats.BaseEnemyDamage[0] * GameStats.EnemyHealthModifier[(int)GameManager.Instance.CurrentDifficulty];
+        animatorCreep = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -51,12 +55,14 @@ public class CreepAI : EnemyBehavior
             ((!playerInSightRange || playerInSightRange) && (!playerInAttackRange || playerInAttackRange) && (playerSpotted || !playerSpotted) && baseInSightRange && !baseInAttackRange && isWave))
         {
             //print("Finding Base(isWave)");
+            animatorCreep.SetBool("isWave", true);
             findBase();
         }
         //If during wave, player not spotted and base within sight and attack range. Attack Base.
         if ((!playerInSightRange || playerInSightRange) && (!playerInAttackRange || playerInAttackRange) && (playerSpotted || !playerSpotted) && baseInSightRange && baseInAttackRange && isWave)
         {
             //print("Attacking Base(isWave)");
+            animatorCreep.SetBool("AttackBase", true);
             Attack(baseObj);
         }
 
@@ -65,18 +71,23 @@ public class CreepAI : EnemyBehavior
         if ((!playerInSightRange && !playerInAttackRange && (!playerSpotted || playerSpotted) && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave))
         {
             //print("Wandering(!isWave)");
+            animatorCreep.SetBool("Wandering", true);
+            agent.speed = wanderSpeed;
             Wandering();
         }
         //If player is in range of enemy's sight, monster will chase.
         if ((playerInSightRange && !playerInAttackRange && (playerSpotted || !playerSpotted) && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave))
         {
             //print("Chasing Player(!isWave)");
+            animatorCreep.SetBool("playerInAttackRange", true);
+            agent.speed = chaseSpeed;
             Chase();
         }
         //If player is in attack range and in sight range, monster will attack.
         if (playerInSightRange && playerInAttackRange && playerSpotted && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave)
         {
             //print("Attacking Player(!isWave)");
+            animatorCreep.SetBool("AttackPlayer", true);
             Attack(player);
         }
     }
@@ -84,6 +95,9 @@ public class CreepAI : EnemyBehavior
     //Wandering state
     public override void Wandering()
     {
+        animatorCreep.SetBool("playerInAttackRange", false);
+        animatorCreep.SetBool("AttackPlayer", false);
+        animatorCreep.SetBool("AttackBase", false);
         if (!walkPointSet)
         {
             findWalkPoint();
@@ -104,6 +118,8 @@ public class CreepAI : EnemyBehavior
 
     public override void findBase()
     {
+        animatorCreep.SetBool("AttackPlayer", false);
+        animatorCreep.SetBool("AttackBase", false);
         agent.SetDestination(baseObj.transform.position);
     }
 
@@ -124,6 +140,9 @@ public class CreepAI : EnemyBehavior
     //Player is spotted and monster gives chase
     public override void Chase()
     {
+        animatorCreep.SetBool("AttackPlayer", false);
+        animatorCreep.SetBool("AttackBase", false);
+        animatorCreep.SetBool("BaseSpotted", false);
         agent.SetDestination(player.transform.position);
     }
 
@@ -164,6 +183,7 @@ public class CreepAI : EnemyBehavior
     //Code for points given on enemy kill goes here inside the MonsterSpawner.cs
     public override void Die()
     {
+        animatorCreep.SetBool("Die", true); //Need to find a way to implement death anim
         print("Creep Dying");
         parent_MonSpawn.creepDie();
         if (gameObject != null)

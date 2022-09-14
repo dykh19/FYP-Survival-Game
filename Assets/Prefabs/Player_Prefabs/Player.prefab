@@ -180,7 +180,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 300
+  far clip plane: 1000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -250,8 +250,8 @@ GameObject:
   - component: {fileID: 4029703380950846376}
   - component: {fileID: 4029703380950846377}
   - component: {fileID: 4029703380950848598}
-  - component: {fileID: 6197510655658603820}
-  m_Layer: 0
+  - component: {fileID: 1986104532}
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -317,12 +317,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   GroundCheckDistance: 1
-  MaxSpeedOnGround: 10
+  MaxSpeedOnGround: 8
   MovementSharpnessOnGround: 15
   MaxSpeedCrouchedRatio: 0.5
   MaxSpeedInAir: 10
   AccelerationSpeedInAir: 25
-  SprintSpeedModifier: 2
+  SprintSpeedModifier: 1.5
   KillHeight: -50
   RotationSpeed: 200
   AimingRotationMultiplier: 0.4
@@ -337,6 +337,7 @@ MonoBehaviour:
   JumpSfx: {fileID: 8300000, guid: 2934eb43a8059044599ab6e6ee44e3d3, type: 3}
   LandSfx: {fileID: 8300000, guid: fc34feae196916546b10bc0cb3fb5abf, type: 3}
   FallDamageSfx: {fileID: 8300000, guid: 124e058ce68d7b549894042e86d18c54, type: 3}
+  HitSound: {fileID: 8300000, guid: c39440de55b683b4386442460c2d392b, type: 3}
   RecievesFallDamage: 0
   MinSpeedForFallDamage: 10
   MaxSpeedForFallDamage: 30
@@ -354,7 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20c9f1186dfdc6e42bbcffd4fd5781ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 0
+  MaxHealth: 100
   CurrentHealth: 0
   IsDead: 0
 --- !u!143 &4029703380950846376
@@ -390,6 +391,8 @@ MonoBehaviour:
   StartingWeapons:
   - {fileID: 8323776800172828795, guid: b318fabc73446b746a1005cede0c4ceb, type: 3}
   - {fileID: 8323776800172828795, guid: 31d97e822763d1f4cb769f7e3f7f7333, type: 3}
+  - {fileID: 6928601398970659000, guid: 868755f01d12a2f408816f09daa12b31, type: 3}
+  - {fileID: 5569255677459549204, guid: 26de437dade0a194cbd59c49cb1621a3, type: 3}
   WeaponCamera: {fileID: 4029703380774114208}
   WeaponParentSocket: {fileID: 4029703380736659262}
   DefaultWeaponPosition: {fileID: 4029703379277046888}
@@ -409,6 +412,7 @@ MonoBehaviour:
   FpsWeaponLayer:
     serializedVersion: 2
     m_Bits: 64
+  Crosshair: {fileID: 0}
 --- !u!82 &4029703380950848598
 AudioSource:
   m_ObjectHideFlags: 0
@@ -505,20 +509,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!136 &6197510655658603820
-CapsuleCollider:
+--- !u!114 &1986104532
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4029703380950846368}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  m_Radius: 0.34848133
-  m_Height: 1.8
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 946473a0104c1dd46b69c6dd085a3be8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4029703381038330434
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,7 +566,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.49803925, g: 0.49803925, b: 0.49803925, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -578,7 +580,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 300
+  far clip plane: 1000
   field of view: 60
   orthographic: 0
   orthographic size: 5

@@ -1,0 +1,214 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a85fdc1c43fdd64993fd78a76e5f0f9, type: 3}
+  m_Name: Earth-Like
+  m_EditorClassIdentifier: 
+  mapGenerator:
+    width: 255
+    height: 255
+    noiseScale: 30
+    octaves: 4
+    persistance: 0.4
+    lacunarity: 1
+    enableFalloff: 1
+    falloffCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0.0102202045
+        outSlope: 0.0102202045
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.2980713
+      - serializedVersion: 3
+        time: 0.83422637
+        value: 0.058954433
+        inSlope: 0.1490744
+        outSlope: 0.1490744
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.5770416
+      - serializedVersion: 3
+        time: 1
+        value: 0.7000618
+        inSlope: 7.2921247
+        outSlope: 7.2921247
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.06344385
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  materialGenerator:
+    terrainTypes:
+    - name: Sand
+      height: 0
+      colour: {r: 0.7924528, g: 0.39404398, b: 0.25792095, a: 1}
+      blend: 0
+    - name: Grass
+      height: 0.335
+      colour: {r: 0.8196079, g: 0.47058827, b: 0.3372549, a: 1}
+      blend: 0.001
+    - name: Soil
+      height: 0.345
+      colour: {r: 0.46274513, g: 0.31764707, b: 0.25882354, a: 1}
+      blend: 0.02
+    - name: Rock
+      height: 0.43
+      colour: {r: 0.38679248, g: 0.25563687, b: 0.2025187, a: 1}
+      blend: 0.03
+    - name: Snow
+      height: 0.68
+      colour: {r: 0.7905393, g: 0.8962264, b: 0.8900095, a: 1}
+      blend: 0.04
+  meshGenerator:
+    heightMultiplier: 20
+    multiplierCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0.012510726
+        value: 0.10189166
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.35001233
+        value: 0.3977601
+        inSlope: 0.027695248
+        outSlope: 0.027695248
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.7308825
+      - serializedVersion: 3
+        time: 0.49904656
+        value: 0.40439147
+        inSlope: 0.015450149
+        outSlope: 0.015450149
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.28071883
+      - serializedVersion: 3
+        time: 0.57406706
+        value: 0.45026654
+        inSlope: -0.005713949
+        outSlope: -0.005713949
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 1
+        outWeight: 1
+      - serializedVersion: 3
+        time: 0.65023464
+        value: 0.50058424
+        inSlope: 0.0005365274
+        outSlope: 0.0005365274
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.8365669
+      - serializedVersion: 3
+        time: 1.000427
+        value: 0.99999994
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  prefabSpawner:
+    enableWater: 0
+    expandOcean: 0
+    waterLevel: 0.276
+    waterMaterial: {fileID: 2100000, guid: 16fc2e5e73d89c14b96511acaa4905cd, type: 2}
+    spawnables:
+    - name: Tree 1
+      model: {fileID: 8153463798392465162, guid: 4f10205d3fb7748388ffe357a0b7d436, type: 3}
+      modelScale: -0.6
+      verticalOffset: -1.1
+      spawnHeight: 0.45
+      spawnRange: 1
+      rarity: 0.9
+    - name: Tree 2
+      model: {fileID: 8777056887307897802, guid: d9703edd962024c5a95d60d19a557b15, type: 3}
+      modelScale: -0.6
+      verticalOffset: -1
+      spawnHeight: 0.45
+      spawnRange: 1
+      rarity: 0.9
+    - name: Tree 3
+      model: {fileID: 2522260860184389761, guid: 834e15431ca2b48b8bd4c05e9b743f34, type: 3}
+      modelScale: -0.6
+      verticalOffset: -0.7
+      spawnHeight: 0.7
+      spawnRange: 3
+      rarity: 0.9
+    - name: Rock
+      model: {fileID: 5644775033662080400, guid: 417ca92d72d114be6bba7bfac22bfb5f, type: 3}
+      modelScale: -0.2
+      verticalOffset: -0.4
+      spawnHeight: 0.45
+      spawnRange: 1
+      rarity: 0.5
+    - name: Josephite Ore
+      model: {fileID: 4068393679189931614, guid: 434676b38872d41dbb075abd670c4285, type: 3}
+      modelScale: 0
+      verticalOffset: 0
+      spawnHeight: 0.45
+      spawnRange: 1
+      rarity: 0.5
+    - name: Seanite Ore
+      model: {fileID: 4981872439944236568, guid: 30ea1d73034614e4aaa042d5d77b304a, type: 3}
+      modelScale: 0
+      verticalOffset: 0
+      spawnHeight: 0.325
+      spawnRange: 1
+      rarity: 0.5
+    - name: Nicholite Ore
+      model: {fileID: 4595580011992947335, guid: 4b032b53186c245579956fe8e89885a2, type: 3}
+      modelScale: 0
+      verticalOffset: 0
+      spawnHeight: 0.6
+      spawnRange: 3
+      rarity: 0.4
+    - name: Eddirite Ore
+      model: {fileID: 3619684949350018057, guid: 6f3b908ccaa024a6199a742f71b473fc, type: 3}
+      modelScale: 0
+      verticalOffset: 0
+      spawnHeight: 0.65
+      spawnRange: 2
+      rarity: 0.5
+    - name: Damianite Ore
+      model: {fileID: 4780728482505725590, guid: 22f56f7d819ec4640bf0948d19dee720, type: 3}
+      modelScale: 0
+      verticalOffset: 0
+      spawnHeight: 0.65
+      spawnRange: 2
+      rarity: 0.65
+  editorNotes: "Name\t\tStart Height\nSand\t\t9.9\nGrass\t\t39.6\nSoil\t\t39.7\nRock\t\t40.2\nSnow\t\t51.0\n\nName\t\tAvg\tHeight\t\tR.Rate\nRock\t\t131\t39.3
+    - 41.3\t100.0%\nJosephite Ore\t128\t39.3 - 41.3\t97.7%\nSeanite Ore\t78\t38.3
+    - 40.3\t59.5%\nNicholite Ore\t55\t43.4 - 49.4\t42.0%\nTree 1\t\t51\t39.3 - 41.3\t38.9%\nTree
+    3\t\t51\t48.6 - 54.6\t38.9%\nTree 2\t\t48\t39.3 - 41.3\t36.6%\nEddirite Ore\t27\t48.1
+    - 52.1\t20.6%\nDamianite Ore\t18\t48.1 - 52.1\t13.7%\n\nLast updated on 18/8/2022
+    at 2:27 AM"
