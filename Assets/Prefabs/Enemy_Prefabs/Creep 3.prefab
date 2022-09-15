@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2290174626494826751}
   - component: {fileID: 2290174626494826749}
   - component: {fileID: 2290174626494826720}
-  - component: {fileID: 7302542752921340887}
   - component: {fileID: 6725323331174891404}
+  - component: {fileID: 1839966625367995516}
   m_Layer: 10
   m_Name: Creep 3
   m_TagString: Enemy
@@ -106,6 +106,7 @@ MonoBehaviour:
     m_Bits: 512
   currHealth: 10
   maxHealth: 10
+  distanceToWalkPoint: {x: 0, y: 0, z: 0}
   isDead: 0
   isWave: 0
   sightRange: 10
@@ -115,6 +116,7 @@ MonoBehaviour:
   baseInSightRange: 0
   baseInAttackRange: 0
   playerSpotted: 0
+  isWandering: 0
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 100
   wanderSpeed: 3
@@ -136,19 +138,6 @@ MonoBehaviour:
   MaxHealth: 0
   CurrentHealth: 0
   IsDead: 0
---- !u!65 &7302542752921340887
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2290174626494826747}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 5.0827637, y: 13.09306, z: 1}
-  m_Center: {x: 0, y: 6.698423, z: 0}
 --- !u!114 &6725323331174891404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,6 +154,20 @@ MonoBehaviour:
   HealthBar: {fileID: 6151964992552373092}
   HideFullHealthBar: 0
   ViewDistance: 20
+--- !u!136 &1839966625367995516
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2290174626494826747}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.5
+  m_Height: 14
+  m_Direction: 1
+  m_Center: {x: 0, y: 6.698423, z: 0}
 --- !u!1 &2972484008895184756
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,12 +13,14 @@ public class EnemyBehavior : MonoBehaviour
 
     public float currHealth;
     public float maxHealth;
+    public Vector3 distanceToWalkPoint;
 
     public bool isDead, isWave = false;
 
     //Spotting Player Variables
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange, baseInSightRange, baseInAttackRange, playerSpotted;
+    public bool isWandering;
 
     public virtual void CheckHealth()
     {

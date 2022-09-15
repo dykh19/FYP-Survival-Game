@@ -27,7 +27,7 @@ public class Monster_Spawner : MonoBehaviour
     public bool isWave = false;
     public bool inWave = false;
 
-    public GameObject[] creeps = new GameObject[4];
+    public GameObject[] creeps = new GameObject[3];
     public GameObject eliteR;
     public GameObject eliteM;
     public GameObject boss;
