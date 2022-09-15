@@ -177,35 +177,35 @@ MonoBehaviour:
       verticalOffset: 0
       spawnHeight: 0.45
       spawnRange: 1
-      rarity: 0.5
+      rarity: 0.9
     - name: Seanite Ore
       model: {fileID: 4981872439944236568, guid: 30ea1d73034614e4aaa042d5d77b304a, type: 3}
       modelScale: 0
       verticalOffset: 0
       spawnHeight: 0.325
       spawnRange: 1
-      rarity: 0.5
+      rarity: 0.9
     - name: Nicholite Ore
       model: {fileID: 4595580011992947335, guid: 4b032b53186c245579956fe8e89885a2, type: 3}
       modelScale: 0
       verticalOffset: 0
       spawnHeight: 0.6
       spawnRange: 3
-      rarity: 0.4
+      rarity: 0.9
     - name: Eddirite Ore
       model: {fileID: 3619684949350018057, guid: 6f3b908ccaa024a6199a742f71b473fc, type: 3}
       modelScale: 0
       verticalOffset: 0
       spawnHeight: 0.65
       spawnRange: 2
-      rarity: 0.5
+      rarity: 0.9
     - name: Damianite Ore
       model: {fileID: 4780728482505725590, guid: 22f56f7d819ec4640bf0948d19dee720, type: 3}
       modelScale: 0
       verticalOffset: 0
       spawnHeight: 0.65
       spawnRange: 2
-      rarity: 0.65
+      rarity: 0.9
   editorNotes: "Name\t\tStart Height\nSand\t\t9.9\nGrass\t\t39.6\nSoil\t\t39.7\nRock\t\t40.2\nSnow\t\t51.0\n\nName\t\tAvg\tHeight\t\tR.Rate\nRock\t\t131\t39.3
     - 41.3\t100.0%\nJosephite Ore\t128\t39.3 - 41.3\t97.7%\nSeanite Ore\t78\t38.3
     - 40.3\t59.5%\nNicholite Ore\t55\t43.4 - 49.4\t42.0%\nTree 1\t\t51\t39.3 - 41.3\t38.9%\nTree

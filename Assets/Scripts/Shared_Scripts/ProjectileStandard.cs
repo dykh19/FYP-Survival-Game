@@ -198,13 +198,13 @@ public class ProjectileStandard : ProjectileBase
         if (hit.collider.GetComponent<IgnoreHitDetection>())
         {
             return false;
-        }
+        }*/
 
         // ignore hits with triggers that don't have a Damageable component
-        if (hit.collider.isTrigger && hit.collider.GetComponent<Damageable>() == null)
+        if (hit.collider.isTrigger && hit.collider.GetComponent<Health>() == null)
         {
             return false;
-        }*/
+        }
 
         // ignore hits with specific ignored colliders (self colliders, by default)
         if (m_IgnoredColliders != null && m_IgnoredColliders.Contains(hit.collider))
