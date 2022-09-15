@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using UnityEngine.UI;
 // Game Manager is in-charge of the overall game state
 public class GameManager : MonoBehaviour
 {
@@ -45,7 +46,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
-        playerInventory = new Inventory();
+        
         DontDestroyOnLoad(this);
         PlayerStats = new PlayerStatistics();
         OnPlayerDie += LoseGame;
@@ -89,6 +90,7 @@ public class GameManager : MonoBehaviour
 
     public void ExitToMainMenu()
     {
+        
         SceneManager.LoadScene(0);
     }
 
@@ -134,6 +136,9 @@ public class GameManager : MonoBehaviour
                     break;
 
             }
+
+            playerInventory = new Inventory();
+
             userInterfaces[0].userInterface = GameObject.Find("PlayerHUD").GetComponent<Canvas>();
             userInterfaces[1].userInterface = GameObject.Find("PauseMenuUI").GetComponent<Canvas>();
             userInterfaces[2].userInterface = GameObject.Find("InventoryUI").GetComponent<Canvas>();
@@ -142,6 +147,11 @@ public class GameManager : MonoBehaviour
             worldgen.CreateWorld();
         }
         
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            CurrentGameState = GameState.START;
+            ResumeGame();
+        }
     }
 
     public void UpdatePlayerStatistics()

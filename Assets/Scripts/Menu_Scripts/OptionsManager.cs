@@ -22,7 +22,7 @@ public class OptionsManager : MonoBehaviour
         List<string> options = new List<string>();
         for (int i = 0; i < resolutions.Length; i++)
         {
-            string option = resolutions[i].width + " x " + resolutions[i].height;
+            string option = resolutions[i].width + " x " + resolutions[i].height + " @ " + resolutions[i].refreshRate + "hz";
             options.Add(option);
 
             if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
@@ -35,10 +35,10 @@ public class OptionsManager : MonoBehaviour
         resolutionDropdown.RefreshShownValue();
     }
 
-    public void SetResolution(int ResolutionIndex)
+    public void SetResolution()
     {
-        Resolution resolution = resolutions[ResolutionIndex];
-        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        Resolution resolution = resolutions[resolutionDropdown.value];
+        Screen.SetResolution(resolution.width, resolution.height, FullScreen.isOn, resolution.refreshRate);
     }
 
     public void SetFullScreen(bool FullScreen)
