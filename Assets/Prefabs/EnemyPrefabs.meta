@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/GameItems/Damianite.asset.meta
+guid: 888573442cc2a3742804efac44fd238b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+========
+guid: 2dad881e31470dc4394fcf3d10e51af1
+folderAsset: yes
+DefaultImporter:
+  externalObjects: {}
+>>>>>>>> main:Assets/Prefabs/Enemy_Prefabs.meta
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
