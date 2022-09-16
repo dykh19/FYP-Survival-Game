@@ -44,7 +44,7 @@ public class PlayerOpenUI : MonoBehaviour
         // Close the current UI if the player presses either the Escape key
         // or the assigned keycode if specified.
 
-        if (Input.GetKeyDown(KeyCode.Escape) || (currentlyActive is not null) && Input.GetKeyDown(((UserInterface)currentlyActive).keyCode))
+        if (Input.GetKeyDown(KeyCode.Escape) || ((currentlyActive is not null) && Input.GetKeyDown(((UserInterface)currentlyActive).keyCode)))
             CloseUI();
     }
 

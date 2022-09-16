@@ -20,7 +20,7 @@ public class WorldGenerator : MonoBehaviour
     [Header("Center Area Settings")]
     public bool flattenCenter = true;
     [Range(0, 1)] public float groundLevel;
-    [Range(1, 10)] public float radius = 10;
+    [Range(1, 50)] public float radius = 10;
     [Range(0, 10)] public float radialSmoothing = 5;
 
     [Header("Editor Controls")]
@@ -31,6 +31,8 @@ public class WorldGenerator : MonoBehaviour
     private MeshCollider meshCollider;
 
     public NavMeshSurface NavMesh;
+
+    public GameObject BasePrefab;
 
     void Awake()
     {
@@ -53,6 +55,7 @@ public class WorldGenerator : MonoBehaviour
         if (displayMode == ShaderMode.CustomTerrainShader)
             terrainPreset.prefabSpawner.SpawnStuff(meshData, transform);
 
+        SpawnBase();
         NavMesh.BuildNavMesh();
     }
 
@@ -92,6 +95,11 @@ public class WorldGenerator : MonoBehaviour
     {
         while (transform.childCount > 0)
             DestroyImmediate(transform.GetChild(0).gameObject);
+    }
+
+    public void SpawnBase()
+    {
+        Instantiate(BasePrefab, new Vector3(0, 7.92f, 0), Quaternion.identity, this.transform);
     }
 }
 

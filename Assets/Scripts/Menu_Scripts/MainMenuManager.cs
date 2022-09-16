@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
@@ -10,6 +11,20 @@ public class MainMenuManager : MonoBehaviour
     public GameObject OptionsUI;
     public GameObject CreditsUI;
     public GameObject NewGameUI;
+    public Button EasyButton;
+    public Button NormalButton;
+    public Button HardButton;
+    public Button NormalModeButton;
+    public Button EndlessModeButton;
+
+    public void Awake()
+    {
+        EasyButton.onClick.AddListener(delegate { GameManager.Instance.SetDifficulty(0); });
+        NormalButton.onClick.AddListener(delegate { GameManager.Instance.SetDifficulty(1); });
+        HardButton.onClick.AddListener(delegate { GameManager.Instance.SetDifficulty(2); });
+        NormalModeButton.onClick.AddListener(delegate { GameManager.Instance.SetGameMode(0); });
+        EndlessModeButton.onClick.AddListener(delegate { GameManager.Instance.SetGameMode(1); GameManager.Instance.SetDifficulty(3);});
+    }
 
     //Quit game
     public void QuitGame()

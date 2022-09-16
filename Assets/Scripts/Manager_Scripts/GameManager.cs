@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using UnityEngine.UI;
 // Game Manager is in-charge of the overall game state
 public class GameManager : MonoBehaviour
 {
@@ -38,34 +39,19 @@ public class GameManager : MonoBehaviour
         // Make sure there is only one instance of GameManager and prevent it from being destroyed
         if (Instance != null && Instance != this)
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
         else
         {
             Instance = this;
         }
 
-        playerInventory = new Inventory();
+        
         DontDestroyOnLoad(this);
         PlayerStats = new PlayerStatistics();
         OnPlayerDie += LoseGame;
 
-        switch (CurrentDifficulty)
-        {
-            case Difficulty.EASY:
-                WaveCountToWin = EasyWaveCount;
-                break;
-            case Difficulty.NORMAL:
-                WaveCountToWin = NormalWaveCount;
-                break;
-            case Difficulty.HARD:
-                WaveCountToWin = HardWaveCount;
-                break;
-            default:
-                WaveCountToWin = 1;
-                break;
-                
-        }
+        
     }
 
     //When Scene changes to the game level, run the OnNewGameLevelLoaded function
@@ -102,6 +88,12 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
     }
 
+    public void ExitToMainMenu()
+    {
+        
+        SceneManager.LoadScene(0);
+    }
+
     //Function to run when the player completes the game objective
     public void WinGame()
     {
@@ -128,10 +120,38 @@ public class GameManager : MonoBehaviour
         {
             CurrentGameState = GameState.INGAME;
 
+            switch (CurrentDifficulty)
+            {
+                case Difficulty.EASY:
+                    WaveCountToWin = EasyWaveCount;
+                    break;
+                case Difficulty.NORMAL:
+                    WaveCountToWin = NormalWaveCount;
+                    break;
+                case Difficulty.HARD:
+                    WaveCountToWin = HardWaveCount;
+                    break;
+                default:
+                    WaveCountToWin = 1;
+                    break;
+
+            }
+
+            playerInventory = new Inventory();
+
+            userInterfaces[0].userInterface = GameObject.Find("PlayerHUD").GetComponent<Canvas>();
+            userInterfaces[1].userInterface = GameObject.Find("PauseMenuUI").GetComponent<Canvas>();
+            userInterfaces[2].userInterface = GameObject.Find("InventoryUI").GetComponent<Canvas>();
+
             worldgen = GameObject.Find("World Generator").GetComponent<WorldGenerator>();
             worldgen.CreateWorld();
         }
         
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            CurrentGameState = GameState.START;
+            ResumeGame();
+        }
     }
 
     public void UpdatePlayerStatistics()

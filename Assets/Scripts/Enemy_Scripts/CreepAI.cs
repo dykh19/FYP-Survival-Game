@@ -14,6 +14,7 @@ public class CreepAI : EnemyBehavior
     public float walkPointRange;
     public float wanderSpeed = 3f;
     public float chaseSpeed = 7f;
+    
 
     //Attacking Variables
     public float timeBetweenAttacks;
@@ -28,7 +29,7 @@ public class CreepAI : EnemyBehavior
         player = GameObject.FindGameObjectWithTag("Player").transform;  //set player object
         baseObj = GameObject.FindGameObjectWithTag("Base").transform; //set base object
         agent = GetComponent<NavMeshAgent>();   //set NavMesh agent
-        Damage = GameStats.BaseEnemyDamage[0] * GameStats.EnemyHealthModifier[(int)GameManager.Instance.CurrentDifficulty];
+        Damage = GameStats.BaseEnemyDamage[0] * GameStats.EnemyAttackModifier[(int)GameManager.Instance.CurrentDifficulty];
         animatorCreep = GetComponentInChildren<Animator>();
     }
 
@@ -98,6 +99,7 @@ public class CreepAI : EnemyBehavior
         animatorCreep.SetBool("playerInAttackRange", false);
         animatorCreep.SetBool("AttackPlayer", false);
         animatorCreep.SetBool("AttackBase", false);
+        isWandering = true;
         if (!walkPointSet)
         {
             findWalkPoint();
@@ -108,12 +110,13 @@ public class CreepAI : EnemyBehavior
             agent.SetDestination(walkPoint);
         }
 
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+        distanceToWalkPoint = transform.position - walkPoint;
 
         if(distanceToWalkPoint.magnitude < 1f)
         {
             walkPointSet = false;
         }
+        
     }
 
     public override void findBase()
@@ -126,10 +129,25 @@ public class CreepAI : EnemyBehavior
     //Finding the walk point for the monster's wander phase
     public override void findWalkPoint()
     {
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
+        //float randomZ = Random.Range(-walkPointRange, walkPointRange);
+        //float randomX = Random.Range(-walkPointRange, walkPointRange);
+        //float pathY;
 
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+        //walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+
+
+        var rayOrigin = new Vector3(Random.Range(-walkPointRange, walkPointRange), 100f, Random.Range(-walkPointRange, walkPointRange));
+        var ray = new Ray(rayOrigin, Vector3.down);
+
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            walkPoint = hit.point + hit.normal;
+            NavMeshHit closestHit;
+            if(NavMesh.SamplePosition(walkPoint, out closestHit, 500, 1))
+            {
+                walkPoint = closestHit.position;
+            }
+        }
 
         if(Physics.Raycast(walkPoint, -transform.up, 2f, isGround))
         {
