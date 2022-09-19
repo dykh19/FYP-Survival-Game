@@ -7,36 +7,38 @@ using UnityEngine.UI;
 // Game Manager is in-charge of the overall game state
 public class GameManager : MonoBehaviour
 {
+    // Make this class a singleton instance
     public static GameManager Instance { get; private set; }
+
     public GameMode CurrentGameMode;
     public Difficulty CurrentDifficulty;
     public GameState CurrentGameState;
-    public int NumberOfWaves;
+    public int WaveCountToWin;
     public int TimeToNextWave;
 
     public int EasyWaveCount;
     public int NormalWaveCount;
     public int HardWaveCount;
 
-    public int WaveCountToWin;
+    public WorldGenerator WorldGen;
 
-    public WorldGenerator worldgen;
+    // Player Inventory
+    public Inventory PlayerInventory;
+    public GameItem[] StartingItems;
 
-    //Player Inventory
-    public Inventory playerInventory;
-    public GameItem[] startingItems;
+    // User Interfaces
+    public UserInterface[] UserInterfaces;
 
-    //User Interfaces
-    public UserInterface[] userInterfaces;
-
+    // Player Statistics to keep track of current game's stats, also used for saving and loading
     public PlayerStatistics PlayerStats;
 
+    // Unity Action that will run multiple functions when invoked
     public UnityAction OnPlayerDie;
 
 
     void Awake()
     {
-        // Make sure there is only one instance of GameManager and prevent it from being destroyed
+        // Make sure there is only one instance of GameManager and destroy itself if there is already an existing instance
         if (Instance != null && Instance != this)
         {
             Destroy(this.gameObject);
@@ -46,12 +48,9 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
-        
         DontDestroyOnLoad(this);
         PlayerStats = new PlayerStatistics();
         OnPlayerDie += LoseGame;
-
-        
     }
 
     //When Scene changes to the game level, run the OnNewGameLevelLoaded function
@@ -66,11 +65,13 @@ public class GameManager : MonoBehaviour
 
     }
 
+    // Set Game Mode base on integer given
     public void SetGameMode(int newMode)
     {
         CurrentGameMode = (GameMode)newMode;
     }
 
+    // Set Difficulty based on integer given
     public void SetDifficulty(int newDifficulty)
     {
         CurrentDifficulty = (Difficulty)newDifficulty;
@@ -88,6 +89,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
     }
 
+    // Function to load the main menu
     public void ExitToMainMenu()
     {
         
@@ -111,11 +113,11 @@ public class GameManager : MonoBehaviour
         Cursor.visible = true;
         SceneManager.LoadScene(2);
     }
-
+    
+    // Function will be called whenever a new scene is loaded
     public void LoadNewScene(Scene scene, LoadSceneMode aMode)
     {
-        //Perform Initial Loading Stuff Here
-        //Eg. Generate Map, Choose Base Location
+        // Perform Initial Loading Stuff Here
         if (SceneManager.GetActiveScene().name == "GamePlay")
         {
             CurrentGameState = GameState.INGAME;
@@ -137,16 +139,17 @@ public class GameManager : MonoBehaviour
 
             }
 
-            playerInventory = new Inventory();
+            PlayerInventory = new Inventory();
 
-            userInterfaces[0].userInterface = GameObject.Find("PlayerHUD").GetComponent<Canvas>();
-            userInterfaces[1].userInterface = GameObject.Find("PauseMenuUI").GetComponent<Canvas>();
-            userInterfaces[2].userInterface = GameObject.Find("InventoryUI").GetComponent<Canvas>();
+            UserInterfaces[0].userInterface = GameObject.Find("PlayerHUD").GetComponent<Canvas>();
+            UserInterfaces[1].userInterface = GameObject.Find("PauseMenuUI").GetComponent<Canvas>();
+            UserInterfaces[2].userInterface = GameObject.Find("InventoryUI").GetComponent<Canvas>();
 
-            worldgen = GameObject.Find("World Generator").GetComponent<WorldGenerator>();
-            worldgen.CreateWorld();
+            WorldGen = GameObject.Find("World Generator").GetComponent<WorldGenerator>();
+            WorldGen.CreateWorld();
         }
         
+        // If the loaded scene is MainMenu, reset the game state and resume the paused timescale
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
             CurrentGameState = GameState.START;
@@ -154,6 +157,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Function to update the Player Statistics object with the latest data
     public void UpdatePlayerStatistics()
     {
         PlayerStats.currentDifficutly = CurrentDifficulty;
@@ -161,6 +165,5 @@ public class GameManager : MonoBehaviour
 
         PlayerStats.CurrentHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().CurrentHealth;
         PlayerStats.MaxHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().MaxHealth;
-
     }
 }

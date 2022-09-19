@@ -17,7 +17,7 @@ public class PlayerOpenUI : MonoBehaviour
 
     void Start()
     {
-        defaultUI = GameManager.Instance.userInterfaces[0];
+        defaultUI = GameManager.Instance.UserInterfaces[0];
         ClearAllUI();
         SetUIActivity(defaultUI, true);
     }
@@ -34,7 +34,7 @@ public class PlayerOpenUI : MonoBehaviour
     {
         // Open the UI if the player pressed its respective assigned UI key.
 
-        foreach (var ui in GameManager.Instance.userInterfaces)
+        foreach (var ui in GameManager.Instance.UserInterfaces)
             if ((ui.keyCode != KeyCode.None) && Input.GetKeyDown(ui.keyCode))
                 OpenUI(ui);
     }
@@ -76,7 +76,7 @@ public class PlayerOpenUI : MonoBehaviour
 
     private static void ClearAllUI()
     {
-        foreach (var ui in GameManager.Instance.userInterfaces)
+        foreach (var ui in GameManager.Instance.UserInterfaces)
             SetUIActivity(ui, false);
     }
 

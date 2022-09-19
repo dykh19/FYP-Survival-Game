@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+// WaveTimerManager is the timer for spawning the next wave
 public class WaveTimerManager : MonoBehaviour
 {
+    // Make this class a singleton instance
     public static WaveTimerManager Instance { get; private set; }
 
     public float TimeValue;
@@ -16,6 +17,7 @@ public class WaveTimerManager : MonoBehaviour
 
     private void Awake()
     {
+        // Make sure there is only one instance of WaveTimerManager and destroy itself if there is already an existing instance
         if (Instance != null && Instance != this)
         {
             Destroy(this);
@@ -24,14 +26,16 @@ public class WaveTimerManager : MonoBehaviour
         {
             Instance = this;
         }
+        // Set References to the UI and Spawner
         TimerUI = GameObject.Find("TimerText").GetComponent<TMP_Text>();
         WaveCountUI = GameObject.Find("WaveCountText").GetComponent<TMP_Text>();
         MonsterSpawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Monster_Spawner>();
     }
 
+    // Set the timer based on the GameManager Value and start the timer
     private void Start()
     {
-        SetTimer(300);
+        SetTimer(GameManager.Instance.TimeToNextWave);
         StartTimer();
         UpdateWaveCountText();
     }
@@ -71,42 +75,50 @@ public class WaveTimerManager : MonoBehaviour
         }
     }
 
+    // Function to set the timer with a new time value
     public void SetTimer(float Time)
     {
         TimeValue = Time;
         TimeRemaining = Time;
     }
 
+    // Function to start the timer
     public void StartTimer()
     {
         IsTimerRunning = true;
     }
 
+    // Function to stop the timer
     public void StopTimer()
     {
         IsTimerRunning = false;
     }
 
+    // Function to reset the timer
     public void ResetTimer()
     {
         TimeRemaining = TimeValue;
     }
 
+    // Function to show the timer
     public void ShowTimer()
     {
         TimerUI.gameObject.SetActive(true);
     }
 
+    // Function to hide the timer
     public void HideTimer()
     {
         TimerUI.gameObject.SetActive(false);
     }
 
+    // Function to set the text to show the wave is here
     public void IncomingWave()
     {
         TimerUI.text = "Enemy Wave is here!";
     }    
 
+    // Function to update the text to show the time left
     void UpdateTimerUI()
     {
         float TimeToDisplay = TimeRemaining + 1;
@@ -117,6 +129,7 @@ public class WaveTimerManager : MonoBehaviour
         TimerUI.text += string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
+    // Function to skip the timer and spawn the next wave
     public void SkipToNextWave()
     {
         StopTimer();
@@ -131,16 +144,16 @@ public class WaveTimerManager : MonoBehaviour
         }
     }
 
+    // Function to reset and start the timer
     public void StartNewWaveTimer()
     {
         ResetTimer();
         StartTimer();
     }
 
+    // Function to update the wave progress text
     public void UpdateWaveCountText()
     {
         WaveCountUI.text = "Wave Progress: " + MonsterSpawner.waveNumber + "/" + GameManager.Instance.WaveCountToWin;
     }
-
-
 }

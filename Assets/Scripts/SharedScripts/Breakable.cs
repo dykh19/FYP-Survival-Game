@@ -31,7 +31,7 @@ public class Breakable : MonoBehaviour
         {
             gameObject.transform.GetChild(0).gameObject.SetActive(false);
             if (dropItem is not null)
-                GameManager.Instance.playerInventory.AddItem(dropItem);
+                GameManager.Instance.PlayerInventory.AddItem(dropItem);
             Invoke("Break", 1);
         }
 

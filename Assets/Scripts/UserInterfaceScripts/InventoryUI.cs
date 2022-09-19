@@ -70,7 +70,7 @@ public class InventoryUI : UIController
 
     private void CreateContainer()
     {
-        var numberOfColumns = MinimumMultiple(GameManager.Instance.playerInventory.Items.Length, slotsPerRow);
+        var numberOfColumns = MinimumMultiple(GameManager.Instance.PlayerInventory.Items.Length, slotsPerRow);
         var sizeSpacing = slotSize + slotSpacing;
         var doublePadding = containerPadding * 2;
 
@@ -91,7 +91,7 @@ public class InventoryUI : UIController
     private void CreateSlots()
     {
         // Create a slot for every inventory item.
-        slots = new GameObject[GameManager.Instance.playerInventory.Items.Length];
+        slots = new GameObject[GameManager.Instance.PlayerInventory.Items.Length];
 
         for (int i = 0; i < slots.Length; i++)
         {
@@ -108,7 +108,7 @@ public class InventoryUI : UIController
         // Display the icon and quantity for every item in the inventory.
         for (int i = 0; i < slots.Length; i++)
         {
-            var item = GameManager.Instance.playerInventory.Items[i];
+            var item = GameManager.Instance.PlayerInventory.Items[i];
 
             if (item is not null)
             {
