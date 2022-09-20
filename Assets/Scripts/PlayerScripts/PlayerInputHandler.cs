@@ -16,14 +16,14 @@ public class PlayerInputHandler : MonoBehaviour
     [Tooltip("Used to flip the horizontal input axis")]
     public bool InvertXAxis = false;
 
-    PlayerCharacterController PlayerCharacterController;
+    //PlayerCharacterController PlayerCharacterController;
     bool FireInputWasHeld;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        PlayerCharacterController = GetComponent<PlayerCharacterController>();
+        //PlayerCharacterController = GetComponent<PlayerCharacterController>();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

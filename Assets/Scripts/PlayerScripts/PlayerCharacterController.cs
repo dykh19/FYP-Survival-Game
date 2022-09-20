@@ -93,8 +93,8 @@ public class PlayerCharacterController : MonoBehaviour
     public AudioClip HitSound;
 
     [Header("Fall Damage")]
-    [Tooltip("Whether the player will recieve damage when hitting the ground at high speed")]
-    public bool RecievesFallDamage;
+    [Tooltip("Whether the player will receive damage when hitting the ground at high speed")]
+    public bool ReceivesFallDamage;
 
     [Tooltip("Minimun fall speed for recieving fall damage")]
     public float MinSpeedForFallDamage = 10f;
@@ -135,7 +135,7 @@ public class PlayerCharacterController : MonoBehaviour
     PlayerWeaponsManager m_WeaponsManager;
     //Actor m_Actor;
     Vector3 m_GroundNormal;
-    Vector3 m_CharacterVelocity;
+    //Vector3 m_CharacterVelocity;
     Vector3 m_LatestImpactSpeed;
     float m_LastTimeJumped = 0f;
     float m_CameraVerticalAngle = 0f;
@@ -194,7 +194,7 @@ public class PlayerCharacterController : MonoBehaviour
             float fallSpeed = -Mathf.Min(CharacterVelocity.y, m_LatestImpactSpeed.y);
             float fallSpeedRatio = (fallSpeed - MinSpeedForFallDamage) /
                                    (MaxSpeedForFallDamage - MinSpeedForFallDamage);
-            if (RecievesFallDamage && fallSpeedRatio > 0f)
+            if (ReceivesFallDamage && fallSpeedRatio > 0f)
             {
                 float dmgFromFall = Mathf.Lerp(FallDamageAtMinSpeed, FallDamageAtMaxSpeed, fallSpeedRatio);
                 m_Health.TakeDamage(dmgFromFall);
