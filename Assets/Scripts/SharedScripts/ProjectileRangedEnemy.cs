@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedEnemyProjectile : MonoBehaviour
+public class ProjectileRangedEnemy : MonoBehaviour
 {
     public float Damage;
 

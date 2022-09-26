@@ -7,8 +7,8 @@ using UnityEngine;
 public class PlayerStatistics
 {
     // Stores player's chosen game mode and difficulty
-    public GameMode currentGameMode;
-    public Difficulty currentDifficutly;
+    public GameMode CurrentGameMode;
+    public Difficulty CurrentDifficutly;
 
     // Stores the number of enemies killed in current wave and in total
     public int TotalEnemiesKilled;

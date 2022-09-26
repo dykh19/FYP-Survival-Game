@@ -170,7 +170,7 @@ public class EliteRAI : EnemyBehavior
         {
             //~~~~~~~~~~~~~~~~~~~~Attack Code Here~~~~~~~~~~~~~~~~~~~~//
             Rigidbody rb = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            bullet.GetComponent<RangedEnemyProjectile>().SetDamage(Damage);
+            bullet.GetComponent<ProjectileRangedEnemy>().SetDamage(Damage);
             rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
             rb.AddForce(transform.up * 4f, ForceMode.Impulse);
             Destroy(rb.gameObject, 10);

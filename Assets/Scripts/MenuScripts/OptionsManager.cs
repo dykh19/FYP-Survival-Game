@@ -8,36 +8,36 @@ using TMPro;
 public class OptionsManager : MonoBehaviour
 {
     public AudioMixer AudioMixer;
-    public TMP_Dropdown resolutionDropdown;
+    public TMP_Dropdown ResolutionDropdown;
     public Toggle FullScreen;
 
-    Resolution[] resolutions;
+    Resolution[] Resolutions;
 
     private void Start()
     {
-        resolutions = Screen.resolutions;
-        resolutionDropdown.ClearOptions();
+        Resolutions = Screen.resolutions;
+        ResolutionDropdown.ClearOptions();
         int CurrentResolutionIndex = 0;
 
         List<string> options = new List<string>();
-        for (int i = 0; i < resolutions.Length; i++)
+        for (int i = 0; i < Resolutions.Length; i++)
         {
-            string option = resolutions[i].width + " x " + resolutions[i].height + " @ " + resolutions[i].refreshRate + "hz";
+            string option = Resolutions[i].width + " x " + Resolutions[i].height + " @ " + Resolutions[i].refreshRate + "hz";
             options.Add(option);
 
-            if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
+            if (Resolutions[i].width == Screen.width && Resolutions[i].height == Screen.height)
             {
                 CurrentResolutionIndex = i;
             }
         }
-        resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = CurrentResolutionIndex;
-        resolutionDropdown.RefreshShownValue();
+        ResolutionDropdown.AddOptions(options);
+        ResolutionDropdown.value = CurrentResolutionIndex;
+        ResolutionDropdown.RefreshShownValue();
     }
 
     public void SetResolution()
     {
-        Resolution resolution = resolutions[resolutionDropdown.value];
+        Resolution resolution = Resolutions[ResolutionDropdown.value];
         Screen.SetResolution(resolution.width, resolution.height, FullScreen.isOn, resolution.refreshRate);
     }
 

@@ -45,7 +45,7 @@ public class PlayerHUD : UIController
     [HideInInspector] public PlayerHUDToolbar toolbar;
 
     private RectTransform healthBar;
-    private RectTransform energyBar;
+    //private RectTransform energyBar;
     private RectTransform BaseHealthBar;
     private GameObject crosshair;
 

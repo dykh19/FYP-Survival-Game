@@ -7988,6 +7988,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6206563619497944814, guid: 6cd9f6c817a5eee4ba93347c94ca4d36, type: 3}
+      propertyPath: UserInterfaces.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6206563619497944814, guid: 6cd9f6c817a5eee4ba93347c94ca4d36, type: 3}
+      propertyPath: UserInterfaces.Array.data[0].name
+      value: Default
+      objectReference: {fileID: 0}
+    - target: {fileID: 6206563619497944814, guid: 6cd9f6c817a5eee4ba93347c94ca4d36, type: 3}
+      propertyPath: UserInterfaces.Array.data[1].name
+      value: Pause
+      objectReference: {fileID: 0}
+    - target: {fileID: 6206563619497944814, guid: 6cd9f6c817a5eee4ba93347c94ca4d36, type: 3}
+      propertyPath: UserInterfaces.Array.data[2].name
+      value: Inventory
+      objectReference: {fileID: 0}
+    - target: {fileID: 6206563619497944814, guid: 6cd9f6c817a5eee4ba93347c94ca4d36, type: 3}
+      propertyPath: UserInterfaces.Array.data[1].keyCode
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 6206563619497944814, guid: 6cd9f6c817a5eee4ba93347c94ca4d36, type: 3}
+      propertyPath: UserInterfaces.Array.data[2].keyCode
+      value: 105
+      objectReference: {fileID: 0}
+    - target: {fileID: 6206563619497944814, guid: 6cd9f6c817a5eee4ba93347c94ca4d36, type: 3}
+      propertyPath: UserInterfaces.Array.data[0].userInterface
+      value: 
+      objectReference: {fileID: 2335797759092880818, guid: d48c4045f3d28404797d048753e41ed4, type: 3}
+    - target: {fileID: 6206563619497944814, guid: 6cd9f6c817a5eee4ba93347c94ca4d36, type: 3}
+      propertyPath: UserInterfaces.Array.data[1].userInterface
+      value: 
+      objectReference: {fileID: 2002561676770484545, guid: c703d7c3b10ab484889027b521e85c15, type: 3}
+    - target: {fileID: 6206563619497944814, guid: 6cd9f6c817a5eee4ba93347c94ca4d36, type: 3}
+      propertyPath: UserInterfaces.Array.data[2].userInterface
+      value: 
+      objectReference: {fileID: 7195239745950500977, guid: ac78ccb6565ea9e4cb25ca688a5ef7c9, type: 3}
     - target: {fileID: 6206563619497944815, guid: 6cd9f6c817a5eee4ba93347c94ca4d36, type: 3}
       propertyPath: m_Name
       value: GameManager

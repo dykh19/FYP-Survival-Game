@@ -160,8 +160,8 @@ public class GameManager : MonoBehaviour
     // Function to update the Player Statistics object with the latest data
     public void UpdatePlayerStatistics()
     {
-        PlayerStats.currentDifficutly = CurrentDifficulty;
-        PlayerStats.currentGameMode = CurrentGameMode;
+        PlayerStats.CurrentDifficutly = CurrentDifficulty;
+        PlayerStats.CurrentGameMode = CurrentGameMode;
 
         PlayerStats.CurrentHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().CurrentHealth;
         PlayerStats.MaxHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().MaxHealth;

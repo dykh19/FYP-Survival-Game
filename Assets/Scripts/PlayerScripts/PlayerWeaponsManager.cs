@@ -72,7 +72,7 @@ public class PlayerWeaponsManager : MonoBehaviour
     [Tooltip("Layer to set FPS weapon gameObjects to")]
     public LayerMask FpsWeaponLayer;
 
-    public Image Crosshair;
+    //public Image Crosshair;
 
     public bool IsAiming { get; private set; }
     public bool IsPointingAtEnemy { get; private set; }
@@ -648,7 +648,7 @@ public class PlayerWeaponsManager : MonoBehaviour
         }
     }
 
-    void UpdateCrosshairColor()
+    /*void UpdateCrosshairColor()
     {
         if (IsPointingAtEnemy)
         {
@@ -658,5 +658,5 @@ public class PlayerWeaponsManager : MonoBehaviour
         {
             Crosshair.color = new Color(1, 1, 1, 0.7f);
         }
-    }
+    }*/
 }
