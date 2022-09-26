@@ -47,15 +47,14 @@ MonoBehaviour:
   CurrentGameMode: 0
   CurrentDifficulty: 0
   CurrentGameState: 0
-  NumberOfWaves: 0
-  TimeToNextWave: 0
+  WaveCountToWin: 0
+  TimeToNextWave: 300
   EasyWaveCount: 1
   NormalWaveCount: 5
   HardWaveCount: 7
-  WaveCountToWin: 0
-  worldgen: {fileID: 0}
-  startingItems: []
-  userInterfaces:
+  WorldGen: {fileID: 0}
+  StartingItems: []
+  UserInterfaces:
   - name: Default
     keyCode: 0
     userInterface: {fileID: 2335797759092880818, guid: d48c4045f3d28404797d048753e41ed4, type: 3}
