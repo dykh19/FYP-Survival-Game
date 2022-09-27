@@ -15,8 +15,12 @@ public class Health : MonoBehaviour
 
     private void Awake()
     {
+        if (this.CompareTag("Player"))
+        {
+            GameManager.Instance.LoadData += LoadHealth;
+        }
         //If owner of this health script is enemy, adjust the health based on difficulty and mob type
-        if (this.tag == "Enemy")
+        if (this.CompareTag("Enemy"))
         {
             if (this.GetComponent("CreepAI") != null)
             {
@@ -40,8 +44,16 @@ public class Health : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Set Current health to Max Health set in awake
-        CurrentHealth = MaxHealth;
+        if (GameManager.Instance.LoadingSavedGame == true && this.CompareTag("Player"))
+        {
+            return;
+        }
+        else
+        {
+            // Set Current health to Max Health set in awake
+            CurrentHealth = MaxHealth;
+        }
+        
     }
 
     //Heal the entity by given argument
@@ -101,6 +113,12 @@ public class Health : MonoBehaviour
     {
         MaxHealth = newHealth;
         CurrentHealth = newHealth;
+    }
+
+    void LoadHealth()
+    {
+        MaxHealth = GameManager.Instance.PlayerStats.MaxHealth;
+        CurrentHealth = GameManager.Instance.PlayerStats.CurrentHealth;
     }
 
 }

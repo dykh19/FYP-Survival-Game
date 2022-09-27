@@ -95,7 +95,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2335797759092880821
 RectTransform:
   m_ObjectHideFlags: 0
@@ -215,6 +215,8 @@ MonoBehaviour:
   toolbarSlotSize: 30
   toolbarSlotSpacing: 3
   toolbarSlots: 4
+  PlayerHealthIcon: {fileID: 0}
+  BaseHealthIcon: {fileID: 0}
   toolbar: {fileID: 0}
 --- !u!1 &2335797759498467744
 GameObject:

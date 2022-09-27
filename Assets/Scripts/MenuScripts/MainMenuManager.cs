@@ -36,7 +36,13 @@ public class MainMenuManager : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene(1);
-    }    
+    }   
+    
+    public void LoadGame()
+    {
+        GameManager.Instance.LoadingSavedGame = true;
+        SceneManager.LoadScene(1);
+    }
 
     //Open options screen
     public void OpenOptions()

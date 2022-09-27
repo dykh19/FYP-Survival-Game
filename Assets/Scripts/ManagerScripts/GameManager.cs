@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     // Make this class a singleton instance
     public static GameManager Instance { get; private set; }
 
+    public bool LoadingSavedGame;
+
     public GameMode CurrentGameMode;
     public Difficulty CurrentDifficulty;
     public GameState CurrentGameState;
@@ -35,6 +37,8 @@ public class GameManager : MonoBehaviour
     // Unity Action that will run multiple functions when invoked
     public UnityAction OnPlayerDie;
 
+    public UnityAction LoadData;
+
 
     void Awake()
     {
@@ -50,6 +54,7 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(this);
         PlayerStats = new PlayerStatistics();
+        LoadingSavedGame = false;
         OnPlayerDie += LoseGame;
     }
 
@@ -92,7 +97,6 @@ public class GameManager : MonoBehaviour
     // Function to load the main menu
     public void ExitToMainMenu()
     {
-        
         SceneManager.LoadScene(0);
     }
 
@@ -120,35 +124,59 @@ public class GameManager : MonoBehaviour
         // Perform Initial Loading Stuff Here
         if (SceneManager.GetActiveScene().name == "GamePlay")
         {
-            CurrentGameState = GameState.INGAME;
-
-            switch (CurrentDifficulty)
+            if (LoadingSavedGame == true)
             {
-                case Difficulty.EASY:
-                    WaveCountToWin = EasyWaveCount;
-                    break;
-                case Difficulty.NORMAL:
-                    WaveCountToWin = NormalWaveCount;
-                    break;
-                case Difficulty.HARD:
-                    WaveCountToWin = HardWaveCount;
-                    break;
-                default:
-                    WaveCountToWin = 1;
-                    break;
+                CurrentGameState = GameState.INGAME;
+                PlayerStats = SaveLoadManager.Instance.ReadPlayerDataFromFile();
+                for (int i = 0; i < PlayerStats.PlayerInventory.Items.Length; i++)
+                {
+                    if (PlayerStats.PlayerInventory.Items[i].item == null)
+                    {
+                        PlayerStats.PlayerInventory.Items[i] = null;
+                    }
+                }
+                LoadData.Invoke();
 
+                PlayerInventory = PlayerStats.PlayerInventory;
+
+                UserInterfaces[0].userInterface = GameObject.Find("PlayerHUD").GetComponent<Canvas>();
+                UserInterfaces[1].userInterface = GameObject.Find("PauseMenuUI").GetComponent<Canvas>();
+                UserInterfaces[2].userInterface = GameObject.Find("InventoryUI").GetComponent<Canvas>();
+
+                WorldGen = GameObject.Find("World Generator").GetComponent<WorldGenerator>();
+                WorldGen.CreateWorld();
+                LoadingSavedGame = false;
             }
+            else
+            {
+                CurrentGameState = GameState.INGAME;
 
-            PlayerInventory = new Inventory();
+                switch (CurrentDifficulty)
+                {
+                    case Difficulty.EASY:
+                        WaveCountToWin = EasyWaveCount;
+                        break;
+                    case Difficulty.NORMAL:
+                        WaveCountToWin = NormalWaveCount;
+                        break;
+                    case Difficulty.HARD:
+                        WaveCountToWin = HardWaveCount;
+                        break;
+                    default:
+                        WaveCountToWin = 1;
+                        break;
+                }
 
-            UserInterfaces[0].userInterface = GameObject.Find("PlayerHUD").GetComponent<Canvas>();
-            UserInterfaces[1].userInterface = GameObject.Find("PauseMenuUI").GetComponent<Canvas>();
-            UserInterfaces[2].userInterface = GameObject.Find("InventoryUI").GetComponent<Canvas>();
+                PlayerInventory = new Inventory();
 
-            WorldGen = GameObject.Find("World Generator").GetComponent<WorldGenerator>();
-            WorldGen.CreateWorld();
+                UserInterfaces[0].userInterface = GameObject.Find("PlayerHUD").GetComponent<Canvas>();
+                UserInterfaces[1].userInterface = GameObject.Find("PauseMenuUI").GetComponent<Canvas>();
+                UserInterfaces[2].userInterface = GameObject.Find("InventoryUI").GetComponent<Canvas>();
+
+                WorldGen = GameObject.Find("World Generator").GetComponent<WorldGenerator>();
+                WorldGen.CreateWorld();
+            }
         }
-        
         // If the loaded scene is MainMenu, reset the game state and resume the paused timescale
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
@@ -165,5 +193,7 @@ public class GameManager : MonoBehaviour
 
         PlayerStats.CurrentHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().CurrentHealth;
         PlayerStats.MaxHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().MaxHealth;
+
+        PlayerStats.PlayerInventory = PlayerInventory;
     }
 }

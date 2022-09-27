@@ -4,6 +4,7 @@ using UnityEngine;
 
 // This class will be used for tracking the player's stats during the game
 // It will also be used for saving and loading of the game
+[System.Serializable]
 public class PlayerStatistics
 {
     // Stores player's chosen game mode and difficulty
@@ -39,6 +40,8 @@ public class PlayerStatistics
     public float MaxHealth;
     public float CurrentHealth;
 
+    public Inventory PlayerInventory;
+
     public PlayerStatistics()
     {
         TotalEnemiesKilled = 0;
@@ -64,6 +67,8 @@ public class PlayerStatistics
 
         MaxHealth = 0;
         CurrentHealth = 0;
+
+        PlayerInventory = new Inventory();
     }
 
     public void CalculateTotalEnemiesKilled()
