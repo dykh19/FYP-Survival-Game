@@ -17,7 +17,11 @@ public class VendorUI : MonoBehaviour
     public int RifleLvl = 0;
     public int ShotgunLvl = 0;
     public int buttonCount = 0;
-    public Button chosenButton;
+
+    private Transform LMeleeButton;
+    private Transform HMeleeButton;
+    private Transform RifleButton;
+    private Transform ShotgunButton;
 
     private void Awake()
     {
@@ -29,10 +33,10 @@ public class VendorUI : MonoBehaviour
         vendorItemTemplate = container.Find("VendorItemTemplate");
         //vendorItemTemplate.gameObject.SetActive(false);
 
-        CreateUpgradeButton(Upgrade.EquipmentUpgradeType.LMelee_1, "Light Melee Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.LMelee_1), 0);
-        CreateUpgradeButton(Upgrade.EquipmentUpgradeType.HMelee_1, "Heavy Melee Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.HMelee_1), 1);
-        CreateUpgradeButton(Upgrade.EquipmentUpgradeType.Rifle_1, "Rifle Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.Rifle_1), 2);
-        CreateUpgradeButton(Upgrade.EquipmentUpgradeType.Shotgun_1, "Shotgun Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.Shotgun_1), 3);
+        LMeleeButton = CreateUpgradeButton(Upgrade.EquipmentUpgradeType.LMelee_1, "Light Melee Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.LMelee_1), 0);
+        HMeleeButton = CreateUpgradeButton(Upgrade.EquipmentUpgradeType.HMelee_1, "Heavy Melee Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.HMelee_1), 1);
+        RifleButton = CreateUpgradeButton(Upgrade.EquipmentUpgradeType.Rifle_1, "Rifle Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.Rifle_1), 2);
+        ShotgunButton = CreateUpgradeButton(Upgrade.EquipmentUpgradeType.Shotgun_1, "Shotgun Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.Shotgun_1), 3);
         buttonCount = 4;
     }
 
@@ -41,94 +45,95 @@ public class VendorUI : MonoBehaviour
         /*Button for Light Melee Weapon Upgrade*/
         if (LMeleeLvl == 0 && buttonCount < 4)
         {
-            UpdateUpgradeButton(Upgrade.EquipmentUpgradeType.LMelee_1, "Light Melee Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.LMelee_1), 0);
+            UpdateUpgradeButton("LMeleeButton", Upgrade.EquipmentUpgradeType.LMelee_1, "Light Melee Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.LMelee_1), 0);
         }
         else if (LMeleeLvl == 1 && buttonCount < 5)
         {
-            UpdateUpgradeButton(Upgrade.EquipmentUpgradeType.LMelee_2, "Light Melee Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.LMelee_2), 0);
+            UpdateUpgradeButton("LMeleeButton", Upgrade.EquipmentUpgradeType.LMelee_2, "Light Melee Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.LMelee_2), 0);
         }
         else if (LMeleeLvl == 2 && buttonCount < 5)
         {
-            UpdateUpgradeButton(Upgrade.EquipmentUpgradeType.LMelee_3, "Light Melee Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.LMelee_3), 0);
+            UpdateUpgradeButton("LMeleeButton", Upgrade.EquipmentUpgradeType.LMelee_3, "Light Melee Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.LMelee_3), 0);
         }
         else if (LMeleeLvl == 3 && buttonCount < 5)
         {
-            UpdateUpgradeButton(Upgrade.EquipmentUpgradeType.LMelee_4, "Light Melee Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.LMelee_4), 0);
+            UpdateUpgradeButton("LMeleeButton", Upgrade.EquipmentUpgradeType.LMelee_4, "Light Melee Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.LMelee_4), 0);
         }
         else if (LMeleeLvl > 3 && buttonCount < 5)
         {
-            UpdateUpgradeButton(Upgrade.EquipmentUpgradeType.LMeleeMax, "Light Melee MAX", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.LMeleeMax), 0);
+            UpdateUpgradeButton("LMeleeButton", Upgrade.EquipmentUpgradeType.LMeleeMax, "Light Melee MAX", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.LMeleeMax), 0);
         }
 
         /*Button for Heavy Melee Weapon Upgrade*/
         if (HMeleeLvl == 0 && buttonCount < 5)
         {
-            UpdateUpgradeButton(Upgrade.EquipmentUpgradeType.HMelee_1, "Heavy Melee Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.HMelee_1), 1);
+            UpdateUpgradeButton("HMeleeButton", Upgrade.EquipmentUpgradeType.HMelee_1, "Heavy Melee Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.HMelee_1), 1);
         }
         else if (HMeleeLvl == 1 && buttonCount < 5)
         {
-            UpdateUpgradeButton(Upgrade.EquipmentUpgradeType.HMelee_2, "Heavy Melee Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.HMelee_2), 1);
+            UpdateUpgradeButton("HMeleeButton", Upgrade.EquipmentUpgradeType.HMelee_2, "Heavy Melee Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.HMelee_2), 1);
         }
         else if (HMeleeLvl == 2 && buttonCount < 5)
         {
-            UpdateUpgradeButton(Upgrade.EquipmentUpgradeType.HMelee_3, "Heavy Melee Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.HMelee_3), 1);
+            UpdateUpgradeButton("HMeleeButton", Upgrade.EquipmentUpgradeType.HMelee_3, "Heavy Melee Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.HMelee_3), 1);
         }
         else if (HMeleeLvl == 3 && buttonCount < 5)
         {
-            UpdateUpgradeButton(Upgrade.EquipmentUpgradeType.HMelee_4, "Heavy Melee Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.HMelee_4), 1);
+            UpdateUpgradeButton("HMeleeButton", Upgrade.EquipmentUpgradeType.HMelee_4, "Heavy Melee Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.HMelee_4), 1);
         }
         else if (HMeleeLvl > 3 && buttonCount < 5)
         {
-            UpdateUpgradeButton(Upgrade.EquipmentUpgradeType.HMeleeMax, "Heavy Melee MAX", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.HMeleeMax), 0);
+            UpdateUpgradeButton("HMeleeButton", Upgrade.EquipmentUpgradeType.HMeleeMax, "Heavy Melee MAX", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.HMeleeMax), 0);
         }
 
         /*Button for Rifle Weapon Upgrade*/
         if (RifleLvl == 0 && buttonCount < 5)
         {
-            UpdateUpgradeButton(Upgrade.EquipmentUpgradeType.Rifle_1, "Rifle Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.Rifle_1), 1);
+            UpdateUpgradeButton("RifleButton", Upgrade.EquipmentUpgradeType.Rifle_1, "Rifle Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.Rifle_1), 1);
         }
         else if (RifleLvl == 1 && buttonCount < 5)
         {
-            UpdateUpgradeButton(Upgrade.EquipmentUpgradeType.Rifle_2, "Rifle Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.Rifle_2), 1);
+            UpdateUpgradeButton("RifleButton", Upgrade.EquipmentUpgradeType.Rifle_2, "Rifle Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.Rifle_2), 1);
         }
         else if (RifleLvl == 2 && buttonCount < 5)
         {
-            UpdateUpgradeButton(Upgrade.EquipmentUpgradeType.Rifle_3, "Rifle Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.Rifle_3), 1);
+            UpdateUpgradeButton("RifleButton", Upgrade.EquipmentUpgradeType.Rifle_3, "Rifle Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.Rifle_3), 1);
         }
         else if (RifleLvl == 3 && buttonCount < 5)
         {
-            UpdateUpgradeButton(Upgrade.EquipmentUpgradeType.Rifle_4, "Rifle Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.Rifle_4), 1);
+            UpdateUpgradeButton("RifleButton", Upgrade.EquipmentUpgradeType.Rifle_4, "Rifle Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.Rifle_4), 1);
         }
         else if (RifleLvl > 3 && buttonCount < 5)
         {
-            UpdateUpgradeButton(Upgrade.EquipmentUpgradeType.RifleMax, "Rifle MAX", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.RifleMax), 0);
+            UpdateUpgradeButton("RifleButton", Upgrade.EquipmentUpgradeType.RifleMax, "Rifle MAX", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.RifleMax), 0);
         }
 
         /*Button for Shotgun Weapon Upgrade*/
         if (ShotgunLvl == 0 && buttonCount < 5)
         {
-            UpdateUpgradeButton(Upgrade.EquipmentUpgradeType.Shotgun_1, "Shotgun Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.Shotgun_1), 1);
+            UpdateUpgradeButton("ShotgunButton", Upgrade.EquipmentUpgradeType.Shotgun_1, "Shotgun Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.Shotgun_1), 1);
         }
         else if (ShotgunLvl == 1 && buttonCount < 5)
         {
-            UpdateUpgradeButton(Upgrade.EquipmentUpgradeType.Shotgun_2, "Shotgun Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.Shotgun_2), 1);
+            UpdateUpgradeButton("ShotgunButton", Upgrade.EquipmentUpgradeType.Shotgun_2, "Shotgun Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.Shotgun_2), 1);
         }
         else if (ShotgunLvl == 2 && buttonCount < 5)
         {
-            UpdateUpgradeButton(Upgrade.EquipmentUpgradeType.Shotgun_3, "Shotgun Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.Shotgun_3), 1);
+            UpdateUpgradeButton("ShotgunButton", Upgrade.EquipmentUpgradeType.Shotgun_3, "Shotgun Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.Shotgun_3), 1);
         }
         else if (ShotgunLvl == 3 && buttonCount < 5)
         {
-            UpdateUpgradeButton(Upgrade.EquipmentUpgradeType.Shotgun_4, "Shotgun Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.Shotgun_4), 1);
+            UpdateUpgradeButton("ShotgunButton", Upgrade.EquipmentUpgradeType.Shotgun_4, "Shotgun Up", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.Shotgun_4), 1);
         }
         else if (ShotgunLvl > 3 && buttonCount < 5)
         {
-            UpdateUpgradeButton(Upgrade.EquipmentUpgradeType.ShotgunMax, "Shotgun MAX", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.ShotgunMax), 0);
+            UpdateUpgradeButton("ShotgunButton", Upgrade.EquipmentUpgradeType.ShotgunMax, "Shotgun MAX", Upgrade.GetCost(Upgrade.EquipmentUpgradeType.ShotgunMax), 0);
         }
     }
 
-    private void CreateUpgradeButton(Upgrade.EquipmentUpgradeType upgradeType, string itemName, int itemCost, int positionIndex)
+    private Transform CreateUpgradeButton(Upgrade.EquipmentUpgradeType upgradeType, string itemName, int itemCost, int positionIndex)
     {
+
         Transform vendorItemTransform = Instantiate(vendorItemTemplate, container);
         //vendorItemTransform.gameObject.SetActive(true);
         RectTransform vendorItemRectTransform = vendorItemTransform.GetComponent<RectTransform>();
@@ -150,14 +155,37 @@ public class VendorUI : MonoBehaviour
             vendorItemTransform.GetComponent<Button>().interactable = false;
             Debug.Log("Button Disabled");
         }
+
+        return vendorItemTransform;
     }
 
-    private void UpdateUpgradeButton(Upgrade.EquipmentUpgradeType upgradeType, string itemName, int itemCost, int positionIndex)
+    private void UpdateUpgradeButton(string buttonType, Upgrade.EquipmentUpgradeType upgradeType, string itemName, int itemCost, int positionIndex)
     {
-        chosenButton = GameObject.Find(itemName).GetComponent<Button>();
-        chosenButton.GetComponent<Text>().GetComponent("upgradeText").GetComponent<TextMeshProUGUI>().SetText(itemName);
-        chosenButton.GetComponent<Text>().GetComponent("costText").GetComponent<TextMeshProUGUI>().SetText(itemCost.ToString());
+        //chosenButton = GameObject.Find(itemName).GetComponent<Button>();
+        //chosenButton.GetComponent<Text>().GetComponent("upgradeText").GetComponent<TextMeshProUGUI>().SetText(itemName);
+        //chosenButton.GetComponent<Text>().GetComponent("costText").GetComponent<TextMeshProUGUI>().SetText(itemCost.ToString());
         //chosenButton.GetComponent("costText").GetComponent<TextMeshProUGUI>().SetText(itemCost.ToString());
+        if(buttonType == "LMeleeButton")
+        {
+            LMeleeButton.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText(itemName);
+            LMeleeButton.Find("costText").GetComponent<TextMeshProUGUI>().SetText(itemCost.ToString());
+        }
+        if(buttonType == "HMeleeButton")
+        {
+            HMeleeButton.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText(itemName);
+            HMeleeButton.Find("costText").GetComponent<TextMeshProUGUI>().SetText(itemCost.ToString());
+        }
+        if(buttonType == "RifleButton")
+        {
+            RifleButton.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText(itemName);
+            RifleButton.Find("costText").GetComponent<TextMeshProUGUI>().SetText(itemCost.ToString());
+        }
+        if(buttonType == "ShotgunButton")
+        {
+            ShotgunButton.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText(itemName);
+            ShotgunButton.Find("costText").GetComponent<TextMeshProUGUI>().SetText(itemCost.ToString());
+        }
+
     }
 
     private void upgradeItem(Upgrade.EquipmentUpgradeType upgradeType)
