@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
 
+//Script Created by Sean Ong
+
 public class Monster_Spawner : MonoBehaviour
 {
     public int waveNumber = 0;
@@ -102,7 +104,7 @@ public class Monster_Spawner : MonoBehaviour
             GameManager.Instance.WinGame();
         }
 
-        if(!isWave && !inWave && ((creepSpawned == 0) || (creepSpawn != 0 && (creepSpawned == creepKilled))))
+        if(!isWave && !inWave && ((creepSpawned == 0) || (creepSpawn != 0 && (creepSpawned == creepKilled + 5))))
         {
             OpenWorldSpawn();
         }

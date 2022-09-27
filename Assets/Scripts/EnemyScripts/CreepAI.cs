@@ -7,6 +7,7 @@ public class CreepAI : EnemyBehavior
 {
     private Monster_Spawner parent_MonSpawn;
     private Animator animatorCreep;
+    public GameItem creepDrop;
 
     //Pathing Variables
     public Vector3 walkPoint;
@@ -129,13 +130,6 @@ public class CreepAI : EnemyBehavior
     //Finding the walk point for the monster's wander phase
     public override void findWalkPoint()
     {
-        //float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        //float randomX = Random.Range(-walkPointRange, walkPointRange);
-        //float pathY;
-
-        //walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-
-
         var rayOrigin = new Vector3(Random.Range(-walkPointRange, walkPointRange), 100f, Random.Range(-walkPointRange, walkPointRange));
         var ray = new Ray(rayOrigin, Vector3.down);
 
@@ -204,6 +198,11 @@ public class CreepAI : EnemyBehavior
         animatorCreep.SetBool("Die", true); //Need to find a way to implement death anim
         print("Creep Dying");
         parent_MonSpawn.creepDie();
+        if (creepDrop != null)
+        {
+            GameManager.Instance.PlayerInventory.AddItem(creepDrop);
+        }
+                
         if (gameObject != null)
         {
             Destroy(gameObject);
