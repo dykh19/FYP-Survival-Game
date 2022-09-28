@@ -1,5 +1,6 @@
 using Unity.AI.Navigation;
 using UnityEngine;
+using System.Collections.Generic;
 
 // Written by Nicholas Sebastian Hendrata on 12/08/2022.
 
@@ -7,7 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider))]
 public class WorldGenerator : MonoBehaviour
 {
-    public static WorldGenerator Main { get; private set; }
+    //public static WorldGenerator Main { get; private set; }
 
     public TerrainPreset terrainPreset;
     public ShaderMode displayMode = ShaderMode.CustomTerrainShader;
@@ -34,26 +35,32 @@ public class WorldGenerator : MonoBehaviour
 
     public GameObject BasePrefab;
 
+    public GameObject[] Spawnables;
+
     void Awake()
     {
         meshFilter = GetComponent<MeshFilter>();
         meshRenderer = GetComponent<MeshRenderer>();
         meshCollider = GetComponent<MeshCollider>();
         NavMesh = GetComponent<NavMeshSurface>();
-        SetInstance();
+        //SetInstance();
     }
 
-    public void SetInstance()
+    /*public void SetInstance()
     {
         Main = this;
-    }
+    }*/
 
-    public void CreateWorld()
+    public void CreateWorld(bool LoadSavedData)
     {
         var meshData = CreateTerrain();
 
-        if (displayMode == ShaderMode.CustomTerrainShader)
-            terrainPreset.prefabSpawner.SpawnStuff(meshData, transform);
+        if(!LoadSavedData)
+        {
+            if (displayMode == ShaderMode.CustomTerrainShader)
+                terrainPreset.prefabSpawner.SpawnStuff(meshData, transform);
+        }
+        
 
         SpawnBase();
         NavMesh.BuildNavMesh();
@@ -65,8 +72,9 @@ public class WorldGenerator : MonoBehaviour
 
         if (randomSeed)
             seed = Random.Range(int.MinValue, int.MaxValue);
+        
 
-        SetInstance();
+        //SetInstance();
 
         // Create the Terrain.
         var noiseMap = mapGenerator.CreateMap(seed, offset);
@@ -101,6 +109,54 @@ public class WorldGenerator : MonoBehaviour
     {
         Instantiate(BasePrefab, new Vector3(0, 7.92f, 0), Quaternion.identity, this.transform);
     }
+
+    public void SaveWorldData(WorldGenData data)
+    {
+        data.randomSeed = false;
+        data.seed = seed;
+        data.offset = offset;
+        data.flattenCenter = flattenCenter;
+        data.groundLevel = groundLevel;
+        data.radius = radius;
+        data.radialSmoothing = radialSmoothing;
+
+        data.worldObjects = new WorldGenData.WorldObject[transform.childCount];
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            data.worldObjects[i].pos = transform.GetChild(i).transform.position;
+            data.worldObjects[i].rotation = transform.GetChild(i).transform.rotation;
+            data.worldObjects[i].scale = transform.GetChild(i).transform.localScale;
+            data.worldObjects[i].prefabName = transform.GetChild(i).transform.name;
+        }
+    }
+
+    public void LoadWorldData(WorldGenData data)
+    {
+        randomSeed = data.randomSeed;
+        seed = data.seed;
+        offset = data.offset;
+        flattenCenter = data.flattenCenter;
+        groundLevel = data.groundLevel;
+        radius = data.radius;
+        radialSmoothing = data.radialSmoothing;
+    }
+
+    public void LoadWorldObjects(WorldGenData data)
+    {
+        for (int i = 0; i < data.worldObjects.Length; i++)
+        {
+            foreach (GameObject obj in Spawnables)
+            {
+                if (data.worldObjects[i].prefabName == obj.name)
+                {
+                    GameObject SpawnedObject = Instantiate(obj, data.worldObjects[i].pos, data.worldObjects[i].rotation, transform);
+                    SpawnedObject.transform.localScale = data.worldObjects[i].scale;
+                    SpawnedObject.transform.parent = transform;
+                }
+            }
+        }
+    }
 }
 
 public enum ShaderMode
@@ -108,4 +164,28 @@ public enum ShaderMode
     CustomTerrainShader,
     HeightMap,
     NoiseMap
+}
+
+[System.Serializable]
+public class WorldGenData
+{
+    public bool randomSeed = true;
+    public int seed;
+    public Vector2 offset;
+    public bool flattenCenter = true;
+    public float groundLevel;
+    public float radius;
+    public float radialSmoothing;
+
+    [System.Serializable]
+    public struct WorldObject
+    {
+        public Vector3 pos;
+        public Quaternion rotation;
+        public Vector3 scale;
+        public string prefabName;
+    }
+
+    public WorldObject[] worldObjects;
+    
 }

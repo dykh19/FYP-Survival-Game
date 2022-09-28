@@ -27,7 +27,7 @@ public class MeshGenerator
         width = heightMap.GetLength(0);
         height = heightMap.GetLength(1);
 
-        enableHeight = WorldGenerator.Main.displayMode != ShaderMode.NoiseMap;
+        enableHeight = GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().displayMode != ShaderMode.NoiseMap;
 
         var meshData = new MeshData(width, height);
         int vertexIndex = 0;

@@ -42,6 +42,8 @@ public class PlayerStatistics
 
     public Inventory PlayerInventory;
 
+    public WorldGenData WorldGenSaveData;
+
     public PlayerStatistics()
     {
         TotalEnemiesKilled = 0;
@@ -69,6 +71,8 @@ public class PlayerStatistics
         CurrentHealth = 0;
 
         PlayerInventory = new Inventory();
+
+        WorldGenSaveData = new WorldGenData();
     }
 
     public void CalculateTotalEnemiesKilled()

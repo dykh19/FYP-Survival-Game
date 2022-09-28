@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
-using UnityEngine.UI;
+using UnityEditor;
 // Game Manager is in-charge of the overall game state
 public class GameManager : MonoBehaviour
 {
@@ -144,7 +144,10 @@ public class GameManager : MonoBehaviour
                 UserInterfaces[2].userInterface = GameObject.Find("InventoryUI").GetComponent<Canvas>();
 
                 WorldGen = GameObject.Find("World Generator").GetComponent<WorldGenerator>();
-                WorldGen.CreateWorld();
+                WorldGen.LoadWorldData(PlayerStats.WorldGenSaveData);
+                WorldGen.CreateWorld(true);
+                WorldGen.LoadWorldObjects(PlayerStats.WorldGenSaveData);
+                
                 LoadingSavedGame = false;
             }
             else
@@ -174,7 +177,7 @@ public class GameManager : MonoBehaviour
                 UserInterfaces[2].userInterface = GameObject.Find("InventoryUI").GetComponent<Canvas>();
 
                 WorldGen = GameObject.Find("World Generator").GetComponent<WorldGenerator>();
-                WorldGen.CreateWorld();
+                WorldGen.CreateWorld(false);
             }
         }
         // If the loaded scene is MainMenu, reset the game state and resume the paused timescale
@@ -195,5 +198,7 @@ public class GameManager : MonoBehaviour
         PlayerStats.MaxHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().MaxHealth;
 
         PlayerStats.PlayerInventory = PlayerInventory;
+
+        WorldGen.SaveWorldData(PlayerStats.WorldGenSaveData);
     }
 }

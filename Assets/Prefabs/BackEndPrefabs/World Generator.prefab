@@ -57,6 +57,18 @@ MonoBehaviour:
   radius: 10
   radialSmoothing: 10
   autoUpdate: 0
+  NavMesh: {fileID: 0}
+  BasePrefab: {fileID: 0}
+  Spawnables:
+  - {fileID: 8153463798392465162, guid: 4f10205d3fb7748388ffe357a0b7d436, type: 3}
+  - {fileID: 8777056887307897802, guid: d9703edd962024c5a95d60d19a557b15, type: 3}
+  - {fileID: 2522260860184389761, guid: 834e15431ca2b48b8bd4c05e9b743f34, type: 3}
+  - {fileID: 5644775033662080400, guid: 417ca92d72d114be6bba7bfac22bfb5f, type: 3}
+  - {fileID: 4780728482505725590, guid: 22f56f7d819ec4640bf0948d19dee720, type: 3}
+  - {fileID: 3619684949350018057, guid: 6f3b908ccaa024a6199a742f71b473fc, type: 3}
+  - {fileID: 4068393679189931614, guid: 434676b38872d41dbb075abd670c4285, type: 3}
+  - {fileID: 4595580011992947335, guid: 4b032b53186c245579956fe8e89885a2, type: 3}
+  - {fileID: 4981872439944236568, guid: 30ea1d73034614e4aaa042d5d77b304a, type: 3}
 --- !u!33 &5748186617188858715
 MeshFilter:
   m_ObjectHideFlags: 0
