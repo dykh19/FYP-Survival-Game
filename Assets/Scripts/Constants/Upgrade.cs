@@ -7,12 +7,13 @@ using UnityEngine;
 public class Upgrade : MonoBehaviour
 {
 
-    public enum EquipmentUpgradeType    //Uses Essence to Upgrade
+    public enum EquipmentExchangeType    //Uses Essence to Upgrade
     {
         LMelee_1, LMelee_2, LMelee_3, LMelee_4, LMeleeMax,
         HMelee_1, HMelee_2, HMelee_3, HMelee_4, HMeleeMax,
         Rifle_1, Rifle_2, Rifle_3, Rifle_4, RifleMax,
         Shotgun_1, Shotgun_2, Shotgun_3, Shotgun_4, ShotgunMax,
+        MonsterEss
     }
 
     /*public enum PassiveSkillUpgradeType
@@ -38,54 +39,124 @@ public class Upgrade : MonoBehaviour
         BaseNone, Base_1, Base_2, Base_3, Base_4
     }
 
-    public static int GetCost(EquipmentUpgradeType equipmentUpgradeType)
+    public enum Currency
+    {
+        MonsterEss, CreepDrop
+    }
+
+    public static string GetCurrency(EquipmentExchangeType Exchange)
+    {
+        switch (Exchange)
+        {
+            default:
+            //Light Melee Weapon Cases
+            case EquipmentExchangeType.LMelee_1:
+                return "MonsterEss";
+            case EquipmentExchangeType.LMelee_2:
+                return "MonsterEss";
+            case EquipmentExchangeType.LMelee_3:
+                return "MonsterEss";
+            case EquipmentExchangeType.LMelee_4:
+                return "MonsterEss";
+            case EquipmentExchangeType.LMeleeMax:
+                return "MonsterEss";
+            //Heavy Melee Weapon Cases
+            case EquipmentExchangeType.HMelee_1:
+                return "MonsterEss";
+            case EquipmentExchangeType.HMelee_2:
+                return "MonsterEss";
+            case EquipmentExchangeType.HMelee_3:
+                return "MonsterEss";
+            case EquipmentExchangeType.HMelee_4:
+                return "MonsterEss";
+            case EquipmentExchangeType.HMeleeMax:
+                return "MonsterEss";
+            //Rifle Weapon Cases
+            case EquipmentExchangeType.Rifle_1:
+                return "MonsterEss";
+            case EquipmentExchangeType.Rifle_2:
+                return "MonsterEss";
+            case EquipmentExchangeType.Rifle_3:
+                return "MonsterEss";
+            case EquipmentExchangeType.Rifle_4:
+                return "MonsterEss";
+            case EquipmentExchangeType.RifleMax:
+                return "MonsterEss";
+            //Shotgun Weapon Cases
+            case EquipmentExchangeType.Shotgun_1:
+                return "MonsterEss";
+            case EquipmentExchangeType.Shotgun_2:
+                return "MonsterEss";
+            case EquipmentExchangeType.Shotgun_3:
+                return "MonsterEss";
+            case EquipmentExchangeType.Shotgun_4:
+                return "MonsterEss";
+            case EquipmentExchangeType.ShotgunMax:
+                return "MonsterEss";
+            case EquipmentExchangeType.MonsterEss:
+                return "CreepDrop";
+        }
+    }
+
+    public static int ExchangeRate(EquipmentExchangeType Exchange)
+    {
+        switch(Exchange)
+        {
+            default:
+            case EquipmentExchangeType.MonsterEss:
+                return 10;
+        }
+    }
+
+
+    public static int GetCost(EquipmentExchangeType equipmentUpgradeType)
     {
         switch(equipmentUpgradeType)
         {
             default:
             //Light Melee Weapon Cases
-            case EquipmentUpgradeType.LMelee_1:
+            case EquipmentExchangeType.LMelee_1:
                 return 400;
-            case EquipmentUpgradeType.LMelee_2:
+            case EquipmentExchangeType.LMelee_2:
                 return 600;
-            case EquipmentUpgradeType.LMelee_3:
+            case EquipmentExchangeType.LMelee_3:
                 return 800;
-            case EquipmentUpgradeType.LMelee_4:
+            case EquipmentExchangeType.LMelee_4:
                 return 1000;
-            case EquipmentUpgradeType.LMeleeMax:
+            case EquipmentExchangeType.LMeleeMax:
                 return 0;
             //Heavy Melee Weapon Cases
-            case EquipmentUpgradeType.HMelee_1:
+            case EquipmentExchangeType.HMelee_1:
                 return 400;
-            case EquipmentUpgradeType.HMelee_2:
+            case EquipmentExchangeType.HMelee_2:
                 return 600;
-            case EquipmentUpgradeType.HMelee_3:
+            case EquipmentExchangeType.HMelee_3:
                 return 800;
-            case EquipmentUpgradeType.HMelee_4:
+            case EquipmentExchangeType.HMelee_4:
                 return 1000;
-            case EquipmentUpgradeType.HMeleeMax:
+            case EquipmentExchangeType.HMeleeMax:
                 return 0;
             //Rifle Weapon Cases
-            case EquipmentUpgradeType.Rifle_1:
+            case EquipmentExchangeType.Rifle_1:
                 return 400;
-            case EquipmentUpgradeType.Rifle_2:
+            case EquipmentExchangeType.Rifle_2:
                 return 600;
-            case EquipmentUpgradeType.Rifle_3:
+            case EquipmentExchangeType.Rifle_3:
                 return 800;
-            case EquipmentUpgradeType.Rifle_4:
+            case EquipmentExchangeType.Rifle_4:
                 return 1000;
-            case EquipmentUpgradeType.RifleMax:
+            case EquipmentExchangeType.RifleMax:
                 return 0;
             //Shotgun Weapon Cases
-            case EquipmentUpgradeType.Shotgun_1:
+            case EquipmentExchangeType.Shotgun_1:
                 return 400;
-            case EquipmentUpgradeType.Shotgun_2:
+            case EquipmentExchangeType.Shotgun_2:
                 return 600;
-            case EquipmentUpgradeType.Shotgun_3:
+            case EquipmentExchangeType.Shotgun_3:
                 return 800;
-            case EquipmentUpgradeType.Shotgun_4:
+            case EquipmentExchangeType.Shotgun_4:
                 return 1000;
-            case EquipmentUpgradeType.ShotgunMax:
+            case EquipmentExchangeType.ShotgunMax:
                 return 0;
         }
     }

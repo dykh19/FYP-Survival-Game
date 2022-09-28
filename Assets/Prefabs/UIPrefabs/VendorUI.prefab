@@ -284,6 +284,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   container: {fileID: 0}
   vendorItemTemplate: {fileID: 0}
+  LMeleeLvl: 0
+  HMeleeLvl: 0
+  RifleLvl: 0
+  ShotgunLvl: 0
+  buttonCount: 0
+  playerInventoryUI: {fileID: 0}
+  creepDrop: {fileID: 11400000, guid: 07d9999ac2c72cf47a2be2aa521addcc, type: 2}
 --- !u!114 &9102110979277821929
 MonoBehaviour:
   m_ObjectHideFlags: 0

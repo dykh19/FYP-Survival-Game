@@ -44,7 +44,7 @@ public class Inventory
         {
             Items[itemIndex].quantity -= quantity;
 
-            if (Items[itemIndex].quantity < 0)
+            if (Items[itemIndex].quantity <= 0)
                 Items[itemIndex] = null;
         }
 
@@ -52,7 +52,7 @@ public class Inventory
         PlayerHUD.Main?.GetComponent<PlayerHUDToolbar>()?.UpdateUI();
     }
 
-    private int GetItemIndex(GameItem item)
+    public int GetItemIndex(GameItem item)
     {
         return Array.FindIndex(Items, invItem =>
             (invItem != null) && (invItem.item.name == item.name));
