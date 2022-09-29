@@ -17,7 +17,10 @@ public class Health : MonoBehaviour
     {
         if (this.CompareTag("Player"))
         {
+            GameManager.Instance.LoadData -= LoadHealth;
+            GameManager.Instance.SaveData -= SaveHealth;
             GameManager.Instance.LoadData += LoadHealth;
+            GameManager.Instance.SaveData += SaveHealth;
         }
         //If owner of this health script is enemy, adjust the health based on difficulty and mob type
         if (this.CompareTag("Enemy"))
@@ -119,6 +122,16 @@ public class Health : MonoBehaviour
     {
         MaxHealth = GameManager.Instance.PlayerStats.MaxHealth;
         CurrentHealth = GameManager.Instance.PlayerStats.CurrentHealth;
+        //Debug.Log("Loaded Player Health");
+        
+    }
+
+    void SaveHealth()
+    {
+        GameManager.Instance.PlayerStats.MaxHealth = MaxHealth;
+        GameManager.Instance.PlayerStats.CurrentHealth = CurrentHealth;
+        GameManager.Instance.LoadData -= LoadHealth;
+        //Debug.Log("Saved Player Health");
     }
 
 }

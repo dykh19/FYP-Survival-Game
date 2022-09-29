@@ -32,11 +32,21 @@ public class PlayerStatistics
     public int TotalBossCoresObtained;
     public int CurrentBossCoresInBase;
 
-    // Stores the number of waves cleared and the current wave
+    // Stores data for the monster spawner script
     public int WavesCleared;
     public int CurrentWave;
+    public bool IsWave;
+    public bool InWave;
+    public int CreepSpawnThisWave;
+    public int CreepKilledThisWave;
+    public int EliteRSpawnThisWave;
+    public int EliteRKilledThisWave;
+    public int EliteMSpawnThisWave;
+    public int EliteMKilledThisWave;
+    public int BossSpawnThisWave;
+    public int BossKilledThisWave;
 
-    // Stores the max and current health of the player
+    // Stores data for player health script
     public float MaxHealth;
     public float CurrentHealth;
 
@@ -66,6 +76,7 @@ public class PlayerStatistics
 
         WavesCleared = 0;
         CurrentWave = 0;
+        IsWave = false;
 
         MaxHealth = 0;
         CurrentHealth = 0;

@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     public UnityAction OnPlayerDie;
 
     public UnityAction LoadData;
+    public UnityAction SaveData;
 
 
     void Awake()
@@ -97,6 +98,7 @@ public class GameManager : MonoBehaviour
     // Function to load the main menu
     public void ExitToMainMenu()
     {
+        ResetPlayerStats();
         SceneManager.LoadScene(0);
     }
 
@@ -136,6 +138,7 @@ public class GameManager : MonoBehaviour
                     }
                 }
                 LoadData.Invoke();
+                LoadData = null;
 
                 PlayerInventory = PlayerStats.PlayerInventory;
 
@@ -154,21 +157,7 @@ public class GameManager : MonoBehaviour
             {
                 CurrentGameState = GameState.INGAME;
 
-                switch (CurrentDifficulty)
-                {
-                    case Difficulty.EASY:
-                        WaveCountToWin = EasyWaveCount;
-                        break;
-                    case Difficulty.NORMAL:
-                        WaveCountToWin = NormalWaveCount;
-                        break;
-                    case Difficulty.HARD:
-                        WaveCountToWin = HardWaveCount;
-                        break;
-                    default:
-                        WaveCountToWin = 1;
-                        break;
-                }
+                
 
                 PlayerInventory = new Inventory();
 
@@ -178,6 +167,21 @@ public class GameManager : MonoBehaviour
 
                 WorldGen = GameObject.Find("World Generator").GetComponent<WorldGenerator>();
                 WorldGen.CreateWorld(false);
+            }
+            switch (CurrentDifficulty)
+            {
+                case Difficulty.EASY:
+                    WaveCountToWin = EasyWaveCount;
+                    break;
+                case Difficulty.NORMAL:
+                    WaveCountToWin = NormalWaveCount;
+                    break;
+                case Difficulty.HARD:
+                    WaveCountToWin = HardWaveCount;
+                    break;
+                default:
+                    WaveCountToWin = 1;
+                    break;
             }
         }
         // If the loaded scene is MainMenu, reset the game state and resume the paused timescale
@@ -193,12 +197,16 @@ public class GameManager : MonoBehaviour
     {
         PlayerStats.CurrentDifficutly = CurrentDifficulty;
         PlayerStats.CurrentGameMode = CurrentGameMode;
-
-        PlayerStats.CurrentHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().CurrentHealth;
-        PlayerStats.MaxHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().MaxHealth;
-
         PlayerStats.PlayerInventory = PlayerInventory;
-
+        // Update stuff with unity action
+        SaveData.Invoke();
+        SaveData = null;
         WorldGen.SaveWorldData(PlayerStats.WorldGenSaveData);
+    }
+
+    public void ResetPlayerStats()
+    {
+        PlayerStats = null;
+        PlayerStats = new PlayerStatistics();
     }
 }

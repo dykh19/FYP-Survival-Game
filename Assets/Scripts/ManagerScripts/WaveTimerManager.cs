@@ -36,7 +36,7 @@ public class WaveTimerManager : MonoBehaviour
     private void Start()
     {
         SetTimer(GameManager.Instance.TimeToNextWave);
-        StartTimer();
+        //StartTimer();
         UpdateWaveCountText();
     }
 

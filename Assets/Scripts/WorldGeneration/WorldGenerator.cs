@@ -153,6 +153,7 @@ public class WorldGenerator : MonoBehaviour
                     GameObject SpawnedObject = Instantiate(obj, data.worldObjects[i].pos, data.worldObjects[i].rotation, transform);
                     SpawnedObject.transform.localScale = data.worldObjects[i].scale;
                     SpawnedObject.transform.parent = transform;
+                    SpawnedObject.name = obj.name;
                 }
             }
         }

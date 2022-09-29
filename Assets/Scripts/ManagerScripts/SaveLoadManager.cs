@@ -25,7 +25,6 @@ public class SaveLoadManager : MonoBehaviour
     private void Start()
     {
         SaveFilePath = Application.persistentDataPath + "/gamedata.json";
-        PrintDebug();
     }
 
     string ReadFile()

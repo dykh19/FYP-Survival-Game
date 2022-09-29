@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
@@ -21,12 +22,13 @@ public class Monster_Spawner : MonoBehaviour
     public int bossSpawned = 0;
     public int bossKilled = 0;
 
-    private int creepSpawn = 0;
+    private int creepCountToEndWave = 0;
     public int creepSpawned = 0;
     public int creepKilled = 0;
 
     public bool isWave = false;
     public bool inWave = false;
+    public bool IsLoadedGame = false;
 
     public GameObject[] creeps = new GameObject[3];
     public GameObject eliteR;
@@ -52,7 +54,19 @@ public class Monster_Spawner : MonoBehaviour
     public Vector3 enemySpawnPosition;
 
     public TMP_Text EnemiesLeftText;
+    private int creepKilledThisInstance;
+    private int creepKilledFromSave;
+
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        //Make sure delegate is only added once
+        GameManager.Instance.LoadData -= LoadSpawnerData;
+        GameManager.Instance.SaveData -= SaveSpawnerData;
+        GameManager.Instance.LoadData += LoadSpawnerData;
+        GameManager.Instance.SaveData += SaveSpawnerData;
+    }
     void Start()
     {
         baseObj = GameObject.FindWithTag("Base");
@@ -71,6 +85,11 @@ public class Monster_Spawner : MonoBehaviour
 
         //spawnEliteR(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
         EnemiesLeftText = GameObject.Find("EnemiesLeftText").GetComponent<TMP_Text>();
+
+        if (!IsLoadedGame)
+        {
+            WaveTimerManager.Instance.StartTimer();
+        }
     }
 
     // Update is called once per frame
@@ -78,7 +97,7 @@ public class Monster_Spawner : MonoBehaviour
     {
         if (inWave)
         {
-            EnemiesLeftText.text = "Enemies Left This Wave: " + (creepSpawned - creepKilled);
+            EnemiesLeftText.text = "Enemies Left This Wave: " + (creepCountToEndWave - creepKilledThisInstance);
         }
 
         if (isWave)
@@ -92,7 +111,7 @@ public class Monster_Spawner : MonoBehaviour
                 NextWave();
             }
 
-            if (creepKilled == creepSpawned && eliteRKilled == eliteRSpawned && eliteMKilled == eliteMSpawned && bossKilled == bossSpawned)
+            if (creepKilledThisInstance == creepCountToEndWave && eliteRKilled == eliteRSpawned && eliteMKilled == eliteMSpawned && bossKilled == bossSpawned)
             {
                 EndWave();
             }
@@ -102,7 +121,7 @@ public class Monster_Spawner : MonoBehaviour
             GameManager.Instance.WinGame();
         }
 
-        if(!isWave && !inWave && ((creepSpawned == 0) || (creepSpawn != 0 && (creepSpawned == creepKilled))))
+        if(!isWave && !inWave && ((creepSpawned == 0) || (creepCountToEndWave != 0 && (creepSpawned == creepKilled))))
         {
             OpenWorldSpawn();
         }
@@ -111,11 +130,11 @@ public class Monster_Spawner : MonoBehaviour
     //Spawning mechanic when !isWave
     public void OpenWorldSpawn()
     {
-        creepSpawn = 30; //Change value here
+        creepCountToEndWave = 30; //Change value here
         creepSpawned = 0;
         creepKilled = 0;
 
-        for(int i = 0; i < creepSpawn; i++)
+        for(int i = 0; i < creepCountToEndWave; i++)
         {
             spawnCreep(mapxPosMin, mapxPosMax, mapzPosMin, mapzPosMax);
         }
@@ -191,13 +210,27 @@ public class Monster_Spawner : MonoBehaviour
     public void StartWave()
     {
         waveNumber = 1;
+        if (!IsLoadedGame)
+        {
+            creepSpawned = 0;
+            creepKilled = 0;
+            eliteRSpawned = 0;
+            eliteRKilled = 0;
+            eliteMSpawned = 0;
+            eliteMKilled = 0;
+            bossSpawned = 0;
+            bossKilled = 0;
+            creepCountToEndWave = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
+        }
+        else
+        {
+            creepCountToEndWave = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f))) - creepKilledFromSave;
+        }
+
         eliteRSpawn = 0; //To change based on specs
-        eliteRKilled = 0;
         eliteMSpawn = 0;
-        eliteMKilled = 0;
-        creepSpawn = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
-        creepSpawned = 0;
-        creepKilled = 0;
+
+        
         isWave = true;
         inWave = true;
         WaveTimerManager.Instance.IncomingWave();
@@ -213,7 +246,7 @@ public class Monster_Spawner : MonoBehaviour
             spawnEliteR(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
             /*~~~~~~~~Add spawn timer here if want~~~~~~~~*/
         }
-        for (int i = 0; i < creepSpawn; i++)
+        for (int i = 0; i < creepCountToEndWave; i++)
         {
             spawnCreep(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
         }
@@ -245,6 +278,7 @@ public class Monster_Spawner : MonoBehaviour
         WaveTimerManager.Instance.StartNewWaveTimer();
         GameManager.Instance.PlayerStats.CurrentWave = waveNumber;
         EnemiesLeftText.text = "";
+        IsLoadedGame = false;
     }
 
     //Function to start the next wave
@@ -252,35 +286,47 @@ public class Monster_Spawner : MonoBehaviour
     {
         isWave = true;
         inWave = true;
-        //creepSpawned = 0;
 
-        creepKilled = 0;
-        creepSpawned = 0;
-        eliteRSpawned = 0;
-        eliteRKilled = 0;
-        eliteMSpawned = 0;
-        eliteMKilled = 0;
-        bossSpawned = 0;
-        bossKilled = 0;
-
-        creepSpawn = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
-        WaveTimerManager.Instance.HideTimer();
-        if(creepSpawn > 100)
+        if (!IsLoadedGame)
         {
-            creepSpawn = 100;
+            creepSpawned = 0;
+            creepKilled = 0;
+            eliteRSpawned = 0;
+            eliteRKilled = 0;
+            eliteMSpawned = 0;
+            eliteMKilled = 0;
+            bossSpawned = 0;
+            bossKilled = 0;
+            creepCountToEndWave = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
+        }
+        else
+        {
+            creepCountToEndWave = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f))) - creepKilledFromSave;
+        }
+
+        //creepSpawn = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
+
+        WaveTimerManager.Instance.IncomingWave();
+        if(creepCountToEndWave > 100)
+        {
+            creepCountToEndWave = 100;
         }
         //eliteRSpawn = eliteRSpawn + 2; //replace the 2 with the formula
 
-        foreach (Transform child in transform)
+        if (!IsLoadedGame)
         {
-            GameObject.Destroy(child.gameObject);
+            foreach (Transform child in transform)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
         }
+        
 
         for (int i = 0; i < eliteRSpawn; i++)
         {
             spawnEliteR(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
         }
-        for (int i = 0; i < creepSpawn; i++)
+        for (int i = 0; i < creepCountToEndWave; i++)
         {
             spawnCreep(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
         }
@@ -293,6 +339,11 @@ public class Monster_Spawner : MonoBehaviour
     public void creepDie()
     {
         creepKilled += 1;
+        if (isWave && inWave)
+        {
+            creepKilledThisInstance++;
+        }
+        
         GameManager.Instance.PlayerStats.TotalCreepKilled += 1;
     }
 
@@ -312,5 +363,57 @@ public class Monster_Spawner : MonoBehaviour
     {
         bossKilled += 1;
         GameManager.Instance.PlayerStats.TotalBossKilled += 1;
+    }
+
+    public void LoadSpawnerData()
+    {
+        waveNumber = GameManager.Instance.PlayerStats.CurrentWave;
+        isWave = GameManager.Instance.PlayerStats.IsWave;
+        inWave = GameManager.Instance.PlayerStats.InWave;
+        creepCountToEndWave = GameManager.Instance.PlayerStats.CreepSpawnThisWave;
+        creepKilledFromSave = GameManager.Instance.PlayerStats.CreepKilledThisWave;
+        eliteRSpawn = GameManager.Instance.PlayerStats.EliteRSpawnThisWave;
+        eliteRKilled = GameManager.Instance.PlayerStats.EliteRKilledThisWave;
+        eliteMSpawn = GameManager.Instance.PlayerStats.EliteMSpawnThisWave;
+        eliteMKilled = GameManager.Instance.PlayerStats.EliteMKilledThisWave;
+        bossSpawn = GameManager.Instance.PlayerStats.BossSpawnThisWave;
+        bossKilled = GameManager.Instance.PlayerStats.BossKilledThisWave;
+        IsLoadedGame = true;
+        if (isWave == true && inWave == true)
+        {
+            Start();
+            if (waveNumber == 1)
+            {
+                StartWave();
+            }
+            else
+            {
+                NextWave();
+            }
+        }
+        else
+        {
+            Start();
+            OpenWorldSpawn();
+            WaveTimerManager.Instance.StartTimer();
+        }
+        //Debug.Log("Loaded Spawner Data");
+    }
+
+    public void SaveSpawnerData()
+    {
+        GameManager.Instance.PlayerStats.CurrentWave = waveNumber;
+        GameManager.Instance.PlayerStats.IsWave = isWave;
+        GameManager.Instance.PlayerStats.InWave = inWave;
+        GameManager.Instance.PlayerStats.CreepSpawnThisWave = creepCountToEndWave;
+        GameManager.Instance.PlayerStats.CreepKilledThisWave = creepKilledThisInstance + creepKilledFromSave;
+        GameManager.Instance.PlayerStats.EliteRSpawnThisWave = eliteRSpawn;
+        GameManager.Instance.PlayerStats.EliteRKilledThisWave = eliteRKilled;
+        GameManager.Instance.PlayerStats.EliteMSpawnThisWave = eliteMSpawn;
+        GameManager.Instance.PlayerStats.EliteMKilledThisWave = eliteMKilled;
+        GameManager.Instance.PlayerStats.BossSpawnThisWave = bossSpawn;
+        GameManager.Instance.PlayerStats.BossKilledThisWave = bossKilled;
+        GameManager.Instance.LoadData -= LoadSpawnerData;
+        //Debug.Log("Saved Spawner Data");
     }
 }
