@@ -34,21 +34,26 @@ public class PlayerStatistics
 
     // Stores data for the monster spawner script
     public int WavesCleared;
-    public int CurrentWave;
-    public bool IsWave;
-    public bool InWave;
-    public int CreepSpawnThisWave;
-    public int CreepKilledThisWave;
-    public int EliteRSpawnThisWave;
-    public int EliteRKilledThisWave;
-    public int EliteMSpawnThisWave;
-    public int EliteMKilledThisWave;
-    public int BossSpawnThisWave;
-    public int BossKilledThisWave;
+    public int currentWave;
+    public bool isWave;
+    public bool inWave;
+    public int creepCountToEndWave;
+    public int creepKilledThisWave;
+    public int eliteRCountToEndWave;
+    public int eliteRKilledThisWave;
+    public int eliteMCountToEndWave;
+    public int eliteMKilledThisWave;
+    public int bossCountToEndWave;
+    public int bossKilledThisWave;
 
-    // Stores data for player health script
-    public float MaxHealth;
-    public float CurrentHealth;
+    // Stores data for player health
+    public float maxHealth;
+    public float currentHealth;
+
+    // Stores data for player base health
+    public float maxBaseHealth;
+    public float currentBaseHealth;
+
 
     public Inventory PlayerInventory;
 
@@ -75,11 +80,11 @@ public class PlayerStatistics
         CurrentBossCoresInBase = 0;
 
         WavesCleared = 0;
-        CurrentWave = 0;
-        IsWave = false;
+        currentWave = 0;
+        isWave = false;
 
-        MaxHealth = 0;
-        CurrentHealth = 0;
+        maxHealth = 0;
+        currentHealth = 0;
 
         PlayerInventory = new Inventory();
 

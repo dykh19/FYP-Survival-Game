@@ -17,10 +17,16 @@ public class Health : MonoBehaviour
     {
         if (this.CompareTag("Player"))
         {
-            GameManager.Instance.LoadData -= LoadHealth;
-            GameManager.Instance.SaveData -= SaveHealth;
-            GameManager.Instance.LoadData += LoadHealth;
-            GameManager.Instance.SaveData += SaveHealth;
+            GameManager.Instance.LoadData -= LoadPlayerHealth;
+            GameManager.Instance.SaveData -= SavePlayerHealth;
+            GameManager.Instance.LoadData += LoadPlayerHealth;
+            GameManager.Instance.SaveData += SavePlayerHealth;
+        }
+
+        if (this.CompareTag("Base"))
+        {
+            GameManager.Instance.SaveData -= SaveBaseHealth;
+            GameManager.Instance.SaveData += SaveBaseHealth;
         }
         //If owner of this health script is enemy, adjust the health based on difficulty and mob type
         if (this.CompareTag("Enemy"))
@@ -50,6 +56,10 @@ public class Health : MonoBehaviour
         if (GameManager.Instance.LoadingSavedGame == true && this.CompareTag("Player"))
         {
             return;
+        }
+        else if (GameManager.Instance.LoadingSavedGame == true && this.CompareTag("Base"))
+        {
+            LoadBaseHealth();
         }
         else
         {
@@ -95,20 +105,24 @@ public class Health : MonoBehaviour
     public void HandleDeath()
     {
         //If player, end game
-        if(this.tag == "Player")
+        if(this.CompareTag("Player"))
         {
             //Do player dies things here
             GameManager.Instance.OnPlayerDie?.Invoke();
         }
 
         //If enemy, call enemy death function
-        if(this.tag == "Enemy")
+        if(this.CompareTag("Enemy"))
         {
             this.GetComponent<EnemyBehavior>().Die();
             Debug.Log("Enemy Dead");
         }
 
         //Handle Base death
+        if(this.CompareTag("Base"))
+        {
+            GameManager.Instance.OnPlayerDie?.Invoke();
+        }
     }
 
     //Change the Health from default value
@@ -118,19 +132,35 @@ public class Health : MonoBehaviour
         CurrentHealth = newHealth;
     }
 
-    void LoadHealth()
+    void LoadPlayerHealth()
     {
-        MaxHealth = GameManager.Instance.PlayerStats.MaxHealth;
-        CurrentHealth = GameManager.Instance.PlayerStats.CurrentHealth;
+        MaxHealth = GameManager.Instance.PlayerStats.maxHealth;
+        CurrentHealth = GameManager.Instance.PlayerStats.currentHealth;
         //Debug.Log("Loaded Player Health");
         
     }
 
-    void SaveHealth()
+    void SavePlayerHealth()
     {
-        GameManager.Instance.PlayerStats.MaxHealth = MaxHealth;
-        GameManager.Instance.PlayerStats.CurrentHealth = CurrentHealth;
-        GameManager.Instance.LoadData -= LoadHealth;
+        GameManager.Instance.PlayerStats.maxHealth = MaxHealth;
+        GameManager.Instance.PlayerStats.currentHealth = CurrentHealth;
+        GameManager.Instance.LoadData -= LoadPlayerHealth;
+        //Debug.Log("Saved Player Health");
+    }
+
+    void LoadBaseHealth()
+    {
+        MaxHealth = GameManager.Instance.PlayerStats.maxBaseHealth;
+        CurrentHealth = GameManager.Instance.PlayerStats.currentBaseHealth;
+        Debug.Log("Loaded Base Health");
+
+    }
+
+    void SaveBaseHealth()
+    {
+        GameManager.Instance.PlayerStats.maxBaseHealth = MaxHealth;
+        GameManager.Instance.PlayerStats.currentBaseHealth = CurrentHealth;
+        GameManager.Instance.LoadData -= LoadBaseHealth;
         //Debug.Log("Saved Player Health");
     }
 

@@ -13,18 +13,26 @@ public class Monster_Spawner : MonoBehaviour
     private int eliteRSpawn = 0;
     public int eliteRSpawned = 0;
     public int eliteRKilled = 0;
+    private int eliteRKilledThisInstance;
+    private int eliteRKilledFromSave;
 
     private int eliteMSpawn = 0;
     public int eliteMSpawned = 0;
     public int eliteMKilled = 0;
+    private int eliteMKilledThisInstance;
+    private int eliteMKilledFromSave;
 
     private int bossSpawn = 0;
     public int bossSpawned = 0;
     public int bossKilled = 0;
+    private int bossKilledThisInstance;
+    private int bossKilledFromSave;
 
     private int creepCountToEndWave = 0;
     public int creepSpawned = 0;
     public int creepKilled = 0;
+    private int creepKilledThisInstance;
+    private int creepKilledFromSave;
 
     public bool isWave = false;
     public bool inWave = false;
@@ -54,8 +62,7 @@ public class Monster_Spawner : MonoBehaviour
     public Vector3 enemySpawnPosition;
 
     public TMP_Text EnemiesLeftText;
-    private int creepKilledThisInstance;
-    private int creepKilledFromSave;
+
 
     // Start is called before the first frame update
 
@@ -234,7 +241,7 @@ public class Monster_Spawner : MonoBehaviour
         isWave = true;
         inWave = true;
         WaveTimerManager.Instance.IncomingWave();
-        GameManager.Instance.PlayerStats.CurrentWave = waveNumber;
+        GameManager.Instance.PlayerStats.currentWave = waveNumber;
 
         foreach (Transform child in transform)
         {
@@ -274,9 +281,11 @@ public class Monster_Spawner : MonoBehaviour
         bossSpawned = 0;
         bossKilled = 0;
         isWave = false;
+        creepKilledFromSave = 0;
+        creepKilledThisInstance = 0;
         WaveTimerManager.Instance.ShowTimer();
         WaveTimerManager.Instance.StartNewWaveTimer();
-        GameManager.Instance.PlayerStats.CurrentWave = waveNumber;
+        GameManager.Instance.PlayerStats.currentWave = waveNumber;
         EnemiesLeftText.text = "";
         IsLoadedGame = false;
     }
@@ -367,17 +376,17 @@ public class Monster_Spawner : MonoBehaviour
 
     public void LoadSpawnerData()
     {
-        waveNumber = GameManager.Instance.PlayerStats.CurrentWave;
-        isWave = GameManager.Instance.PlayerStats.IsWave;
-        inWave = GameManager.Instance.PlayerStats.InWave;
-        creepCountToEndWave = GameManager.Instance.PlayerStats.CreepSpawnThisWave;
-        creepKilledFromSave = GameManager.Instance.PlayerStats.CreepKilledThisWave;
-        eliteRSpawn = GameManager.Instance.PlayerStats.EliteRSpawnThisWave;
-        eliteRKilled = GameManager.Instance.PlayerStats.EliteRKilledThisWave;
-        eliteMSpawn = GameManager.Instance.PlayerStats.EliteMSpawnThisWave;
-        eliteMKilled = GameManager.Instance.PlayerStats.EliteMKilledThisWave;
-        bossSpawn = GameManager.Instance.PlayerStats.BossSpawnThisWave;
-        bossKilled = GameManager.Instance.PlayerStats.BossKilledThisWave;
+        waveNumber = GameManager.Instance.PlayerStats.currentWave;
+        isWave = GameManager.Instance.PlayerStats.isWave;
+        inWave = GameManager.Instance.PlayerStats.inWave;
+        creepCountToEndWave = GameManager.Instance.PlayerStats.creepCountToEndWave;
+        creepKilledFromSave = GameManager.Instance.PlayerStats.creepKilledThisWave;
+        eliteRSpawn = GameManager.Instance.PlayerStats.eliteRCountToEndWave;
+        eliteRKilled = GameManager.Instance.PlayerStats.eliteRKilledThisWave;
+        eliteMSpawn = GameManager.Instance.PlayerStats.eliteMCountToEndWave;
+        eliteMKilled = GameManager.Instance.PlayerStats.eliteMKilledThisWave;
+        bossSpawn = GameManager.Instance.PlayerStats.bossCountToEndWave;
+        bossKilled = GameManager.Instance.PlayerStats.bossKilledThisWave;
         IsLoadedGame = true;
         if (isWave == true && inWave == true)
         {
@@ -402,17 +411,17 @@ public class Monster_Spawner : MonoBehaviour
 
     public void SaveSpawnerData()
     {
-        GameManager.Instance.PlayerStats.CurrentWave = waveNumber;
-        GameManager.Instance.PlayerStats.IsWave = isWave;
-        GameManager.Instance.PlayerStats.InWave = inWave;
-        GameManager.Instance.PlayerStats.CreepSpawnThisWave = creepCountToEndWave;
-        GameManager.Instance.PlayerStats.CreepKilledThisWave = creepKilledThisInstance + creepKilledFromSave;
-        GameManager.Instance.PlayerStats.EliteRSpawnThisWave = eliteRSpawn;
-        GameManager.Instance.PlayerStats.EliteRKilledThisWave = eliteRKilled;
-        GameManager.Instance.PlayerStats.EliteMSpawnThisWave = eliteMSpawn;
-        GameManager.Instance.PlayerStats.EliteMKilledThisWave = eliteMKilled;
-        GameManager.Instance.PlayerStats.BossSpawnThisWave = bossSpawn;
-        GameManager.Instance.PlayerStats.BossKilledThisWave = bossKilled;
+        GameManager.Instance.PlayerStats.currentWave = waveNumber;
+        GameManager.Instance.PlayerStats.isWave = isWave;
+        GameManager.Instance.PlayerStats.inWave = inWave;
+        GameManager.Instance.PlayerStats.creepCountToEndWave = creepCountToEndWave;
+        GameManager.Instance.PlayerStats.creepKilledThisWave = creepKilledThisInstance + creepKilledFromSave;
+        GameManager.Instance.PlayerStats.eliteRCountToEndWave = eliteRSpawn;
+        GameManager.Instance.PlayerStats.eliteRKilledThisWave = eliteRKilled;
+        GameManager.Instance.PlayerStats.eliteMCountToEndWave = eliteMSpawn;
+        GameManager.Instance.PlayerStats.eliteMKilledThisWave = eliteMKilled;
+        GameManager.Instance.PlayerStats.bossCountToEndWave = bossSpawn;
+        GameManager.Instance.PlayerStats.bossKilledThisWave = bossKilled;
         GameManager.Instance.LoadData -= LoadSpawnerData;
         //Debug.Log("Saved Spawner Data");
     }
