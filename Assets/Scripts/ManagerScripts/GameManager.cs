@@ -151,7 +151,7 @@ public class GameManager : MonoBehaviour
                 WorldGen.CreateWorld(true);
                 WorldGen.LoadWorldObjects(PlayerStats.WorldGenSaveData);
                 
-                LoadingSavedGame = false;
+                //LoadingSavedGame = false;
             }
             else
             {

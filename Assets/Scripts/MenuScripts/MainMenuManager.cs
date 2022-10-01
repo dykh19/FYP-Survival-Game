@@ -35,6 +35,7 @@ public class MainMenuManager : MonoBehaviour
     //Start Game
     public void StartGame()
     {
+        GameManager.Instance.LoadingSavedGame = false;
         SceneManager.LoadScene(1);
     }   
     
