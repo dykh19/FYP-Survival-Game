@@ -21,25 +21,25 @@ public class WorldGeneratorEditor : Editor
         var update = DrawDefaultInspector();
 
         if (update && worldGenerator.autoUpdate)
-            worldGenerator.CreateWorld();
+            //worldGenerator.CreateWorld();
 
         GUILayout.Space(4);
 
         if (GUILayout.Button("Generate World"))
-            worldGenerator.CreateWorld();
+            //worldGenerator.CreateWorld();
 
         if (GUILayout.Button("Generate Empty World"))
-            worldGenerator.CreateTerrain();
+            //worldGenerator.CreateTerrain();
 
         if (GUILayout.Button("Destroy World"))
-            worldGenerator.Reset();
+            //worldGenerator.Reset();
 
         GUILayout.Space(10);
         EditorGUILayout.LabelField("Debug Controls", EditorStyles.boldLabel);
 
         if (GUILayout.Button("Fix NullReferenceException"))
         {
-            worldGenerator.SetInstance();
+            //worldGenerator.SetInstance();
             ClearLog();
         }
     }

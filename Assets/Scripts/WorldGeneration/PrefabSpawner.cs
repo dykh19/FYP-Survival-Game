@@ -60,12 +60,12 @@ public class PrefabSpawner
     {
         foreach (var point in mapMeshData.vertices)
         {
-            if (WorldGenerator.Main.flattenCenter)
+            if (GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().flattenCenter)
             {
                 var distanceX = 0 - point.x;  // Assuming the center of the map is (0, y, 0).
                 var distanceZ = 0 - point.z;
                 var distanceSquared = (distanceX * distanceX) + (distanceZ * distanceZ);
-                var radiusSquared = WorldGenerator.Main.radius * WorldGenerator.Main.radius;
+                var radiusSquared = GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().radius * GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().radius;
 
                 if (distanceSquared <= radiusSquared) continue;
             }

@@ -28,7 +28,7 @@ public class MaterialGenerator
         width = heightMap.GetLength(0);
         height = heightMap.GetLength(1);
 
-        enableCustomShader = WorldGenerator.Main.displayMode == ShaderMode.CustomTerrainShader;
+        enableCustomShader = GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().displayMode == ShaderMode.CustomTerrainShader;
 
         return CreateMaterial();
     }
