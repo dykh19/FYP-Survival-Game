@@ -7,13 +7,16 @@ using UnityEngine;
 public class Upgrade : MonoBehaviour
 {
 
+
+
     public enum EquipmentExchangeType    //Uses Essence to Upgrade
     {
-        LMelee_1, LMelee_2, LMelee_3, LMelee_4, LMeleeMax,
-        HMelee_1, HMelee_2, HMelee_3, HMelee_4, HMeleeMax,
-        Rifle_1, Rifle_2, Rifle_3, Rifle_4, RifleMax,
-        Shotgun_1, Shotgun_2, Shotgun_3, Shotgun_4, ShotgunMax,
-        MonsterEss
+        LMelee_1, LMelee_2, LMelee_3, LMelee_4, LMelee_5, LMelee_6, LMelee_7, LMelee_8, LMelee_9, LMeleeMax,
+        HMelee_1, HMelee_2, HMelee_3, HMelee_4, HMelee_5, HMelee_6, HMelee_7, HMelee_8, HMelee_9, HMeleeMax,
+        Rifle_1, Rifle_2, Rifle_3, Rifle_4, Rifle_5, Rifle_6, Rifle_7, Rifle_8, Rifle_9, RifleMax,
+        Shotgun_1, Shotgun_2, Shotgun_3, Shotgun_4, Shotgun_5, Shotgun_6, Shotgun_7, Shotgun_8, Shotgun_9, ShotgunMax,
+        Armor_1, Armor_2, Armor_3, Armor_4, Armor_5, Armor_6, Armor_7, Armor_8, Armor_9, ArmorMax,
+        Weapon, Armor, Base, MonsterEss, MonsterOre
     }
 
     /*public enum PassiveSkillUpgradeType
@@ -49,51 +52,17 @@ public class Upgrade : MonoBehaviour
         switch (Exchange)
         {
             default:
-            //Light Melee Weapon Cases
-            case EquipmentExchangeType.LMelee_1:
+            //Equipment Upgrade
+            case EquipmentExchangeType.Weapon:
                 return "MonsterEss";
-            case EquipmentExchangeType.LMelee_2:
+            case EquipmentExchangeType.Armor:
                 return "MonsterEss";
-            case EquipmentExchangeType.LMelee_3:
+            case EquipmentExchangeType.Base:
                 return "MonsterEss";
-            case EquipmentExchangeType.LMelee_4:
-                return "MonsterEss";
-            case EquipmentExchangeType.LMeleeMax:
-                return "MonsterEss";
-            //Heavy Melee Weapon Cases
-            case EquipmentExchangeType.HMelee_1:
-                return "MonsterEss";
-            case EquipmentExchangeType.HMelee_2:
-                return "MonsterEss";
-            case EquipmentExchangeType.HMelee_3:
-                return "MonsterEss";
-            case EquipmentExchangeType.HMelee_4:
-                return "MonsterEss";
-            case EquipmentExchangeType.HMeleeMax:
-                return "MonsterEss";
-            //Rifle Weapon Cases
-            case EquipmentExchangeType.Rifle_1:
-                return "MonsterEss";
-            case EquipmentExchangeType.Rifle_2:
-                return "MonsterEss";
-            case EquipmentExchangeType.Rifle_3:
-                return "MonsterEss";
-            case EquipmentExchangeType.Rifle_4:
-                return "MonsterEss";
-            case EquipmentExchangeType.RifleMax:
-                return "MonsterEss";
-            //Shotgun Weapon Cases
-            case EquipmentExchangeType.Shotgun_1:
-                return "MonsterEss";
-            case EquipmentExchangeType.Shotgun_2:
-                return "MonsterEss";
-            case EquipmentExchangeType.Shotgun_3:
-                return "MonsterEss";
-            case EquipmentExchangeType.Shotgun_4:
-                return "MonsterEss";
-            case EquipmentExchangeType.ShotgunMax:
-                return "MonsterEss";
+            //Exchange Items
             case EquipmentExchangeType.MonsterEss:
+                return "CreepDrop";
+            case EquipmentExchangeType.MonsterOre:
                 return "CreepDrop";
         }
     }
@@ -105,11 +74,13 @@ public class Upgrade : MonoBehaviour
             default:
             case EquipmentExchangeType.MonsterEss:
                 return 10;
+            case EquipmentExchangeType.MonsterOre:
+                return 10;
         }
     }
 
 
-    public static int GetCost(EquipmentExchangeType equipmentUpgradeType)
+    /*public static int GetCost(EquipmentExchangeType equipmentUpgradeType)
     {
         switch(equipmentUpgradeType)
         {
@@ -159,5 +130,5 @@ public class Upgrade : MonoBehaviour
             case EquipmentExchangeType.ShotgunMax:
                 return 0;
         }
-    }
+    }*/
 }

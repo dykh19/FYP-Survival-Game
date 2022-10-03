@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9102110978766057993
 Transform:
   m_ObjectHideFlags: 0
@@ -289,8 +289,59 @@ MonoBehaviour:
   RifleLvl: 0
   ShotgunLvl: 0
   buttonCount: 0
+  LMeleeCost: 10
+  HMeleeCost: 10
+  RifleCost: 10
+  ShotgunCost: 10
+  ArmorCost: 10
+  itemIndex: 0
+  itemCount: 0
   playerInventoryUI: {fileID: 0}
+  playerInventory:
+    Items:
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    activeItemIndex: 0
   creepDrop: {fileID: 11400000, guid: 07d9999ac2c72cf47a2be2aa521addcc, type: 2}
+  monsterEss: {fileID: 11400000, guid: 299f0f15ca4b2e943b9540c7185d3c94, type: 2}
 --- !u!114 &9102110979277821929
 MonoBehaviour:
   m_ObjectHideFlags: 0
