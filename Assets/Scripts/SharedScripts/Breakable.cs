@@ -30,6 +30,7 @@ public class Breakable : MonoBehaviour
         if (currentDurability <= 0)
         {
             gameObject.transform.GetChild(0).gameObject.SetActive(false);
+            
             if (dropItem is not null)
                 GameManager.Instance.PlayerInventory.AddItem(dropItem);
             Invoke("Break", 1);

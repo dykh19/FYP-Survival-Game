@@ -5,6 +5,7 @@ using UnityEngine;
 // NOTE: Weapons, constructables and usables should extend GameItem.
 
 [CreateAssetMenu(fileName = "New Game Item", menuName = "Game Item")]
+[System.Serializable]
 public class GameItem : ScriptableObject
 {
     public new string name;

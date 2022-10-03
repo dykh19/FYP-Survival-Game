@@ -15,8 +15,21 @@ public class Health : MonoBehaviour
 
     private void Awake()
     {
+        if (this.CompareTag("Player"))
+        {
+            GameManager.Instance.LoadData -= LoadPlayerHealth;
+            GameManager.Instance.SaveData -= SavePlayerHealth;
+            GameManager.Instance.LoadData += LoadPlayerHealth;
+            GameManager.Instance.SaveData += SavePlayerHealth;
+        }
+
+        if (this.CompareTag("Base"))
+        {
+            GameManager.Instance.SaveData -= SaveBaseHealth;
+            GameManager.Instance.SaveData += SaveBaseHealth;
+        }
         //If owner of this health script is enemy, adjust the health based on difficulty and mob type
-        if (this.tag == "Enemy")
+        if (this.CompareTag("Enemy"))
         {
             if (this.GetComponent("CreepAI") != null)
             {
@@ -40,8 +53,20 @@ public class Health : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Set Current health to Max Health set in awake
-        CurrentHealth = MaxHealth;
+        if (GameManager.Instance.LoadingSavedGame == true && this.CompareTag("Player"))
+        {
+            return;
+        }
+        else if (GameManager.Instance.LoadingSavedGame == true && this.CompareTag("Base"))
+        {
+            LoadBaseHealth();
+        }
+        else
+        {
+            // Set Current health to Max Health set in awake
+            CurrentHealth = MaxHealth;
+        }
+        
     }
 
     //Heal the entity by given argument
@@ -80,20 +105,24 @@ public class Health : MonoBehaviour
     public void HandleDeath()
     {
         //If player, end game
-        if(this.tag == "Player")
+        if(this.CompareTag("Player"))
         {
             //Do player dies things here
             GameManager.Instance.OnPlayerDie?.Invoke();
         }
 
         //If enemy, call enemy death function
-        if(this.tag == "Enemy")
+        if(this.CompareTag("Enemy"))
         {
             this.GetComponent<EnemyBehavior>().Die();
             Debug.Log("Enemy Dead");
         }
 
         //Handle Base death
+        if(this.CompareTag("Base"))
+        {
+            GameManager.Instance.OnPlayerDie?.Invoke();
+        }
     }
 
     //Change the Health from default value
@@ -101,6 +130,38 @@ public class Health : MonoBehaviour
     {
         MaxHealth = newHealth;
         CurrentHealth = newHealth;
+    }
+
+    void LoadPlayerHealth()
+    {
+        MaxHealth = GameManager.Instance.PlayerStats.maxHealth;
+        CurrentHealth = GameManager.Instance.PlayerStats.currentHealth;
+        //Debug.Log("Loaded Player Health");
+        
+    }
+
+    void SavePlayerHealth()
+    {
+        GameManager.Instance.PlayerStats.maxHealth = MaxHealth;
+        GameManager.Instance.PlayerStats.currentHealth = CurrentHealth;
+        GameManager.Instance.LoadData -= LoadPlayerHealth;
+        //Debug.Log("Saved Player Health");
+    }
+
+    void LoadBaseHealth()
+    {
+        MaxHealth = GameManager.Instance.PlayerStats.maxBaseHealth;
+        CurrentHealth = GameManager.Instance.PlayerStats.currentBaseHealth;
+        Debug.Log("Loaded Base Health");
+
+    }
+
+    void SaveBaseHealth()
+    {
+        GameManager.Instance.PlayerStats.maxBaseHealth = MaxHealth;
+        GameManager.Instance.PlayerStats.currentBaseHealth = CurrentHealth;
+        GameManager.Instance.LoadData -= LoadBaseHealth;
+        //Debug.Log("Saved Player Health");
     }
 
 }

@@ -39,13 +39,13 @@ public class TerrainPresetEditor : Editor
 
         // Buttons.
         if (GUILayout.Button("Generate World"))
-            WorldGenerator.Main.CreateWorld();
+            //GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().CreateWorld();
 
         if (GUILayout.Button("Generate Empty World"))
-            WorldGenerator.Main.CreateTerrain();
+            //GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().CreateTerrain();
 
         if (GUILayout.Button("Destroy World"))
-            WorldGenerator.Main.Reset();
+            //GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().Reset();
 
         GUILayout.Space(10);
 
@@ -97,8 +97,8 @@ public class TerrainPresetEditor : Editor
         var terrainPreset = target as TerrainPreset;
 
         // Enable normal rendering mode.
-        WorldGenerator.Main.displayMode = ShaderMode.CustomTerrainShader;
-        WorldGenerator.Main.randomSeed = true;
+        GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().displayMode = ShaderMode.CustomTerrainShader;
+        GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().randomSeed = true;
 
         // Get all the necessary data.
         var iterCount = 10;
@@ -132,12 +132,12 @@ public class TerrainPresetEditor : Editor
         for (int i = 0; i < iterCount; i++)
         {
             // Generate world.
-            WorldGenerator.Main.CreateWorld();
+            GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().CreateWorld(false);
 
             // For each object spawned by the world:
-            for (int j = 0; j < WorldGenerator.Main.transform.childCount; j++)
+            for (int j = 0; j < GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().transform.childCount; j++)
             {
-                var spawnedObject = WorldGenerator.Main.transform.GetChild(j);
+                var spawnedObject = GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().transform.GetChild(j);
 
                 // Find the corresponding spawn data then increment.
                 foreach (var spawnable in PrefabSpawner.Main.spawnables)

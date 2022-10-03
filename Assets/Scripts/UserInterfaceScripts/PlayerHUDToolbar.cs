@@ -33,13 +33,13 @@ public class PlayerHUDToolbar : UIController
 
     void Update()
     {
-        ScrollActiveItem();
-        KeyActiveItem();
+        //ScrollActiveItem();
+        //KeyActiveItem();
 
-        if (Input.GetMouseButtonDown(0))
-            Inventory.Main.Items[Inventory.Main.activeItemIndex]?.item.OnUse();
+        //if (Input.GetMouseButtonDown(0))
+            //GameManager.Instance.PlayerInventory.Items[GameManager.Instance.PlayerInventory.activeItemIndex]?.item.OnUse();
 
-        Inventory.Main.Items[Inventory.Main.activeItemIndex]?.item.OnHoldStay();
+        //GameManager.Instance.PlayerInventory.Items[GameManager.Instance.PlayerInventory.activeItemIndex]?.item.OnHoldStay();
     }
 
     public void UpdateUI()
@@ -51,33 +51,33 @@ public class PlayerHUDToolbar : UIController
     public void UpdateSelectionSquare(int newValue)
     {
         // Call the 'OnHoldExit' method of the current active item.
-        Inventory.Main.Items[Inventory.Main.activeItemIndex]?.item.OnHoldExit();
+        //GameManager.Instance.PlayerInventory.Items[GameManager.Instance.PlayerInventory.activeItemIndex]?.item.OnHoldExit();
 
         // Update the current active item and move the selection square UI.
-        Inventory.Main.activeItemIndex = newValue;
+        //GameManager.Instance.PlayerInventory.activeItemIndex = newValue;
         selectionSquare.position = slots[newValue].transform.position;
 
         // Call the 'OnHoldEnter' method of the new active item.
-        Inventory.Main.Items[newValue]?.item.OnHoldEnter();
+        GameManager.Instance.PlayerInventory.Items[newValue]?.item.OnHoldEnter();
     }
 
-    private void ScrollActiveItem()
+    /*private void ScrollActiveItem()
     {
         if (Input.mouseScrollDelta.y > 0)
         {
-            if (Inventory.Main.activeItemIndex > 0)
-                UpdateSelectionSquare(Inventory.Main.activeItemIndex - 1);
+            if (GameManager.Instance.PlayerInventory.activeItemIndex > 0)
+                UpdateSelectionSquare(GameManager.Instance.PlayerInventory.activeItemIndex - 1);
             else
                 UpdateSelectionSquare(slots.Length - 1);
         }
         else if (Input.mouseScrollDelta.y < 0)
         {
-            if (Inventory.Main.activeItemIndex < slots.Length - 1)
-                UpdateSelectionSquare(Inventory.Main.activeItemIndex + 1);
+            if (GameManager.Instance.PlayerInventory.activeItemIndex < slots.Length - 1)
+                UpdateSelectionSquare(GameManager.Instance.PlayerInventory.activeItemIndex + 1);
             else
                 UpdateSelectionSquare(0);
         }
-    }
+    }*/
 
     private void KeyActiveItem()
     {
@@ -147,7 +147,7 @@ public class PlayerHUDToolbar : UIController
         // Display the icon and quantity for the first few items in the inventory.
         for (int i = 0; i < slots.Length; i++)
         {
-            var item = Inventory.Main.Items[i];
+            var item = GameManager.Instance.PlayerInventory.Items[i];
 
             if (item is not null)
             {

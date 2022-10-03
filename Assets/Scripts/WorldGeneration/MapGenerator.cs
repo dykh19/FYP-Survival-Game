@@ -88,17 +88,17 @@ public class MapGenerator
         var distanceY = centerY - y;
 
         var distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
-        var radiusSquared = WorldGenerator.Main.radius * WorldGenerator.Main.radius;
-        var outerRadius = WorldGenerator.Main.radius + WorldGenerator.Main.radialSmoothing;
+        var radiusSquared = GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().radius * GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().radius;
+        var outerRadius = GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().radius + GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().radialSmoothing;
         var oRadiusSquared = outerRadius * outerRadius;
 
         if (distanceSquared >= oRadiusSquared) return value;
-        if (distanceSquared <= radiusSquared) return WorldGenerator.Main.groundLevel;
+        if (distanceSquared <= radiusSquared) return GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().groundLevel;
 
         var distance = Mathf.Sqrt(distanceSquared);
-        var smoothing = Mathf.InverseLerp(WorldGenerator.Main.radius, outerRadius, distance);
+        var smoothing = Mathf.InverseLerp(GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().radius, outerRadius, distance);
 
-        return Mathf.Lerp(WorldGenerator.Main.groundLevel, value, smoothing);
+        return Mathf.Lerp(GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().groundLevel, value, smoothing);
     }
 
     private void GenerateOctaveOffsets(int min, int max)
@@ -154,7 +154,7 @@ public class MapGenerator
             {
                 var height = NormalizeNoiseHeight(noiseMap[x, y]);
 
-                if (WorldGenerator.Main.flattenCenter)
+                if (GameManager.Instance.WorldGen.GetComponent<WorldGenerator>().flattenCenter)
                     height = FlattenCenter(height, x, y);
 
                 if (enableFalloff)

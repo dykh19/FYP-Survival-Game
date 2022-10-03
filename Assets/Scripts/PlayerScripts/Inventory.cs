@@ -1,18 +1,18 @@
 using System;
 
 // Written by Nicholas Sebastian Hendrata on 16/08/2022.
-
+[System.Serializable]
 public class Inventory
 {
-    public static Inventory Main { get; private set; }
+    //public static Inventory Main { get; private set; }
 
-    public InventoryItem[] Items { get; private set; }
+    public InventoryItem[] Items;// { get; private set; }
     public int activeItemIndex;
     private const int defaultInventorySize = 20;
 
     public Inventory()
     {
-        Main = this;
+        //Main = this;
         Items = new InventoryItem[defaultInventorySize];
     }
 
@@ -68,6 +68,7 @@ public class Inventory
     }
 }
 
+[System.Serializable]
 public class InventoryItem
 {
     public GameItem item;

@@ -4,6 +4,7 @@ using UnityEngine;
 
 // This class will be used for tracking the player's stats during the game
 // It will also be used for saving and loading of the game
+[System.Serializable]
 public class PlayerStatistics
 {
     // Stores player's chosen game mode and difficulty
@@ -31,13 +32,32 @@ public class PlayerStatistics
     public int TotalBossCoresObtained;
     public int CurrentBossCoresInBase;
 
-    // Stores the number of waves cleared and the current wave
+    // Stores data for the monster spawner script
     public int WavesCleared;
-    public int CurrentWave;
+    public int currentWave;
+    public bool isWave;
+    public bool inWave;
+    public int creepCountToEndWave;
+    public int creepKilledThisWave;
+    public int eliteRCountToEndWave;
+    public int eliteRKilledThisWave;
+    public int eliteMCountToEndWave;
+    public int eliteMKilledThisWave;
+    public int bossCountToEndWave;
+    public int bossKilledThisWave;
 
-    // Stores the max and current health of the player
-    public float MaxHealth;
-    public float CurrentHealth;
+    // Stores data for player health
+    public float maxHealth;
+    public float currentHealth;
+
+    // Stores data for player base health
+    public float maxBaseHealth;
+    public float currentBaseHealth;
+
+
+    public Inventory PlayerInventory;
+
+    public WorldGenData WorldGenSaveData;
 
     public PlayerStatistics()
     {
@@ -60,10 +80,15 @@ public class PlayerStatistics
         CurrentBossCoresInBase = 0;
 
         WavesCleared = 0;
-        CurrentWave = 0;
+        currentWave = 0;
+        isWave = false;
 
-        MaxHealth = 0;
-        CurrentHealth = 0;
+        maxHealth = 0;
+        currentHealth = 0;
+
+        PlayerInventory = new Inventory();
+
+        WorldGenSaveData = new WorldGenData();
     }
 
     public void CalculateTotalEnemiesKilled()
