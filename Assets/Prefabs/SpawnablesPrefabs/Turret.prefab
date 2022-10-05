@@ -457,6 +457,7 @@ MonoBehaviour:
   AmmoReloadDelay: 2
   InfiniteAmmo: 1
   MaxAmmo: 900
+  Damage: 20
   WeaponAnimator: {fileID: 0}
   MuzzleFlashPrefab: {fileID: 0}
   UnparentMuzzleFlash: 0

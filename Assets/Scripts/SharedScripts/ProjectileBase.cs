@@ -9,6 +9,10 @@ public abstract class ProjectileBase : MonoBehaviour
     public Vector3 InheritedMuzzleVelocity { get; private set; }
     public float InitialCharge { get; private set; }
 
+    public float Damage;
+
+    public float MaxLifeTime;
+
     public UnityAction OnShoot;
 
     public void Shoot(RangedWeaponController controller)

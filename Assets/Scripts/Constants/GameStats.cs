@@ -22,4 +22,7 @@ public class GameStats
     public static float[] BaseEnemyHealth = { 70f, 500f, 300f, 1000f };
 
     public static float[] BaseEnemyDamage = { 20f, 40f, 80f, 150f };
+
+    //
+    public static float[] PlayerBaseHealth = { 2500f, 3000f, 4000f, 4500f, 5000f };
 }

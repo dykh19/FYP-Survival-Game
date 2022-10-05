@@ -163,5 +163,4 @@ public class Health : MonoBehaviour
         GameManager.Instance.LoadData -= LoadBaseHealth;
         //Debug.Log("Saved Player Health");
     }
-
 }

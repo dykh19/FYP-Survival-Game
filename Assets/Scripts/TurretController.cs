@@ -63,7 +63,7 @@ public class TurretController : MonoBehaviour
         timeStartedDetection = Mathf.NegativeInfinity;
         previousPivotAimingRotation = turretPivot.rotation;
 
-        delayBetweenShots = turretWeapon.DelayBetweenShots;
+        delayBetweenShots = turretWeapon.delayBetweenShots;
     }
 
     private void Update()
