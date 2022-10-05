@@ -30,14 +30,19 @@ public class WaveTimerManager : MonoBehaviour
         TimerUI = GameObject.Find("TimerText").GetComponent<TMP_Text>();
         WaveCountUI = GameObject.Find("WaveCountText").GetComponent<TMP_Text>();
         MonsterSpawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<Monster_Spawner>();
+        GameManager.Instance.LoadData += LoadTimerData;
+        GameManager.Instance.SaveData += SaveTimerData;
     }
 
     // Set the timer based on the GameManager Value and start the timer
     private void Start()
     {
-        SetTimer(GameManager.Instance.TimeToNextWave);
-        //StartTimer();
-        UpdateWaveCountText();
+        if (!GameManager.Instance.LoadingSavedGame)
+        {
+            SetTimer(GameManager.Instance.TimeToNextWave);
+            StartTimer();
+            UpdateWaveCountText();
+        }
     }
 
     // Update is called once per frame
@@ -155,5 +160,17 @@ public class WaveTimerManager : MonoBehaviour
     public void UpdateWaveCountText()
     {
         WaveCountUI.text = "Wave Progress: " + MonsterSpawner.waveNumber + "/" + GameManager.Instance.WaveCountToWin;
+    }
+
+    public void LoadTimerData()
+    {
+        TimeRemaining = GameManager.Instance.PlayerStats.TimeLeftToNextWave;
+        StartTimer();
+        UpdateWaveCountText();
+    }
+
+    public void SaveTimerData()
+    {
+        GameManager.Instance.PlayerStats.TimeLeftToNextWave = TimeRemaining;
     }
 }

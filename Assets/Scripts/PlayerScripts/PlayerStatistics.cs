@@ -35,16 +35,9 @@ public class PlayerStatistics
     // Stores data for the monster spawner script
     public int WavesCleared;
     public int currentWave;
-    public bool isWave;
-    public bool inWave;
-    public int creepCountToEndWave;
-    public int creepKilledThisWave;
-    public int eliteRCountToEndWave;
-    public int eliteRKilledThisWave;
-    public int eliteMCountToEndWave;
-    public int eliteMKilledThisWave;
-    public int bossCountToEndWave;
-    public int bossKilledThisWave;
+
+    // Stores data for the timer
+    public float TimeLeftToNextWave;
 
     // Stores data for player health
     public float maxHealth;
@@ -81,7 +74,6 @@ public class PlayerStatistics
 
         WavesCleared = 0;
         currentWave = 0;
-        isWave = false;
 
         maxHealth = 0;
         currentHealth = 0;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using TMPro;
 
 public class Monster_Spawner : MonoBehaviour
@@ -13,30 +14,30 @@ public class Monster_Spawner : MonoBehaviour
     private int eliteRSpawn = 0;
     public int eliteRSpawned = 0;
     public int eliteRKilled = 0;
-    private int eliteRKilledThisInstance;
-    private int eliteRKilledFromSave;
+/*    private int eliteRKilledThisInstance;
+    private int eliteRKilledFromSave;*/
 
     private int eliteMSpawn = 0;
     public int eliteMSpawned = 0;
     public int eliteMKilled = 0;
-    private int eliteMKilledThisInstance;
-    private int eliteMKilledFromSave;
+/*    private int eliteMKilledThisInstance;
+    private int eliteMKilledFromSave;*/
 
     private int bossSpawn = 0;
     public int bossSpawned = 0;
     public int bossKilled = 0;
-    private int bossKilledThisInstance;
-    private int bossKilledFromSave;
+/*    private int bossKilledThisInstance;
+    private int bossKilledFromSave;*/
 
     private int creepCountToEndWave = 0;
     public int creepSpawned = 0;
     public int creepKilled = 0;
-    private int creepKilledThisInstance;
-    private int creepKilledFromSave;
+/*    private int creepKilledThisInstance;
+    private int creepKilledFromSave;*/
 
     public bool isWave = false;
     public bool inWave = false;
-    public bool IsLoadedGame = false;
+/*    public bool IsLoadedGame = false;*/
 
     public GameObject[] creeps = new GameObject[3];
     public GameObject eliteR;
@@ -63,6 +64,8 @@ public class Monster_Spawner : MonoBehaviour
 
     public TMP_Text EnemiesLeftText;
 
+    public Button saveGameButton;
+
 
     // Start is called before the first frame update
 
@@ -73,6 +76,8 @@ public class Monster_Spawner : MonoBehaviour
         GameManager.Instance.SaveData -= SaveSpawnerData;
         GameManager.Instance.LoadData += LoadSpawnerData;
         GameManager.Instance.SaveData += SaveSpawnerData;
+
+        saveGameButton = GameObject.Find("SaveGameButton").GetComponent<Button>();
     }
     void Start()
     {
@@ -92,11 +97,6 @@ public class Monster_Spawner : MonoBehaviour
 
         //spawnEliteR(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
         EnemiesLeftText = GameObject.Find("EnemiesLeftText").GetComponent<TMP_Text>();
-
-        if (!IsLoadedGame)
-        {
-            WaveTimerManager.Instance.StartTimer();
-        }
     }
 
     // Update is called once per frame
@@ -104,7 +104,7 @@ public class Monster_Spawner : MonoBehaviour
     {
         if (inWave)
         {
-            EnemiesLeftText.text = "Enemies Left This Wave: " + (creepCountToEndWave - creepKilledThisInstance);
+            EnemiesLeftText.text = "Enemies Left This Wave: " + (creepCountToEndWave - creepKilled);
         }
 
         if (isWave)
@@ -118,7 +118,7 @@ public class Monster_Spawner : MonoBehaviour
                 NextWave();
             }
 
-            if (creepKilledThisInstance == creepCountToEndWave && eliteRKilled == eliteRSpawned && eliteMKilled == eliteMSpawned && bossKilled == bossSpawned)
+            if (creepKilled == creepCountToEndWave && eliteRKilled == eliteRSpawned && eliteMKilled == eliteMSpawned && bossKilled == bossSpawned)
             {
                 EndWave();
             }
@@ -217,22 +217,16 @@ public class Monster_Spawner : MonoBehaviour
     public void StartWave()
     {
         waveNumber = 1;
-        if (!IsLoadedGame)
-        {
-            creepSpawned = 0;
-            creepKilled = 0;
-            eliteRSpawned = 0;
-            eliteRKilled = 0;
-            eliteMSpawned = 0;
-            eliteMKilled = 0;
-            bossSpawned = 0;
-            bossKilled = 0;
-            creepCountToEndWave = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
-        }
-        else
-        {
-            creepCountToEndWave = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f))) - creepKilledFromSave;
-        }
+
+        creepSpawned = 0;
+        creepKilled = 0;
+        eliteRSpawned = 0;
+        eliteRKilled = 0;
+        eliteMSpawned = 0;
+        eliteMKilled = 0;
+        bossSpawned = 0;
+        bossKilled = 0;
+        creepCountToEndWave = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
 
         eliteRSpawn = 0; //To change based on specs
         eliteMSpawn = 0;
@@ -242,6 +236,8 @@ public class Monster_Spawner : MonoBehaviour
         inWave = true;
         WaveTimerManager.Instance.IncomingWave();
         GameManager.Instance.PlayerStats.currentWave = waveNumber;
+        saveGameButton.interactable = false;
+        saveGameButton.GetComponentInChildren<TMP_Text>().SetText("Cannot Save During Wave");
 
         foreach (Transform child in transform)
         {
@@ -269,6 +265,8 @@ public class Monster_Spawner : MonoBehaviour
         //Store Data into PlayerStatistics
         GameManager.Instance.PlayerStats.CalculateTotalEnemiesKilled();
         GameManager.Instance.PlayerStats.WavesCleared = waveNumber;
+        saveGameButton.interactable = true;
+        saveGameButton.GetComponentInChildren<TMP_Text>().SetText("Save Game");
 
         inWave = false;
         waveNumber += 1;
@@ -281,13 +279,11 @@ public class Monster_Spawner : MonoBehaviour
         bossSpawned = 0;
         bossKilled = 0;
         isWave = false;
-        creepKilledFromSave = 0;
-        creepKilledThisInstance = 0;
+
         WaveTimerManager.Instance.ShowTimer();
         WaveTimerManager.Instance.StartNewWaveTimer();
         GameManager.Instance.PlayerStats.currentWave = waveNumber;
         EnemiesLeftText.text = "";
-        IsLoadedGame = false;
     }
 
     //Function to start the next wave
@@ -296,38 +292,29 @@ public class Monster_Spawner : MonoBehaviour
         isWave = true;
         inWave = true;
 
-        if (!IsLoadedGame)
-        {
-            creepSpawned = 0;
-            creepKilled = 0;
-            eliteRSpawned = 0;
-            eliteRKilled = 0;
-            eliteMSpawned = 0;
-            eliteMKilled = 0;
-            bossSpawned = 0;
-            bossKilled = 0;
-            creepCountToEndWave = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
-        }
-        else
-        {
-            creepCountToEndWave = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f))) - creepKilledFromSave;
-        }
-
-        //creepSpawn = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
+        creepSpawned = 0;
+        creepKilled = 0;
+        eliteRSpawned = 0;
+        eliteRKilled = 0;
+        eliteMSpawned = 0;
+        eliteMKilled = 0;
+        bossSpawned = 0;
+        bossKilled = 0;
+        creepCountToEndWave = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
 
         WaveTimerManager.Instance.IncomingWave();
-        if(creepCountToEndWave > 100)
+        saveGameButton.interactable = false;
+        saveGameButton.GetComponentInChildren<TMP_Text>().SetText("Cannot Save During Wave");
+
+        if (creepCountToEndWave > 100)
         {
             creepCountToEndWave = 100;
         }
         //eliteRSpawn = eliteRSpawn + 2; //replace the 2 with the formula
 
-        if (!IsLoadedGame)
+        foreach (Transform child in transform)
         {
-            foreach (Transform child in transform)
-            {
-                GameObject.Destroy(child.gameObject);
-            }
+            GameObject.Destroy(child.gameObject);
         }
         
 
@@ -348,11 +335,6 @@ public class Monster_Spawner : MonoBehaviour
     public void creepDie()
     {
         creepKilled += 1;
-        if (isWave && inWave)
-        {
-            creepKilledThisInstance++;
-        }
-        
         GameManager.Instance.PlayerStats.TotalCreepKilled += 1;
     }
 
@@ -377,51 +359,16 @@ public class Monster_Spawner : MonoBehaviour
     public void LoadSpawnerData()
     {
         waveNumber = GameManager.Instance.PlayerStats.currentWave;
-        isWave = GameManager.Instance.PlayerStats.isWave;
-        inWave = GameManager.Instance.PlayerStats.inWave;
-        creepCountToEndWave = GameManager.Instance.PlayerStats.creepCountToEndWave;
-        creepKilledFromSave = GameManager.Instance.PlayerStats.creepKilledThisWave;
-        eliteRSpawn = GameManager.Instance.PlayerStats.eliteRCountToEndWave;
-        eliteRKilled = GameManager.Instance.PlayerStats.eliteRKilledThisWave;
-        eliteMSpawn = GameManager.Instance.PlayerStats.eliteMCountToEndWave;
-        eliteMKilled = GameManager.Instance.PlayerStats.eliteMKilledThisWave;
-        bossSpawn = GameManager.Instance.PlayerStats.bossCountToEndWave;
-        bossKilled = GameManager.Instance.PlayerStats.bossKilledThisWave;
-        IsLoadedGame = true;
-        if (isWave == true && inWave == true)
-        {
-            Start();
-            if (waveNumber == 1)
-            {
-                StartWave();
-            }
-            else
-            {
-                NextWave();
-            }
-        }
-        else
-        {
-            Start();
-            OpenWorldSpawn();
-            WaveTimerManager.Instance.StartTimer();
-        }
+
+        Start();
+        OpenWorldSpawn();
+        WaveTimerManager.Instance.StartTimer();
         //Debug.Log("Loaded Spawner Data");
     }
 
     public void SaveSpawnerData()
     {
         GameManager.Instance.PlayerStats.currentWave = waveNumber;
-        GameManager.Instance.PlayerStats.isWave = isWave;
-        GameManager.Instance.PlayerStats.inWave = inWave;
-        GameManager.Instance.PlayerStats.creepCountToEndWave = creepCountToEndWave;
-        GameManager.Instance.PlayerStats.creepKilledThisWave = creepKilledThisInstance + creepKilledFromSave;
-        GameManager.Instance.PlayerStats.eliteRCountToEndWave = eliteRSpawn;
-        GameManager.Instance.PlayerStats.eliteRKilledThisWave = eliteRKilled;
-        GameManager.Instance.PlayerStats.eliteMCountToEndWave = eliteMSpawn;
-        GameManager.Instance.PlayerStats.eliteMKilledThisWave = eliteMKilled;
-        GameManager.Instance.PlayerStats.bossCountToEndWave = bossSpawn;
-        GameManager.Instance.PlayerStats.bossKilledThisWave = bossKilled;
         GameManager.Instance.LoadData -= LoadSpawnerData;
         //Debug.Log("Saved Spawner Data");
     }

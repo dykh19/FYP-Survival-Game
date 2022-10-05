@@ -130,6 +130,23 @@ public class GameManager : MonoBehaviour
             {
                 CurrentGameState = GameState.INGAME;
                 PlayerStats = SaveLoadManager.Instance.ReadPlayerDataFromFile();
+
+                switch (CurrentDifficulty)
+                {
+                    case Difficulty.EASY:
+                        WaveCountToWin = EasyWaveCount;
+                        break;
+                    case Difficulty.NORMAL:
+                        WaveCountToWin = NormalWaveCount;
+                        break;
+                    case Difficulty.HARD:
+                        WaveCountToWin = HardWaveCount;
+                        break;
+                    default:
+                        WaveCountToWin = 1;
+                        break;
+                }
+
                 for (int i = 0; i < PlayerStats.PlayerInventory.Items.Length; i++)
                 {
                     if (PlayerStats.PlayerInventory.Items[i].item == null)
@@ -152,14 +169,28 @@ public class GameManager : MonoBehaviour
                 WorldGen.LoadWorldData(PlayerStats.WorldGenSaveData);
                 WorldGen.CreateWorld(true);
                 WorldGen.LoadWorldObjects(PlayerStats.WorldGenSaveData);
-                
-                //LoadingSavedGame = false;
+
+                StartCoroutine(ResetLoadingSavedGame());
             }
             else
             {
                 CurrentGameState = GameState.INGAME;
 
-                
+                switch (CurrentDifficulty)
+                {
+                    case Difficulty.EASY:
+                        WaveCountToWin = EasyWaveCount;
+                        break;
+                    case Difficulty.NORMAL:
+                        WaveCountToWin = NormalWaveCount;
+                        break;
+                    case Difficulty.HARD:
+                        WaveCountToWin = HardWaveCount;
+                        break;
+                    default:
+                        WaveCountToWin = 1;
+                        break;
+                }
 
                 PlayerInventory = new Inventory();
 
@@ -172,21 +203,7 @@ public class GameManager : MonoBehaviour
                 WorldGen = GameObject.Find("World Generator").GetComponent<WorldGenerator>();
                 WorldGen.CreateWorld(false);
             }
-            switch (CurrentDifficulty)
-            {
-                case Difficulty.EASY:
-                    WaveCountToWin = EasyWaveCount;
-                    break;
-                case Difficulty.NORMAL:
-                    WaveCountToWin = NormalWaveCount;
-                    break;
-                case Difficulty.HARD:
-                    WaveCountToWin = HardWaveCount;
-                    break;
-                default:
-                    WaveCountToWin = 1;
-                    break;
-            }
+            
         }
         // If the loaded scene is MainMenu, reset the game state and resume the paused timescale
         if (SceneManager.GetActiveScene().name == "MainMenu")
@@ -212,5 +229,11 @@ public class GameManager : MonoBehaviour
     {
         PlayerStats = null;
         PlayerStats = new PlayerStatistics();
+    }
+
+    IEnumerator ResetLoadingSavedGame()
+    {
+        yield return new WaitForSeconds(5);
+        LoadingSavedGame = false;
     }
 }

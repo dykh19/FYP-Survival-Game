@@ -80,9 +80,16 @@ public class ProjectileStandard : ProjectileBase
         m_IgnoredColliders = new List<Collider>();
         transform.position += m_ProjectileBase.InheritedMuzzleVelocity * Time.deltaTime;
 
-        // Ignore colliders of owner
-        Collider[] ownerColliders = m_ProjectileBase.Owner.GetComponentsInChildren<Collider>();
-        m_IgnoredColliders.AddRange(ownerColliders);
+
+        // Ignore colliders of owner if not turret
+        if (Owner != null)
+        {
+            Collider[] ownerColliders = m_ProjectileBase.Owner.GetComponentsInChildren<Collider>();
+            m_IgnoredColliders.AddRange(ownerColliders);
+        }    
+        
+
+        
 
         // Handle case of player shooting (make projectiles not go through walls, and remember center-of-screen trajectory)
         PlayerWeaponsManager playerWeaponsManager = m_ProjectileBase.Owner.GetComponent<PlayerWeaponsManager>();
@@ -237,7 +244,10 @@ public class ProjectileStandard : ProjectileBase
         if (collider.tag == "Enemy")
         {
             collider.GetComponent<Health>().TakeDamage(Damage);
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCharacterController>().PlayHitSound();
+            if (!this.CompareTag("Turret"))
+            {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCharacterController>().PlayHitSound();
+            }
             Debug.Log("Hit Enemy");
         }
 
