@@ -16,6 +16,7 @@ public class Upgrade : MonoBehaviour
         Rifle_1, Rifle_2, Rifle_3, Rifle_4, Rifle_5, Rifle_6, Rifle_7, Rifle_8, Rifle_9, RifleMax,
         Shotgun_1, Shotgun_2, Shotgun_3, Shotgun_4, Shotgun_5, Shotgun_6, Shotgun_7, Shotgun_8, Shotgun_9, ShotgunMax,
         Armor_1, Armor_2, Armor_3, Armor_4, Armor_5, Armor_6, Armor_7, Armor_8, Armor_9, ArmorMax,
+        Base_1, Base_2, Base_3, Base_4, BaseMax,
         Weapon, Armor, Base, MonsterEss, MonsterOre
     }
 
@@ -37,11 +38,6 @@ public class Upgrade : MonoBehaviour
         Warp
     }
 
-    public enum BaseUpgradeType     //Uses Ores to Upgrade
-    {
-        BaseNone, Base_1, Base_2, Base_3, Base_4
-    }
-
     public enum Currency
     {
         MonsterEss, CreepDrop
@@ -58,7 +54,7 @@ public class Upgrade : MonoBehaviour
             case EquipmentExchangeType.Armor:
                 return "MonsterEss";
             case EquipmentExchangeType.Base:
-                return "MonsterEss";
+                return "SyntheticOre";
             //Exchange Items
             case EquipmentExchangeType.MonsterEss:
                 return "CreepDrop";

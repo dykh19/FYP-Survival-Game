@@ -17,13 +17,14 @@ public class VendorUI : MonoBehaviour
     public int RifleLvl = 0;
     public int ShotgunLvl = 0;
     public int ArmorLvl = 0;
-    public int buttonCount = 0;
+    public int BaseLvl = 0;
 
     public int LMeleeCost = 10;
     public int HMeleeCost = 10;
     public int RifleCost = 10;
     public int ShotgunCost = 10;
     public int ArmorCost = 10;
+    public int BaseCost = 10; //To update according to specs.
 
     public int itemIndex;
     public int itemCount;
@@ -33,10 +34,12 @@ public class VendorUI : MonoBehaviour
     private Transform RifleButton;
     private Transform ShotgunButton;
     private Transform ArmorButton;
+    private Transform BaseButton;
     public InventoryUI playerInventoryUI;
     public Inventory playerInventory;
     public Health playerHealth;
     public GameItem monsterEss;
+    public GameItem syntheticOre;
 
     private void Awake()
     {
@@ -58,7 +61,7 @@ public class VendorUI : MonoBehaviour
         RifleButton = CreateUpgradeButton("Rifle", Upgrade.EquipmentExchangeType.Rifle_1, "Rifle Up", RifleCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 2);
         ShotgunButton = CreateUpgradeButton("Shotgun", Upgrade.EquipmentExchangeType.Shotgun_1, "Shotgun Up", ShotgunCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 3);
         ArmorButton = CreateUpgradeButton("Armor", Upgrade.EquipmentExchangeType.Armor_1, "Armor Up", ArmorCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Armor), 4);
-        buttonCount = 5;
+        BaseButton = CreateUpgradeButton("Base", Upgrade.EquipmentExchangeType.Base_1, "Base Up", BaseCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Base), 5);
     }
 
     //Function to create the buttons. Function used in Start()
@@ -79,7 +82,7 @@ public class VendorUI : MonoBehaviour
         //Calls the function to be used when button is pressed
         vendorItemTransform.GetComponent<Button_UI>().ClickFunc = () =>
         {
-            upgradeItem(buttonType, upgradeType, itemCost, itemName);
+            upgradeItem(currency, buttonType, upgradeType, itemCost, itemName);
         };
 
         //itemCost is 0 when item is max level.
@@ -93,20 +96,36 @@ public class VendorUI : MonoBehaviour
     }
 
     //Code for Upgrade Buttons
-    private void upgradeItem(string buttonType, Upgrade.EquipmentExchangeType upgradeType, int itemCost, string itemName)
+    private void upgradeItem(string currency, string buttonType, Upgrade.EquipmentExchangeType upgradeType, int itemCost, string itemName)
     {
-        itemIndex = playerInventory.GetItemIndex(monsterEss);
-        try
+        //Check for currency != 0
+        if(currency == "MonsterEss")
         {
-            itemCount = GameManager.Instance.PlayerInventory.Items[itemIndex].quantity;
+            itemIndex = playerInventory.GetItemIndex(monsterEss);
+            try
+            {
+                itemCount = GameManager.Instance.PlayerInventory.Items[itemIndex].quantity;
+            }
+            catch
+            {
+                itemCount = 0;
+            }
         }
-        catch
+        else if(currency == "SyntheticOre")
         {
-            itemCount = 0;
+            itemIndex = playerInventory.GetItemIndex(syntheticOre);
+            try
+            {
+                itemCount = GameManager.Instance.PlayerInventory.Items[itemIndex].quantity;
+            }
+            catch
+            {
+                itemCount = 0;
+            }
         }
+        
 
         //Change weapon Values Here based on upgrade type
-
         if (itemCount - itemCost >= 0)
         {
             if (buttonType == "LMelee" && LMeleeLvl < 10)
@@ -178,39 +197,39 @@ public class VendorUI : MonoBehaviour
                 this.HMeleeButton.Find("costText").GetComponent<TextMeshProUGUI>().SetText(" ");
                 if (HMeleeLvl == 1)
                 {
-                    HMeleeButton = CreateUpgradeButton("LMelee", Upgrade.EquipmentExchangeType.HMelee_2, "Heavy Melee Up", HMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
+                    HMeleeButton = CreateUpgradeButton("HMelee", Upgrade.EquipmentExchangeType.HMelee_2, "Heavy Melee Up", HMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
                 }
                 if (HMeleeLvl == 2)
                 {
-                    HMeleeButton = CreateUpgradeButton("LMelee", Upgrade.EquipmentExchangeType.HMelee_3, "Heavy Melee Up", HMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
+                    HMeleeButton = CreateUpgradeButton("HMelee", Upgrade.EquipmentExchangeType.HMelee_3, "Heavy Melee Up", HMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
                 }
                 if (HMeleeLvl == 3)
                 {
-                    HMeleeButton = CreateUpgradeButton("LMelee", Upgrade.EquipmentExchangeType.HMelee_4, "Heavy Melee Up", HMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
+                    HMeleeButton = CreateUpgradeButton("HMelee", Upgrade.EquipmentExchangeType.HMelee_4, "Heavy Melee Up", HMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
                 }
                 if (HMeleeLvl == 4)
                 {
-                    HMeleeButton = CreateUpgradeButton("LMelee", Upgrade.EquipmentExchangeType.HMelee_5, "Heavy Melee Up", HMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
+                    HMeleeButton = CreateUpgradeButton("HMelee", Upgrade.EquipmentExchangeType.HMelee_5, "Heavy Melee Up", HMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
                 }
                 if (HMeleeLvl == 5)
                 {
-                    HMeleeButton = CreateUpgradeButton("LMelee", Upgrade.EquipmentExchangeType.HMelee_6, "Heavy Melee Up", HMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
+                    HMeleeButton = CreateUpgradeButton("HMelee", Upgrade.EquipmentExchangeType.HMelee_6, "Heavy Melee Up", HMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
                 }
                 if (HMeleeLvl == 6)
                 {
-                    HMeleeButton = CreateUpgradeButton("LMelee", Upgrade.EquipmentExchangeType.HMelee_7, "Heavy Melee Up", HMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
+                    HMeleeButton = CreateUpgradeButton("HMelee", Upgrade.EquipmentExchangeType.HMelee_7, "Heavy Melee Up", HMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
                 }
                 if (HMeleeLvl == 7)
                 {
-                    HMeleeButton = CreateUpgradeButton("LMelee", Upgrade.EquipmentExchangeType.HMelee_8, "Heavy Melee Up", HMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
+                    HMeleeButton = CreateUpgradeButton("HMelee", Upgrade.EquipmentExchangeType.HMelee_8, "Heavy Melee Up", HMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
                 }
                 if (HMeleeLvl == 8)
                 {
-                    HMeleeButton = CreateUpgradeButton("LMelee", Upgrade.EquipmentExchangeType.HMelee_9, "Heavy Melee Up", HMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
+                    HMeleeButton = CreateUpgradeButton("HMelee", Upgrade.EquipmentExchangeType.HMelee_9, "Heavy Melee Up", HMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
                 }
                 if (HMeleeLvl == 9)
                 {
-                    HMeleeButton = CreateUpgradeButton("LMelee", Upgrade.EquipmentExchangeType.HMeleeMax, "Heavy Melee MAX", 0, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
+                    HMeleeButton = CreateUpgradeButton("HMelee", Upgrade.EquipmentExchangeType.HMeleeMax, "Heavy Melee MAX", 0, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
                 }
                 Debug.Log("Upgraded to: " + upgradeType);
             }
@@ -369,6 +388,37 @@ public class VendorUI : MonoBehaviour
                     ArmorButton = CreateUpgradeButton("Armor", Upgrade.EquipmentExchangeType.ArmorMax, "Armor MAX", 0, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Armor), 4);
                 }
             }
+            if(buttonType == "Base" && BaseLvl < 5)
+            {
+                BaseLvl++;
+                Debug.Log("Base Upgraded to: " + BaseLvl);
+                GameManager.Instance.PlayerInventory.RemoveItem(syntheticOre, itemCost);
+                BaseCost = BaseCost + 5;
+
+                //Input code to upgrade
+
+                this.BaseButton.GetComponent<Button>().interactable = false;
+                this.BaseButton.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText(" ");
+                this.BaseButton.Find("costText").GetComponent<TextMeshProUGUI>().SetText(" ");
+
+                if (BaseLvl == 1)
+                {
+                    BaseButton = CreateUpgradeButton("Base", Upgrade.EquipmentExchangeType.Base_2, "Base Up", ArmorCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Base), 5);
+                }
+                if (BaseLvl == 2)
+                {
+                    BaseButton = CreateUpgradeButton("Base", Upgrade.EquipmentExchangeType.Base_3, "Base Up", ArmorCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Base), 5);
+                }
+                if (BaseLvl == 3)
+                {
+                    BaseButton = CreateUpgradeButton("Base", Upgrade.EquipmentExchangeType.Base_4, "Base Up", ArmorCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Base), 5);
+                }
+                if (BaseLvl == 4)
+                {
+                    BaseButton = CreateUpgradeButton("Base", Upgrade.EquipmentExchangeType.BaseMax, "Base Up", ArmorCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Base), 5);
+                }
+
+            }
             if (buttonType == "LMelee" && LMeleeLvl >= 10)
             {
                 //Try to insert popup maybe?
@@ -407,6 +457,13 @@ public class VendorUI : MonoBehaviour
                 ArmorButton.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Armor MAX");
                 ArmorButton.Find("costText").GetComponent<TextMeshProUGUI>().SetText("0");
                 ArmorButton.GetComponent<Button>().interactable = false;
+            }
+            if(buttonType == "Base" && BaseLvl >= 5)
+            {
+                Debug.Log("Base Already at Max Level");
+                BaseButton.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Base MAX");
+                BaseButton.Find("costText").GetComponent<TextMeshProUGUI>().SetText("0");
+                BaseButton.GetComponent<Button>().interactable = false;
             }
         }
         else
