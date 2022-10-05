@@ -16,6 +16,7 @@ TagManager:
   - Boss
   - Creep
   - eRange
+  - Turret
   layers:
   - Default
   - TransparentFX

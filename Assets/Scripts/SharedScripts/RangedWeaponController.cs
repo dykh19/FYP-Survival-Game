@@ -140,6 +140,8 @@ public class RangedWeaponController : WeaponController
 
     const string k_AnimAttackParameter = "Attack";
 
+    public bool IsTurret;
+
     //private Queue<Rigidbody> m_PhysicalAmmoPool;
 
     void Awake()
@@ -175,6 +177,11 @@ public class RangedWeaponController : WeaponController
             }
         }*/
 
+        if (gameObject.CompareTag("Turret"))
+        {
+            Owner = gameObject;
+            IsTurret = true;
+        }
 
     }
 
@@ -343,17 +350,26 @@ public class RangedWeaponController : WeaponController
         }
     }
 
-    bool TryShoot()
+    public bool TryShoot()
     {
-        
-        if (m_CurrentAmmoInClip >= 1f
-            && m_LastTimeShot + DelayBetweenShots < Time.time)
+        if (IsTurret)
         {
-            HandleShoot();
-            m_CurrentAmmoInClip -= 1f;
-            return true;
+            if (m_LastTimeShot + DelayBetweenShots < Time.time)
+            {
+                HandleShoot();
+                return true;
+            }
         }
-
+        else
+        {
+            if (m_CurrentAmmoInClip >= 1f
+            && m_LastTimeShot + DelayBetweenShots < Time.time)
+            {
+                HandleShoot();
+                m_CurrentAmmoInClip -= 1f;
+                return true;
+            }
+        }
         return false;
     }
 
