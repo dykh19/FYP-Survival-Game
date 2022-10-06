@@ -107,7 +107,7 @@ public class WorldGenerator : MonoBehaviour
 
     public void SpawnBase()
     {
-        Instantiate(BasePrefab, new Vector3(0, 7.92f, 0), Quaternion.identity, this.transform);
+        Instantiate(BasePrefab, new Vector3(0, 8.05f, 0), Quaternion.identity, this.transform);
     }
 
     public void SaveWorldData(WorldGenData data)

@@ -204,9 +204,14 @@ public class CreepAI : EnemyBehavior
         animatorCreep.SetBool("Die", true); //Need to find a way to implement death anim
         print("Creep Dying");
         parent_MonSpawn.creepDie();
+        if (Random.Range(0, 101) <= 10)
+        {
+            Instantiate(parent_MonSpawn.healthPickupPrefab, transform.position, Quaternion.identity);
+        }
         if (gameObject != null)
         {
             Destroy(gameObject);
         }
+        
     }
 }

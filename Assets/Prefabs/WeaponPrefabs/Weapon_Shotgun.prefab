@@ -149,7 +149,7 @@ MonoBehaviour:
   WeaponRoot: {fileID: 1505447205160222267}
   WeaponMuzzle: {fileID: 8334323006752503713}
   ProjectilePrefab: {fileID: -9037121540970970623, guid: f05c7e6fbbfbe824388456bb4abff9d4, type: 3}
-  DelayBetweenShots: 0.3
+  delayBetweenShots: 0.5
   BulletSpreadAngle: 7
   BulletsPerShot: 7
   RecoilForce: 1
@@ -161,7 +161,8 @@ MonoBehaviour:
   AmmoReloadDelay: 1.5
   InfiniteAmmo: 1
   MaxAmmo: 48
-  Damage: 35
+  damage: 30
+  bulletLifeTime: 0.3
   WeaponAnimator: {fileID: 0}
   MuzzleFlashPrefab: {fileID: 0}
   UnparentMuzzleFlash: 0

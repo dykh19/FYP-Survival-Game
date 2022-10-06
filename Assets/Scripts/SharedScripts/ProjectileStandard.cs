@@ -69,11 +69,12 @@ public class ProjectileStandard : ProjectileBase
 
         m_ProjectileBase.OnShoot += OnShoot;
 
-        Destroy(gameObject, MaxLifeTime);
+        
     }
 
     new void OnShoot()
     {
+        Destroy(gameObject, MaxLifeTime);
         m_ShootTime = Time.time;
         m_LastRootPosition = Root.position;
         m_Velocity = transform.forward * Speed;

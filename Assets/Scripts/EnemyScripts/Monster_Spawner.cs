@@ -66,6 +66,7 @@ public class Monster_Spawner : MonoBehaviour
 
     public Button saveGameButton;
 
+    public GameObject healthPickupPrefab;
 
     // Start is called before the first frame update
 

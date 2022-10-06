@@ -46,12 +46,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 0
+  MaxLifeTime: 2
   Radius: 0.01
   Root: {fileID: 3659995153115176982}
   Tip: {fileID: 1135791333161367127}
-  MaxLifeTime: 2
   ImpactVfx: {fileID: 7655095426451682942, guid: 32435904b4a1d854ab936a02dcfa0b1b, type: 3}
-  ImpactVfxLifetime: 5
+  ImpactVfxLifetime: 2
   ImpactVfxSpawnOffset: 0.1
   ImpactSfxClip: {fileID: 0}
   HittableLayers:

@@ -96,18 +96,25 @@ public class TurretController : MonoBehaviour
             if (sqrDistance < sqrDetectionRange && sqrDistance < closestSqrDistance)
             {
                 //If no obstacles between turret and enemy, and is closest to turret, set enemy as target
-                RaycastHit[] hits = Physics.RaycastAll(detectionSourcePoint.position, (child.GetChild(0).position - detectionSourcePoint.position).normalized, detectionRange, -1, QueryTriggerInteraction.Ignore);
+                //RaycastHit[] hits = Physics.RaycastAll(detectionSourcePoint.position, (child.GetChild(0).position - detectionSourcePoint.position).normalized, detectionRange, -1, QueryTriggerInteraction.Ignore);
                 RaycastHit closestValidHit = new RaycastHit();
                 closestValidHit.distance = Mathf.Infinity;
+                RaycastHit hit;
+                Physics.Raycast(detectionSourcePoint.position, (child.GetChild(0).position - detectionSourcePoint.position).normalized, out hit, detectionRange, -1, QueryTriggerInteraction.Ignore);
                 bool foundValidHit = false;
-                foreach (var hit in hits)
+                if (hit.distance < closestValidHit.distance && hit.collider.CompareTag("Enemy"))
                 {
-                    if (hit.distance < closestValidHit.distance && hit.collider.CompareTag("Enemy"))
-                    {
-                        closestValidHit = hit;
-                        foundValidHit = true;
-                    }
+                    closestValidHit = hit;
+                    foundValidHit = true;
                 }
+                    /*foreach (var hit in hits)
+                    {
+                        if (hit.distance < closestValidHit.distance && hit.collider.CompareTag("Enemy"))
+                        {
+                            closestValidHit = hit;
+                            foundValidHit = true;
+                        }
+                    }*/
 
                 if (foundValidHit)
                 {
