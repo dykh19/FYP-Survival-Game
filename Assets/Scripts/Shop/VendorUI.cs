@@ -16,15 +16,15 @@ public class VendorUI : MonoBehaviour
     public int HMeleeLvl = 0;
     public int RifleLvl = 0;
     public int ShotgunLvl = 0;
-    public int ArmorLvl = 0;
+    public int HealthLvl = 0;
     public int BaseLvl = 0;
 
     public int LMeleeCost = 10;
     public int HMeleeCost = 10;
     public int RifleCost = 10;
     public int ShotgunCost = 10;
-    public int ArmorCost = 10;
-    public int BaseCost = 10; //To update according to specs.
+    public int HealthCost = 10;
+    public int BaseCost = 25; //To update according to specs.
 
     public int itemIndex;
     public int itemCount;
@@ -33,7 +33,7 @@ public class VendorUI : MonoBehaviour
     private Transform HMeleeButton;
     private Transform RifleButton;
     private Transform ShotgunButton;
-    private Transform ArmorButton;
+    private Transform HealthButton;
     private Transform BaseButton;
     public InventoryUI playerInventoryUI;
     public Inventory playerInventory;
@@ -60,7 +60,7 @@ public class VendorUI : MonoBehaviour
         HMeleeButton = CreateUpgradeButton("HMelee", Upgrade.EquipmentExchangeType.HMelee_1, "Heavy Melee Up", HMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
         RifleButton = CreateUpgradeButton("Rifle", Upgrade.EquipmentExchangeType.Rifle_1, "Rifle Up", RifleCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 2);
         ShotgunButton = CreateUpgradeButton("Shotgun", Upgrade.EquipmentExchangeType.Shotgun_1, "Shotgun Up", ShotgunCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 3);
-        ArmorButton = CreateUpgradeButton("Armor", Upgrade.EquipmentExchangeType.Armor_1, "Armor Up", ArmorCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Armor), 4);
+        HealthButton = CreateUpgradeButton("Health", Upgrade.EquipmentExchangeType.Health_1, "Health Up", HealthCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Health), 4);
         BaseButton = CreateUpgradeButton("Base", Upgrade.EquipmentExchangeType.Base_1, "Base Up", BaseCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Base), 5);
     }
 
@@ -335,57 +335,57 @@ public class VendorUI : MonoBehaviour
                 }
                 Debug.Log("Upgraded to: " + upgradeType);
             }
-            if(buttonType == "Armor" && ArmorLvl < 10)
+            if(buttonType == "Health" && HealthLvl < 10)
             {
-                ArmorLvl++;
-                Debug.Log("Armor Upgraded to:" + ArmorLvl);
+                HealthLvl++;
+                Debug.Log("Health Upgraded to:" + HealthLvl);
                 GameManager.Instance.PlayerInventory.RemoveItem(monsterEss, itemCost);
-                ArmorCost = ArmorCost + 5;
+                HealthCost = HealthCost + 5;
 
                 //Amount of Health to increase
                 playerHealth.SetHealth(playerHealth.MaxHealth + 20);
                 playerHealth.Heal(playerHealth.MaxHealth - playerHealth.CurrentHealth);
                 Debug.Log(playerHealth.CurrentHealth);
 
-                this.ArmorButton.GetComponent<Button>().interactable = false;
-                this.ArmorButton.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText(" ");
-                this.ArmorButton.Find("costText").GetComponent<TextMeshProUGUI>().SetText(" ");
+                this.HealthButton.GetComponent<Button>().interactable = false;
+                this.HealthButton.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText(" ");
+                this.HealthButton.Find("costText").GetComponent<TextMeshProUGUI>().SetText(" ");
 
-                if (ArmorLvl == 1)
+                if (HealthLvl == 1)
                 {
-                    ArmorButton = CreateUpgradeButton("Armor", Upgrade.EquipmentExchangeType.Armor_2, "Armor Up", ArmorCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Armor), 4);
+                    HealthButton = CreateUpgradeButton("Health", Upgrade.EquipmentExchangeType.Health_2, "Health Up", HealthCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Health), 4);
                 }
                 if (ShotgunLvl == 2)
                 {
-                    ArmorButton = CreateUpgradeButton("Armor", Upgrade.EquipmentExchangeType.Armor_3, "Armor Up", ArmorCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Armor), 4);
+                    HealthButton = CreateUpgradeButton("Health", Upgrade.EquipmentExchangeType.Health_3, "Health Up", HealthCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Health), 4);
                 }
                 if (ShotgunLvl == 3)
                 {
-                    ArmorButton = CreateUpgradeButton("Armor", Upgrade.EquipmentExchangeType.Armor_4, "Armor Up", ArmorCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Armor), 4);
+                    HealthButton = CreateUpgradeButton("Health", Upgrade.EquipmentExchangeType.Health_4, "Health Up", HealthCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Health), 4);
                 }
                 if (ShotgunLvl == 4)
                 {
-                    ArmorButton = CreateUpgradeButton("Armor", Upgrade.EquipmentExchangeType.Armor_5, "Armor Up", ArmorCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Armor), 4);
+                    HealthButton = CreateUpgradeButton("Health", Upgrade.EquipmentExchangeType.Health_5, "Health Up", HealthCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Health), 4);
                 }
                 if (ShotgunLvl == 5)
                 {
-                    ArmorButton = CreateUpgradeButton("Armor", Upgrade.EquipmentExchangeType.Armor_6, "Armor Up", ArmorCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Armor), 4);
+                    HealthButton = CreateUpgradeButton("Health", Upgrade.EquipmentExchangeType.Health_6, "Health Up", HealthCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Health), 4);
                 }
                 if (ShotgunLvl == 6)
                 {
-                    ArmorButton = CreateUpgradeButton("Armor", Upgrade.EquipmentExchangeType.Armor_7, "Armor Up", ArmorCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Armor), 4);
+                    HealthButton = CreateUpgradeButton("Health", Upgrade.EquipmentExchangeType.Health_7, "Health Up", HealthCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Health), 4);
                 }
                 if (ShotgunLvl == 7)
                 {
-                    ArmorButton = CreateUpgradeButton("Armor", Upgrade.EquipmentExchangeType.Armor_8, "Armor Up", ArmorCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Armor), 4);
+                    HealthButton = CreateUpgradeButton("Health", Upgrade.EquipmentExchangeType.Health_8, "Health Up", HealthCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Health), 4);
                 }
                 if (ShotgunLvl == 8)
                 {
-                    ArmorButton = CreateUpgradeButton("Armor", Upgrade.EquipmentExchangeType.Armor_9, "Armor Up", ArmorCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Armor), 4);
+                    HealthButton = CreateUpgradeButton("Health", Upgrade.EquipmentExchangeType.Health_9, "Health Up", HealthCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Health), 4);
                 }
                 if (ShotgunLvl == 9)
-                {
-                    ArmorButton = CreateUpgradeButton("Armor", Upgrade.EquipmentExchangeType.ArmorMax, "Armor MAX", 0, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Armor), 4);
+                { 
+                    HealthButton = CreateUpgradeButton("Health", Upgrade.EquipmentExchangeType.HealthMax, "Health MAX", 0, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Health), 4);
                 }
             }
             if(buttonType == "Base" && BaseLvl < 5)
@@ -393,7 +393,7 @@ public class VendorUI : MonoBehaviour
                 BaseLvl++;
                 Debug.Log("Base Upgraded to: " + BaseLvl);
                 GameManager.Instance.PlayerInventory.RemoveItem(syntheticOre, itemCost);
-                BaseCost = BaseCost + 5;
+                BaseCost = BaseCost * 2;
 
                 //Input code to upgrade
 
@@ -403,19 +403,19 @@ public class VendorUI : MonoBehaviour
 
                 if (BaseLvl == 1)
                 {
-                    BaseButton = CreateUpgradeButton("Base", Upgrade.EquipmentExchangeType.Base_2, "Base Up", ArmorCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Base), 5);
+                    BaseButton = CreateUpgradeButton("Base", Upgrade.EquipmentExchangeType.Base_2, "Base Up", BaseCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Base), 5);
                 }
                 if (BaseLvl == 2)
                 {
-                    BaseButton = CreateUpgradeButton("Base", Upgrade.EquipmentExchangeType.Base_3, "Base Up", ArmorCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Base), 5);
+                    BaseButton = CreateUpgradeButton("Base", Upgrade.EquipmentExchangeType.Base_3, "Base Up", BaseCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Base), 5);
                 }
                 if (BaseLvl == 3)
                 {
-                    BaseButton = CreateUpgradeButton("Base", Upgrade.EquipmentExchangeType.Base_4, "Base Up", ArmorCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Base), 5);
+                    BaseButton = CreateUpgradeButton("Base", Upgrade.EquipmentExchangeType.Base_4, "Base Up", BaseCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Base), 5);
                 }
                 if (BaseLvl == 4)
                 {
-                    BaseButton = CreateUpgradeButton("Base", Upgrade.EquipmentExchangeType.BaseMax, "Base Up", ArmorCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Base), 5);
+                    BaseButton = CreateUpgradeButton("Base", Upgrade.EquipmentExchangeType.BaseMax, "Base MAX", 0, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Base), 5);
                 }
 
             }
@@ -451,12 +451,12 @@ public class VendorUI : MonoBehaviour
                 ShotgunButton.Find("costText").GetComponent<TextMeshProUGUI>().SetText("0");
                 ShotgunButton.GetComponent<Button>().interactable = false;
             }
-            if(buttonType == "Armor" && ArmorLvl >= 10)
+            if(buttonType == "Health" && HealthLvl >= 10)
             {
-                Debug.Log("Armor Already at Max Level");
-                ArmorButton.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Armor MAX");
-                ArmorButton.Find("costText").GetComponent<TextMeshProUGUI>().SetText("0");
-                ArmorButton.GetComponent<Button>().interactable = false;
+                Debug.Log("Health Already at Max Level");
+                HealthButton.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Health MAX");
+                HealthButton.Find("costText").GetComponent<TextMeshProUGUI>().SetText("0");
+                HealthButton.GetComponent<Button>().interactable = false;
             }
             if(buttonType == "Base" && BaseLvl >= 5)
             {
