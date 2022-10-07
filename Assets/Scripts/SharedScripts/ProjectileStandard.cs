@@ -12,8 +12,8 @@ public class ProjectileStandard : ProjectileBase
     [Tooltip("Transform representing the tip of the projectile (used for accurate collision detection)")]
     public Transform Tip;
 
-    [Tooltip("LifeTime of the projectile")]
-    public float MaxLifeTime = 5f;
+    /*[Tooltip("LifeTime of the projectile")]
+    public float MaxLifeTime = 5f;*/
 
     [Tooltip("VFX prefab to spawn upon impact")]
     public GameObject ImpactVfx;
@@ -43,8 +43,8 @@ public class ProjectileStandard : ProjectileBase
     [Tooltip("Determines if the projectile inherits the velocity that the weapon's muzzle had when firing")]
     public bool InheritWeaponVelocity = false;
 
-    [Header("Damage")] [Tooltip("Damage of the projectile")]
-    public float Damage = 40f;
+    /*[Header("Damage")] [Tooltip("Damage of the projectile")]
+    public float Damage = 40f;*/
 
     //Tooltip("Area of damage. Keep empty if you don<t want area damage")]
     //public DamageArea AreaOfDamage;
@@ -69,11 +69,12 @@ public class ProjectileStandard : ProjectileBase
 
         m_ProjectileBase.OnShoot += OnShoot;
 
-        Destroy(gameObject, MaxLifeTime);
+        
     }
 
     new void OnShoot()
     {
+        Destroy(gameObject, MaxLifeTime);
         m_ShootTime = Time.time;
         m_LastRootPosition = Root.position;
         m_Velocity = transform.forward * Speed;

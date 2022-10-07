@@ -44,7 +44,7 @@ public class RangedWeaponController : WeaponController
     [Tooltip("The projectile prefab")] public ProjectileBase ProjectilePrefab;
 
     [Tooltip("Minimum duration between two shots")]
-    public float DelayBetweenShots = 0.5f;
+    public float delayBetweenShots = 0.5f;
 
     [Tooltip("Angle for the cone in which the bullets will be shot randomly (0 means no spread at all)")]
     public float BulletSpreadAngle = 0f;
@@ -87,6 +87,10 @@ public class RangedWeaponController : WeaponController
 
     [Tooltip("Maximum amount of ammo player can carry")]
     public int MaxAmmo = 900;
+
+    public float damage = 30f;
+
+    public float bulletLifeTime = 5f;
 
     [Header("Audio & Visual")] 
     [Tooltip("Optional weapon animator for OnShoot animations")]
@@ -354,7 +358,7 @@ public class RangedWeaponController : WeaponController
     {
         if (IsTurret)
         {
-            if (m_LastTimeShot + DelayBetweenShots < Time.time)
+            if (m_LastTimeShot + delayBetweenShots < Time.time)
             {
                 HandleShoot();
                 return true;
@@ -363,7 +367,7 @@ public class RangedWeaponController : WeaponController
         else
         {
             if (m_CurrentAmmoInClip >= 1f
-            && m_LastTimeShot + DelayBetweenShots < Time.time)
+            && m_LastTimeShot + delayBetweenShots < Time.time)
             {
                 HandleShoot();
                 m_CurrentAmmoInClip -= 1f;
@@ -384,6 +388,8 @@ public class RangedWeaponController : WeaponController
             Vector3 shotDirection = GetShotDirectionWithinSpread(WeaponMuzzle);
             ProjectileBase newProjectile = Instantiate(ProjectilePrefab, WeaponMuzzle.position,
                 Quaternion.LookRotation(shotDirection));
+            newProjectile.Damage = damage;
+            newProjectile.MaxLifeTime = bulletLifeTime;
             newProjectile.Shoot(this);
         }
 

@@ -47,6 +47,15 @@ public class PlayerStatistics
     public float maxBaseHealth;
     public float currentBaseHealth;
 
+    // Stores data for player upgrades
+    public int playerHealthLevel = 0;
+    public int baseLevel = 0;
+
+    public int playerRifleLevel = 0;
+    public int playerShotgunLevel = 0;
+    public int playerAxeLevel = 0;
+    public int playerSwordLevel = 0;
+
 
     public Inventory PlayerInventory;
 
