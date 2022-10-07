@@ -200,9 +200,14 @@ public class CreepAI : EnemyBehavior
         parent_MonSpawn.creepDie();
         if (creepDrop != null)
         {
-            GameManager.Instance.PlayerInventory.AddItem(creepDrop);
+            GameManager.Instance.PlayerInventory.AddItem(creepDrop);//To change quantity
         }
-                
+
+        if (Random.Range(0, 101) <= 10)
+        {
+            Instantiate(parent_MonSpawn.healthPickupPrefab, transform.position, Quaternion.identity);
+        }
+
         if (gameObject != null)
         {
             Destroy(gameObject);
