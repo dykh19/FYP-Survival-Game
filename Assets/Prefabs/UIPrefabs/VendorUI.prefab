@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9102110978766057993
 Transform:
   m_ObjectHideFlags: 0
@@ -181,6 +181,7 @@ GameObject:
   - component: {fileID: 9102110979277821933}
   - component: {fileID: 9102110979277821934}
   - component: {fileID: 9102110979277821929}
+  - component: {fileID: 1508172837356512985}
   m_Layer: 0
   m_Name: VendorUI
   m_TagString: Untagged
@@ -282,20 +283,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71564385c34e2154c8beb432ad05671e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  container: {fileID: 0}
-  vendorItemTemplate: {fileID: 0}
-  LMeleeLvl: 0
-  HMeleeLvl: 0
-  RifleLvl: 0
-  ShotgunLvl: 0
-  buttonCount: 0
-  LMeleeCost: 10
+  container: {fileID: 9102110978766057993}
+  vendorItemTemplate: {fileID: 9102110979514941712}
+  LMeleeCost: 1
   HMeleeCost: 10
-  RifleCost: 10
+  RifleCost: 1
   ShotgunCost: 10
-  ArmorCost: 10
+  HealthCost: 10
+  BaseCost: 25
   itemIndex: 0
-  itemCount: 0
+  currencyCount: 0
   playerInventoryUI: {fileID: 0}
   playerInventory:
     Items:
@@ -340,8 +337,10 @@ MonoBehaviour:
     - item: {fileID: 0}
       quantity: 0
     activeItemIndex: 0
-  creepDrop: {fileID: 11400000, guid: 07d9999ac2c72cf47a2be2aa521addcc, type: 2}
+  upgradeManager: {fileID: 0}
+  playerHealth: {fileID: 0}
   monsterEss: {fileID: 11400000, guid: 299f0f15ca4b2e943b9540c7185d3c94, type: 2}
+  syntheticOre: {fileID: 0}
 --- !u!114 &9102110979277821929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,6 +353,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32611c73add3c1459c303be3d251b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1508172837356512985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9102110979277821935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a239b7ff91ab43749afb50954ce7be94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHealthLevel: 0
+  baseLevel: 0
+  playerRifleLevel: 0
+  playerShotgunLevel: 0
+  playerAxeLevel: 0
+  playerSwordLevel: 0
 --- !u!1 &9102110979514941713
 GameObject:
   m_ObjectHideFlags: 0

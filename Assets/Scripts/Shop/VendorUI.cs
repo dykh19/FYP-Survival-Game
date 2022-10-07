@@ -12,15 +12,21 @@ public class VendorUI : MonoBehaviour
     public Transform container;
     public Transform vendorItemTemplate;
 
-    public int LMeleeCost = 10;
-    public int HMeleeCost = 10;
-    public int RifleCost = 10;
-    public int ShotgunCost = 10;
-    public int HealthCost = 10;
-    public int BaseCost = 25; //To update according to specs.
+    [SerializeField]
+    private int LMeleeCost = 1; //10 previously;
+    [SerializeField]
+    private int HMeleeCost = 1;
+    [SerializeField]
+    private int RifleCost = 1;
+    [SerializeField]
+    private int ShotgunCost = 1;
+    [SerializeField]
+    private int HealthCost = 1;
+    [SerializeField]
+    private int BaseCost = 25; //To update according to specs.
 
     public int itemIndex;
-    public int itemCount;
+    public int currencyCount;
 
     private Transform LMeleeButton;
     private Transform HMeleeButton;
@@ -45,19 +51,260 @@ public class VendorUI : MonoBehaviour
         //Assigning the relevant objects
         playerInventoryUI = FindObjectOfType<InventoryUI>();
         playerInventory = GameManager.Instance.PlayerInventory;
-        playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
-        container = transform.Find("Container");
-        vendorItemTemplate = container.Find("VendorItemTemplate");
         upgradeManager = this.GetComponent<UpgradeManager>();
 
         //Creating the initial buttons
-        LMeleeButton = CreateUpgradeButton("LMelee", Upgrade.EquipmentExchangeType.LMelee_1, "Light Melee Up", LMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 0);
-        HMeleeButton = CreateUpgradeButton("HMelee", Upgrade.EquipmentExchangeType.HMelee_1, "Heavy Melee Up", HMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
-        RifleButton = CreateUpgradeButton("Rifle", Upgrade.EquipmentExchangeType.Rifle_1, "Rifle Up", RifleCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 2);
-        ShotgunButton = CreateUpgradeButton("Shotgun", Upgrade.EquipmentExchangeType.Shotgun_1, "Shotgun Up", ShotgunCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 3);
+        RifleButton = CreateRifleButton("Rifle", "Rifle Upgrade!", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 0);
+        ShotgunButton = CreateShotgunButton("Shotgun", "Shotgun Upgrade!", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
+        HMeleeButton = CreateAxeButton("Axe", "Axe Upgrade!", Upgrade.GetCurrecy(Upgrade.EquipmentExchangeType.Weapon), 2);
+        LMeleeButton = CreateSwordButton("Sword", "Sword Upgrade!", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 3);
+        //Not Converted Yet
         HealthButton = CreateUpgradeButton("Health", Upgrade.EquipmentExchangeType.Health_1, "Health Up", HealthCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Health), 4);
         BaseButton = CreateUpgradeButton("Base", Upgrade.EquipmentExchangeType.Base_1, "Base Up", BaseCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Base), 5);
     }
+
+    //Creation of the Rifle Upgrade Button
+    private Transform CreateRifleButton(string buttonType, string itemName, string currency, int positionIndex)
+    {
+        Transform rifleButtonTransform = Instantiate(vendorItemTemplate, container);
+        RectTransform rifleItemRectTransform = rifleButtonTransform.GetComponent<RectTransform>();
+
+        float buttonHeight = 90f;
+        rifleItemRectTransform.anchoredPosition = new Vector2(0, -buttonHeight * positionIndex);
+        rifleButtonTransform.name = itemName;
+
+        if(upgradeManager.playerRifleLevel < 10)
+        {
+            rifleButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Rifle Upgrade!");
+        }
+        if(upgradeManager.playerRifleLevel >= 10)
+        {
+            rifleButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Rifle Max Level!");
+        }
+
+        rifleButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText(RifleCost.ToString());
+
+        rifleButtonTransform.GetComponent<Button_UI>().ClickFunc = () =>
+        {
+            itemIndex = playerInventory.GetItemIndex(monsterEss);
+            try
+            {
+                currencyCount = GameManager.Instance.PlayerInventory.Items[itemIndex].quantity;
+            }
+            catch
+            {
+                currencyCount = 0;
+            }
+
+            if (currencyCount - RifleCost >= 0)
+            {
+                if (upgradeManager.playerRifleLevel < 10)
+                {
+                    upgradeManager.playerRifleLevel++;
+                    rifleButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Rifle Upgrade!");
+                    //RifleCost = RifleCost + 5;
+                    upgradeManager.UpgradePlayerWeapon(0);
+                    GameManager.Instance.PlayerInventory.RemoveItem(monsterEss, RifleCost);
+                }
+                if (upgradeManager.playerSwordLevel >= 10)
+                {
+                    rifleButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Rifle MAX Level!");
+                    rifleButtonTransform.GetComponent<Button>().interactable = false;
+                }
+
+                rifleButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText(RifleCost.ToString());
+            }
+        };
+
+        return rifleButtonTransform;
+    }
+
+    //Creation of the Shotgun Upgrade Button
+    private Transform CreateShotgunButton(string buttonType, string itemName, string currency, int positionIndex)
+    {
+        Transform shotgunButtonTransform = Instantiate(vendorItemTemplate, container);
+        RectTransform shotgunItemRectTransform = shotgunButtonTransform.GetComponent<RectTransform>();
+
+        float buttonHeight = 90f;
+        shotgunItemRectTransform.anchoredPosition = new Vector2(0, -buttonHeight * positionIndex);
+        shotgunButtonTransform.name = itemName;
+
+        if(upgradeManager.playerShotgunLevel < 10)
+        {
+            shotgunButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Shotgun Upgrade!");
+        }
+        if (upgradeManager.playerShotgunLevel >= 10)
+        {
+            shotgunButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Shotgun Max Level!");
+        }
+
+        shotgunButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText(ShotgunCost.ToString());
+
+        shotgunButtonTransform.GetComponent<Button_UI>().ClickFunc = () =>
+        {
+            itemIndex = playerInventory.GetItemIndex(monsterEss);
+            try
+            {
+                currencyCount = GameManager.Instance.PlayerInventory.Items[itemIndex].quantity;
+            }
+            catch
+            {
+                currencyCount = 0;
+            }
+
+            if (currencyCount - ShotgunCost >= 0)
+            {
+                if (upgradeManager.playerShotgunLevel < 10)
+                {
+                    upgradeManager.playerShotgunLevel++;
+                    shotgunButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Shotgun Upgrade!");
+                    ShotgunCost = ShotgunCost + 5;
+                    upgradeManager.UpgradePlayerWeapon(1);
+                    GameManager.Instance.PlayerInventory.RemoveItem(monsterEss, ShotgunCost);
+                }
+                if (upgradeManager.playerSwordLevel >= 10)
+                {
+                    shotgunButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Shotgun MAX Level!");
+                    shotgunButtonTransform.GetComponent<Button>().interactable = false;
+                }
+                shotgunButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText(ShotgunCost.ToString());
+            }
+        };
+
+        return shotgunButtonTransform;
+    }
+
+    //Creation of the Axe Upgrade Button
+    private Transform CreateAxeButton(string buttonType, string itemName, string currency, int positionIndex)
+    {
+        Transform axeButtonTransform = Instantiate(vendorItemTemplate, container);
+        RectTransform axeItemRectTransform = axeButtonTransform.GetComponent<RectTransform>();
+
+        float buttonHeight = 90f;
+        axeItemRectTransform.anchoredPosition = new Vector2(0, -buttonHeight * positionIndex);
+        axeButtonTransform.name = itemName;
+
+        if (upgradeManager.playerAxeLevel < 10)
+        {
+            axeButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Axe Upgrade!");
+        }
+        if (upgradeManager.playerAxeLevel >= 10)
+        {
+            axeButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Axe MAX Level!");
+        }
+
+        axeButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText(HMeleeCost.ToString());
+
+        axeButtonTransform.GetComponent<Button_UI>().ClickFunc = () =>
+        {
+            itemIndex = playerInventory.GetItemIndex(monsterEss);
+            try
+            {
+                currencyCount = GameManager.Instance.PlayerInventory.Items[itemIndex].quantity;
+            }
+            catch
+            {
+                currencyCount = 0;
+            }
+
+            if (currencyCount - HMeleeCost >= 0)
+            {
+                if (upgradeManager.playerAxeLevel < 10)
+                {
+                    upgradeManager.playerAxeLevel++;
+                    axeButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Axe Upgrade!");
+                    HMeleeCost = HMeleeCost + 5;
+                    upgradeManager.UpgradePlayerWeapon(3);
+                    GameManager.Instance.PlayerInventory.RemoveItem(monsterEss, HMeleeCost);
+                }
+                if (upgradeManager.playerAxeLevel >= 10)
+                {
+                    axeButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Axe MAX Level!");
+                    axeButtonTransform.GetComponent<Button>().interactable = false;
+                }
+
+                axeButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText(HMeleeCost.ToString());
+            }
+        };
+
+        return axeButtonTransform;
+    }
+
+
+
+    //Creation of the Sword Upgrade Button
+    private Transform CreateSwordButton(string buttonType, string itemName, string currency, int positionIndex)
+    {
+        Transform swordButtonTransform = Instantiate(vendorItemTemplate, container);
+        RectTransform swordItemRectTransform = swordButtonTransform.GetComponent<RectTransform>();
+
+        float buttonHeight = 90f;
+        swordItemRectTransform.anchoredPosition = new Vector2(0, -buttonHeight * positionIndex);
+        swordButtonTransform.name = itemName;
+
+        if(upgradeManager.playerSwordLevel < 10)
+        {
+            swordButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Sword Upgrade!");
+        }
+        if(upgradeManager.playerSwordLevel >= 10)
+        {
+            swordButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Sword MAX Level!");
+        }
+
+        swordButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText(LMeleeCost.ToString());
+
+        swordButtonTransform.GetComponent<Button_UI>().ClickFunc = () =>
+        {
+            itemIndex = playerInventory.GetItemIndex(monsterEss);
+            try
+            {
+                currencyCount = GameManager.Instance.PlayerInventory.Items[itemIndex].quantity;
+            }
+            catch
+            {
+                currencyCount = 0;
+            }
+
+            if (currencyCount - LMeleeCost >= 0)
+            {
+                if (upgradeManager.playerSwordLevel < 10)
+                {
+                    upgradeManager.playerSwordLevel++;
+                    swordButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Sword Upgrade!");
+                    LMeleeCost = LMeleeCost + 5;
+                    upgradeManager.UpgradePlayerWeapon(3);
+                    GameManager.Instance.PlayerInventory.RemoveItem(monsterEss, LMeleeCost);
+                }
+                if (upgradeManager.playerSwordLevel >= 10)
+                {
+                    swordButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Sword MAX Level!");
+                    swordButtonTransform.GetComponent<Button>().interactable = false;
+                }
+
+                swordButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText(LMeleeCost.ToString());
+            }
+        };
+
+        return swordButtonTransform;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //Function to create the buttons. Function used in Start()
     private Transform CreateUpgradeButton(string buttonType, Upgrade.EquipmentExchangeType upgradeType, string itemName, int itemCost, string currency, int positionIndex)
@@ -99,11 +346,11 @@ public class VendorUI : MonoBehaviour
             itemIndex = playerInventory.GetItemIndex(monsterEss);
             try
             {
-                itemCount = GameManager.Instance.PlayerInventory.Items[itemIndex].quantity;
+                currencyCount = GameManager.Instance.PlayerInventory.Items[itemIndex].quantity;
             }
             catch
             {
-                itemCount = 0;
+                currencyCount = 0;
             }
         }
         else if(currency == "SyntheticOre")
@@ -111,70 +358,18 @@ public class VendorUI : MonoBehaviour
             itemIndex = playerInventory.GetItemIndex(syntheticOre);
             try
             {
-                itemCount = GameManager.Instance.PlayerInventory.Items[itemIndex].quantity;
+                currencyCount = GameManager.Instance.PlayerInventory.Items[itemIndex].quantity;
             }
             catch
             {
-                itemCount = 0;
+                currencyCount = 0;
             }
         }
         
 
         //Change weapon Values Here based on upgrade type
-        if (itemCount - itemCost >= 0)
+        if (currencyCount - itemCost >= 0)
         {
-            if (buttonType == "LMelee" && upgradeManager.playerSwordLevel < 10)
-            {
-                upgradeManager.playerSwordLevel++;
-                Debug.Log("Light Melee Upgraded to:" + upgradeManager.playerSwordLevel);
-                GameManager.Instance.PlayerInventory.RemoveItem(monsterEss, itemCost);
-                LMeleeCost = LMeleeCost + 5;
-
-                upgradeManager.UpgradePlayerWeapon(3);
-
-                this.LMeleeButton.GetComponent<Button>().interactable = false;
-                this.LMeleeButton.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText(" ");
-                this.LMeleeButton.Find("costText").GetComponent<TextMeshProUGUI>().SetText(" ");
-
-                if (upgradeManager.playerSwordLevel == 1)
-                {
-                    LMeleeButton = CreateUpgradeButton("LMelee", Upgrade.EquipmentExchangeType.LMelee_2, "Light Melee Up", LMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 0);
-                }
-                if(upgradeManager.playerSwordLevel == 2)
-                {
-                    LMeleeButton = CreateUpgradeButton("LMelee", Upgrade.EquipmentExchangeType.LMelee_3, "Light Melee Up", LMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon),0);
-                }
-                if(upgradeManager.playerSwordLevel == 3)
-                {
-                    LMeleeButton = CreateUpgradeButton("LMelee", Upgrade.EquipmentExchangeType.LMelee_4, "Light Melee Up", LMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 0);
-                }
-                if(upgradeManager.playerSwordLevel == 4)
-                {
-                    LMeleeButton = CreateUpgradeButton("LMelee", Upgrade.EquipmentExchangeType.LMelee_5, "Light Melee Up", LMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 0);
-                }
-                if (upgradeManager.playerSwordLevel == 5)
-                {
-                    LMeleeButton = CreateUpgradeButton("LMelee", Upgrade.EquipmentExchangeType.LMelee_6, "Light Melee Up", LMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 0);
-                }
-                if (upgradeManager.playerSwordLevel == 6)
-                {
-                    LMeleeButton = CreateUpgradeButton("LMelee", Upgrade.EquipmentExchangeType.LMelee_7, "Light Melee Up", LMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 0);
-                }
-                if (upgradeManager.playerSwordLevel == 7)
-                {
-                    LMeleeButton = CreateUpgradeButton("LMelee", Upgrade.EquipmentExchangeType.LMelee_8, "Light Melee Up", LMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 0);
-                }
-                if (upgradeManager.playerSwordLevel == 8)
-                {
-                    LMeleeButton = CreateUpgradeButton("LMelee", Upgrade.EquipmentExchangeType.LMelee_9, "Light Melee Up", LMeleeCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 0);
-                }
-                if (upgradeManager.playerSwordLevel == 9)
-                {
-                    LMeleeButton = CreateUpgradeButton("LMelee", Upgrade.EquipmentExchangeType.LMeleeMax, "Light Melee MAX", 0, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 0);
-                }
-
-                Debug.Log("Upgraded to: " + upgradeType);
-            }
             if (buttonType == "HMelee" && upgradeManager.playerAxeLevel < 10)
             {
                 upgradeManager.playerAxeLevel++;
@@ -406,14 +601,6 @@ public class VendorUI : MonoBehaviour
                     BaseButton = CreateUpgradeButton("Base", Upgrade.EquipmentExchangeType.BaseMax, "Base MAX", 0, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Base), 5);
                 }
 
-            }
-            if (buttonType == "LMelee" && upgradeManager.playerSwordLevel >= 10)
-            {
-                //Try to insert popup maybe?
-                Debug.Log("Weapon Already at Max Level");
-                LMeleeButton.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Light Melee MAX");
-                LMeleeButton.Find("costText").GetComponent<TextMeshProUGUI>().SetText("0");
-                LMeleeButton.GetComponent<Button>().interactable = false;
             }
             if (buttonType == "HMelee" && upgradeManager.playerAxeLevel >= 10)
             {
