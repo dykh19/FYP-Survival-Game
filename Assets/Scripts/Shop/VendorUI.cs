@@ -56,7 +56,7 @@ public class VendorUI : MonoBehaviour
         //Creating the initial buttons
         RifleButton = CreateRifleButton("Rifle", "Rifle Upgrade!", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 0);
         ShotgunButton = CreateShotgunButton("Shotgun", "Shotgun Upgrade!", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
-        HMeleeButton = CreateAxeButton("Axe", "Axe Upgrade!", Upgrade.GetCurrecy(Upgrade.EquipmentExchangeType.Weapon), 2);
+        HMeleeButton = CreateAxeButton("Axe", "Axe Upgrade!", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 2);
         LMeleeButton = CreateSwordButton("Sword", "Sword Upgrade!", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 3);
         //Not Converted Yet
         HealthButton = CreateUpgradeButton("Health", Upgrade.EquipmentExchangeType.Health_1, "Health Up", HealthCost, Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Health), 4);
@@ -214,7 +214,7 @@ public class VendorUI : MonoBehaviour
                     upgradeManager.playerAxeLevel++;
                     axeButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Axe Upgrade!");
                     HMeleeCost = HMeleeCost + 5;
-                    upgradeManager.UpgradePlayerWeapon(3);
+                    upgradeManager.UpgradePlayerWeapon(2);
                     GameManager.Instance.PlayerInventory.RemoveItem(monsterEss, HMeleeCost);
                 }
                 if (upgradeManager.playerAxeLevel >= 10)
@@ -286,6 +286,118 @@ public class VendorUI : MonoBehaviour
         };
 
         return swordButtonTransform;
+    }
+
+    //Creation of the Health Upgrade Button
+    private Transform CreateHealthButton(string buttonType, string itemName, string currency, int positionIndex)
+    {
+        Transform healthButtonTransform = Instantiate(vendorItemTemplate, container);
+        RectTransform healthItemRectTransform = healthButtonTransform.GetComponent<RectTransform>();
+
+        float buttonHeight = 90f;
+        healthItemRectTransform.anchoredPosition = new Vector2(0, -buttonHeight * positionIndex);
+        healthButtonTransform.name = itemName;
+
+        if (upgradeManager.playerHealthLevel < 10)
+        {
+            healthButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Health Upgrade!");
+        }
+        if (upgradeManager.playerHealthLevel >= 10)
+        {
+            healthButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Health MAX Level!");
+        }
+
+        healthButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText(HealthCost.ToString());
+
+        healthButtonTransform.GetComponent<Button_UI>().ClickFunc = () =>
+        {
+            itemIndex = playerInventory.GetItemIndex(monsterEss);
+            try
+            {
+                currencyCount = GameManager.Instance.PlayerInventory.Items[itemIndex].quantity;
+            }
+            catch
+            {
+                currencyCount = 0;
+            }
+
+            if (currencyCount - HealthCost >= 0)
+            {
+                if (upgradeManager.playerHealthLevel < 10)
+                {
+                    upgradeManager.playerHealthLevel++;
+                    healthButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Health Upgrade!");
+                    HealthCost = HealthCost + 5;
+                    upgradeManager.UpgradePlayerHealth();
+                    GameManager.Instance.PlayerInventory.RemoveItem(monsterEss, HealthCost);
+                }
+                if (upgradeManager.playerHealthLevel >= 10)
+                {
+                    healthButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Health MAX Level!");
+                    healthButtonTransform.GetComponent<Button>().interactable = false;
+                }
+
+                healthButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText(HealthCost.ToString());
+            }
+        };
+
+        return healthButtonTransform;
+    }
+
+    //Creation of the Base Upgrade Button
+    private Transform CreateBaseButton(string buttonType, string itemName, string currency, int positionIndex)
+    {
+        Transform baseButtonTransform = Instantiate(vendorItemTemplate, container);
+        RectTransform baseItemRectTransform = baseButtonTransform.GetComponent<RectTransform>();
+
+        float buttonHeight = 90f;
+        baseItemRectTransform.anchoredPosition = new Vector2(0, -buttonHeight * positionIndex);
+        baseButtonTransform.name = itemName;
+
+        if (upgradeManager.baseLevel < 10)
+        {
+            baseButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Base Upgrade!");
+        }
+        if (upgradeManager.baseLevel >= 10)
+        {
+            baseButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Base MAX Level!");
+        }
+
+        baseButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText(BaseCost.ToString());
+
+        baseButtonTransform.GetComponent<Button_UI>().ClickFunc = () =>
+        {
+            itemIndex = playerInventory.GetItemIndex(syntheticOre);
+            try
+            {
+                currencyCount = GameManager.Instance.PlayerInventory.Items[itemIndex].quantity;
+            }
+            catch
+            {
+                currencyCount = 0;
+            }
+
+            if (currencyCount - HealthCost >= 0)
+            {
+                if (upgradeManager.baseLevel < 10)
+                {
+                    upgradeManager.baseLevel++;
+                    baseButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Base Upgrade!");
+                    BaseCost = BaseCost + 5;
+                    upgradeManager.UpgradeBase();
+                    GameManager.Instance.PlayerInventory.RemoveItem(monsterEss, BaseCost);
+                }
+                if (upgradeManager.playerSwordLevel >= 10)
+                {
+                    baseButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Base MAX Level!");
+                    baseButtonTransform.GetComponent<Button>().interactable = false;
+                }
+
+                baseButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText(BaseCost.ToString());
+            }
+        };
+
+        return baseButtonTransform;
     }
 
 

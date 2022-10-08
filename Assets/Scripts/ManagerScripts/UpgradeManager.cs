@@ -101,7 +101,7 @@ public class UpgradeManager : MonoBehaviour
         }
     }
 
-    // Call this with weapon index to upgrade by 1 level (Rifle - 0, Shotgun - 1, Axe - 3, Sword - 4)
+    // Call this with weapon index to upgrade by 1 level (Rifle - 0, Shotgun - 1, Axe - 2, Sword - 3)
     public void UpgradePlayerWeapon(int weaponIndex)
     {
         switch (weaponIndex)
