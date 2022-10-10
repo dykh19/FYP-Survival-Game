@@ -243,6 +243,14 @@ public class PlayerInputHandler : MonoBehaviour
         return 0f;
     }
 
+    public bool GetInteractInput()
+    {
+        if (CanProcessInput())
+        {
+            return Input.GetButtonDown("Interact");
+        }
 
+        return false;
+    }
 }
 
