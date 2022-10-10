@@ -52,11 +52,11 @@ public class CreepAI : EnemyBehavior
         /**********Conditions for state of monster.**********/
         //When isWave (Creeps solely target the player base)
         //If during wave, player and base both not in sight or attack range. Find base.
-        if (((!playerInSightRange || playerInSightRange) && (!playerInAttackRange || playerInAttackRange) && (playerSpotted || !playerSpotted) && !baseInSightRange && !baseInAttackRange && isWave) ||
-            ((!playerInSightRange || playerInSightRange) && (!playerInAttackRange || playerInAttackRange) && (playerSpotted || !playerSpotted) && baseInSightRange && !baseInAttackRange && isWave))
+        if ((!playerInSightRange || playerInSightRange) && (!playerInAttackRange || playerInAttackRange) && (playerSpotted || !playerSpotted) && (!baseInSightRange || baseInSightRange) && !baseInAttackRange && isWave)
         {
-            //print("Finding Base(isWave)");
+            print("Finding Base(isWave)");
             animatorCreep.SetBool("isWave", true);
+            agent.speed = chaseSpeed;
             findBase();
         }
         //If during wave, player not spotted and base within sight and attack range. Attack Base.
@@ -131,10 +131,8 @@ public class CreepAI : EnemyBehavior
     {
         //float randomZ = Random.Range(-walkPointRange, walkPointRange);
         //float randomX = Random.Range(-walkPointRange, walkPointRange);
-        //float pathY;
 
         //walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-
 
         var rayOrigin = new Vector3(Random.Range(-walkPointRange, walkPointRange), 100f, Random.Range(-walkPointRange, walkPointRange));
         var ray = new Ray(rayOrigin, Vector3.down);

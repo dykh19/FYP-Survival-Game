@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3659995153115176982}
   - component: {fileID: -6745138229257183886}
-  - component: {fileID: -5897781426499450463}
   - component: {fileID: 850513796423076529}
+  - component: {fileID: 8231453198748797712}
   m_Layer: 0
   m_Name: Enemy_Projectile_Test
   m_TagString: Untagged
@@ -51,19 +51,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-5897781426499450463
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3659995153115176983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f839761caf3fce4f8625d0073d46d23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Damage: 10
 --- !u!135 &850513796423076529
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -77,6 +64,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8231453198748797712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3659995153115176983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 619d6ed1db623e14eaaa5fa471ca7c95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Damage: 10
 --- !u!1 &5564024855854763701
 GameObject:
   m_ObjectHideFlags: 0

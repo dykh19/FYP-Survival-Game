@@ -11,6 +11,8 @@ public class EliteRAI : EnemyBehavior
     public Vector3 walkPoint;
     bool walkPointSet;
     public float walkPointRange;
+    public float wanderSpeed = 5f;
+    public float chaseSpeed = 5f;
 
     //Attacking Variables
     public float timeBetweenAttacks;
@@ -53,6 +55,7 @@ public class EliteRAI : EnemyBehavior
             (!playerInSightRange && !playerInAttackRange && !playerSpotted && baseInSightRange && !baseInAttackRange && isWave))
         {
             //print("Finding Base(isWave)");
+            agent.speed = chaseSpeed;
             findBase();
         }
         //If during wave, player not spotted and base within sight and attack range. Attack Base.
@@ -69,7 +72,7 @@ public class EliteRAI : EnemyBehavior
             Chase();
         }
         //If during wave, player is within attack range. Attack player.
-        if (playerInSightRange && playerInAttackRange && playerSpotted && (baseInSightRange || !baseInSightRange) && (baseInAttackRange || !baseInAttackRange) && isWave)
+        if (playerInSightRange && playerInAttackRange && (playerSpotted || !playerSpotted) && (baseInSightRange || !baseInSightRange) && (baseInAttackRange || !baseInAttackRange) && isWave)
         {
             //print("Attacking Player(isWave)");
             Attack(player);
@@ -77,15 +80,17 @@ public class EliteRAI : EnemyBehavior
 
         //When !isWave
         //If not in wave and player not in sight while base in sight/attack range, monster wanders.
-        if ((!playerInSightRange && !playerInAttackRange && !playerSpotted && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave))
+        if ((!playerInSightRange && !playerInAttackRange && (!playerSpotted || playerSpotted) && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave))
         {
             print("Wandering(!isWave)");
+            agent.speed = wanderSpeed;
             Wandering();
         }
         //If player is in range of enemy's sight, monster will chase.
         if ((playerInSightRange && !playerInAttackRange && (playerSpotted || !playerSpotted) && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave))
         {
             print("Chasing Player(!isWave)");
+            agent.speed = chaseSpeed;
             Chase();
         }
         //If player is in attack range and in sight range, monster will attack.
@@ -109,7 +114,7 @@ public class EliteRAI : EnemyBehavior
             agent.SetDestination(walkPoint);
         }
 
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+        distanceToWalkPoint = transform.position - walkPoint;
 
         if(distanceToWalkPoint.magnitude < 1f)
         {
@@ -125,12 +130,25 @@ public class EliteRAI : EnemyBehavior
     //Finding the walk point for the monster's wander phase
     public override void findWalkPoint()
     {
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
+        //float randomZ = Random.Range(-walkPointRange, walkPointRange);
+        //float randomX = Random.Range(-walkPointRange, walkPointRange);
 
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+        //walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        if(Physics.Raycast(walkPoint, -transform.up, 2f, isGround))
+        var rayOrigin = new Vector3(Random.Range(-walkPointRange, walkPointRange), 100f, Random.Range(-walkPointRange, walkPointRange));
+        var ray = new Ray(rayOrigin, Vector3.down);
+
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            walkPoint = hit.point + hit.normal;
+            NavMeshHit closestHit;
+            if (NavMesh.SamplePosition(walkPoint, out closestHit, 500, 1))
+            {
+                walkPoint = closestHit.position;
+            }
+        }
+
+        if (Physics.Raycast(walkPoint, -transform.up, 2f, isGround))
         {
             walkPointSet = true;
         }
@@ -141,25 +159,6 @@ public class EliteRAI : EnemyBehavior
     {
         agent.SetDestination(player.transform.position);
     }
-
-    //When player is within monster attack range, monster stops moving and hits the player
-    /*public override void Attack(Transform target)
-    {
-        agent.SetDestination(transform.position);
-        transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
-
-        if(!alreadyAttacked)
-        {
-            //~~~~~~~~~~~~~~~~~~~~Attack Code Here~~~~~~~~~~~~~~~~~~~~//
-            Rigidbody rb = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
-
-            alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
-        }
-    }*/
 
     public override void Attack(Transform target)
     {
