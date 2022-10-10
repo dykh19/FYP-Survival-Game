@@ -51,12 +51,14 @@ public class UpgradeManager : MonoBehaviour
     }
 
     // Call this to upgrade base by 1 level
-    public void UpgradeBase()
+    public void UpgradeBase(bool UpgradeHealth = true)
     {
-        // Upgrade base health
-        float newBaseHealth = GameStats.PlayerBaseHealth[baseLevel];
-        baseObject.GetComponent<Health>().SetHealth(newBaseHealth);
-
+        if (UpgradeHealth)
+        {
+            // Upgrade base health
+            float newBaseHealth = GameStats.PlayerBaseHealth[baseLevel];
+            baseObject.GetComponent<Health>().SetHealth(newBaseHealth);
+        }
         // Upgrade base turrets
         switch (baseLevel)
         {
@@ -199,7 +201,7 @@ public class UpgradeManager : MonoBehaviour
         playerShotgunLevel = GameManager.Instance.PlayerStats.playerShotgunLevel;
         playerAxeLevel = GameManager.Instance.PlayerStats.playerAxeLevel;
         playerSwordLevel = GameManager.Instance.PlayerStats.playerSwordLevel;
-        UpgradeBase();
+        UpgradeBase(false);
         UpgradePlayerWeapon(1);
         UpgradePlayerWeapon(2);
         UpgradePlayerWeapon(3);
