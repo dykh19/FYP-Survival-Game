@@ -152,7 +152,20 @@ public class Monster_Spawner : MonoBehaviour
     //Function to spawn Creeps (Mainly for waves)
     public void spawnCreep(float xPosMin, float xPosMax, float zPosMin, float zPosMax)
     {
-        var rayOrigin = new Vector3(Random.Range(xPosMin, xPosMax), 100f, Random.Range(zPosMin, zPosMax));
+        bool validSpawn = false;
+        float x = 0f;
+        float z = 0f;
+        // Generate until position is outside of radius around base then spawn
+        while (!validSpawn)
+        {
+            x = Random.Range(xPosMin, xPosMax);
+            z = Random.Range(zPosMin, zPosMax);
+            if ((new Vector3(x, baseObj.transform.position.y, z) - baseObj.transform.position).sqrMagnitude >= 25f * 25f)
+            {
+                validSpawn = true;
+            }
+        }
+        var rayOrigin = new Vector3(x, 100f, z);
         var ray = new Ray(rayOrigin, Vector3.down);
         
         int creepIndex;
