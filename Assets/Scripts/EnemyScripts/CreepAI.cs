@@ -199,7 +199,6 @@ public class CreepAI : EnemyBehavior
     //Code for points given on enemy kill goes here inside the MonsterSpawner.cs
     public override void Die()
     {
-        animatorCreep.SetBool("Die", true); //Need to find a way to implement death anim
         print("Creep Dying");
         parent_MonSpawn.creepDie();
         if (Random.Range(0, 101) <= 10)

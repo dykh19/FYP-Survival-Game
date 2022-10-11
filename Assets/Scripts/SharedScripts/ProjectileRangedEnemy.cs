@@ -5,6 +5,30 @@ using UnityEngine;
 public class ProjectileRangedEnemy : MonoBehaviour
 {
     public float Damage;
+    /*    public GameObject player;
+        public Vector3 targetPlayer;
+        public Vector3 direction;
+        public float speed = 2f;
+
+    private void Start()
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                targetPlayer = player.transform.position;
+            }
+            else
+            {
+                print("Player = null");
+            }
+
+            direction = (targetPlayer - transform.position).normalized * speed;
+        }
+
+        private void Update()
+        {
+            transform.Translate(direction * Time.deltaTime);
+        }*/
 
     public void SetDamage(float Damage)
     {

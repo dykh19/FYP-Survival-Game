@@ -77,6 +77,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 10
+  player: {fileID: 4029703380950846368, guid: 66d9eee6c6b30ec49a9c1fd6d54ab6dd, type: 3}
+  targetPlayer: {x: 0, y: 0, z: 0}
+  direction: {x: 0, y: 0, z: 0}
+  speed: 2
 --- !u!1 &5564024855854763701
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class EliteRAI : EnemyBehavior
 {
     public Monster_Spawner parent_MonSpawn;
+    private Animator animatorRAI;
 
     //Pathing Variables
     public Vector3 walkPoint;
@@ -30,6 +31,7 @@ public class EliteRAI : EnemyBehavior
         baseObj = GameObject.FindGameObjectWithTag("Base").transform; //set base object
         agent = GetComponent<NavMeshAgent>();   //set NavMesh agent
         Damage = GameStats.BaseEnemyDamage[2] * GameStats.EnemyHealthModifier[(int)GameManager.Instance.CurrentDifficulty];
+        animatorRAI = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -55,6 +57,7 @@ public class EliteRAI : EnemyBehavior
             (!playerInSightRange && !playerInAttackRange && !playerSpotted && baseInSightRange && !baseInAttackRange && isWave))
         {
             //print("Finding Base(isWave)");
+            animatorRAI.SetBool("isWave", true);
             agent.speed = chaseSpeed;
             findBase();
         }
@@ -62,18 +65,21 @@ public class EliteRAI : EnemyBehavior
         if (!playerInSightRange && !playerInAttackRange && !playerSpotted && baseInSightRange && baseInAttackRange && isWave)
         {
             //print("Attacking Base(isWave)");
+            animatorRAI.SetBool("AttackBase", true);
             Attack(baseObj);
         }
         //If during wave, player is spotted while elite mob is hitting/spotted/has not spotted base. Chase player.
         if ((playerInSightRange && !playerInAttackRange && !playerSpotted && (baseInSightRange || !baseInSightRange) && (baseInAttackRange || !baseInAttackRange) && isWave) ||
             (playerInSightRange && !playerInAttackRange && playerSpotted && (baseInSightRange || !baseInSightRange) && (baseInAttackRange || !baseInAttackRange) && isWave))
         {
+            animatorRAI.SetBool("playerInAttackRange", true);
             //print("Chasing Player(isWave)");
             Chase();
         }
         //If during wave, player is within attack range. Attack player.
         if (playerInSightRange && playerInAttackRange && (playerSpotted || !playerSpotted) && (baseInSightRange || !baseInSightRange) && (baseInAttackRange || !baseInAttackRange) && isWave)
         {
+            animatorRAI.SetBool("AttackPlayer", true);
             //print("Attacking Player(isWave)");
             Attack(player);
         }
@@ -83,12 +89,14 @@ public class EliteRAI : EnemyBehavior
         if ((!playerInSightRange && !playerInAttackRange && (!playerSpotted || playerSpotted) && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave))
         {
             print("Wandering(!isWave)");
+            animatorRAI.SetBool("Wandering", true);
             agent.speed = wanderSpeed;
             Wandering();
         }
         //If player is in range of enemy's sight, monster will chase.
         if ((playerInSightRange && !playerInAttackRange && (playerSpotted || !playerSpotted) && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave))
         {
+            animatorRAI.SetBool("playerInAttackRange", true);
             print("Chasing Player(!isWave)");
             agent.speed = chaseSpeed;
             Chase();
@@ -96,6 +104,7 @@ public class EliteRAI : EnemyBehavior
         //If player is in attack range and in sight range, monster will attack.
         if (playerInSightRange && playerInAttackRange && playerSpotted && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave)
         {
+            animatorRAI.SetBool("AttackPlayer", true);
             print("Attacking Player(!isWave)");
             Attack(player); 
         }
@@ -104,6 +113,10 @@ public class EliteRAI : EnemyBehavior
     //Wandering state
     public override void Wandering()
     {
+        animatorRAI.SetBool("playerInAttackRange", false);
+        animatorRAI.SetBool("AttackPlayer", false);
+        animatorRAI.SetBool("AttackBase", false);
+        isWandering = true;
         if (!walkPointSet)
         {
             findWalkPoint();
@@ -124,17 +137,14 @@ public class EliteRAI : EnemyBehavior
 
     public override void findBase()
     {
+        animatorRAI.SetBool("AttackPlayer", false);
+        animatorRAI.SetBool("AttackBase", false);
         agent.SetDestination(baseObj.transform.position);
     }
 
     //Finding the walk point for the monster's wander phase
     public override void findWalkPoint()
     {
-        //float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        //float randomX = Random.Range(-walkPointRange, walkPointRange);
-
-        //walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-
         var rayOrigin = new Vector3(Random.Range(-walkPointRange, walkPointRange), 100f, Random.Range(-walkPointRange, walkPointRange));
         var ray = new Ray(rayOrigin, Vector3.down);
 
@@ -157,6 +167,9 @@ public class EliteRAI : EnemyBehavior
     //Player is spotted and monster gives chase
     public override void Chase()
     {
+        animatorRAI.SetBool("AttackPlayer", false);
+        animatorRAI.SetBool("AttackBase", false);
+        animatorRAI.SetBool("BaseSpotted", false);
         agent.SetDestination(player.transform.position);
     }
 
