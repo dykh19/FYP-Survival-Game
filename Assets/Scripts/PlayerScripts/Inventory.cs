@@ -10,6 +10,8 @@ public class Inventory
     public int activeItemIndex;
     private const int defaultInventorySize = 20;
 
+    private const int maxItemStack = 10;
+
     public Inventory()
     {
         //Main = this;
@@ -18,7 +20,7 @@ public class Inventory
 
     public void AddItem(GameItem newItem, int quantity = 1)
     {
-        var itemIndex = GetItemIndex(newItem);
+        var itemIndex = GetNotFullItemIndex(newItem);
 
         if (itemIndex != -1)
             Items[itemIndex].quantity += quantity;
@@ -38,8 +40,7 @@ public class Inventory
 
     public void RemoveItem(GameItem item, int quantity = 1)
     {
-        var itemIndex = GetItemIndex(item);
-
+        var itemIndex = GetFullItemIndex(item);
         if (itemIndex != -1)
         {
             Items[itemIndex].quantity -= quantity;
@@ -47,7 +48,6 @@ public class Inventory
             if (Items[itemIndex].quantity <= 0)
                 Items[itemIndex] = null;
         }
-
         InventoryUI.Main?.UpdateUI();
         PlayerHUD.Main?.GetComponent<PlayerHUDToolbar>()?.UpdateUI();
     }
@@ -58,6 +58,18 @@ public class Inventory
             (invItem != null) && (invItem.item.name == item.name));
     }
 
+    public int GetFullItemIndex(GameItem item)
+    {
+        return Array.FindIndex(Items, invItem =>
+            (invItem != null) && (invItem.item.name == item.name) && invItem.quantity == maxItemStack);
+    }
+
+    public int GetNotFullItemIndex(GameItem item)
+    {
+        return Array.FindIndex(Items, invItem =>
+            (invItem != null) && (invItem.item.name == item.name) && invItem.quantity != maxItemStack);
+    }
+
     public void ResizeInventory(int newSize)
     {
         var newArray = new InventoryItem[newSize];
@@ -65,6 +77,15 @@ public class Inventory
 
         Array.Copy(Items, newArray, elementsToCopy);
         Items = newArray;
+    }
+
+    public bool CheckIfCanRemoveItem(GameItem item)
+    {
+        if (GetFullItemIndex(item) != -1)
+        {
+            return true;
+        }
+        return false;
     }
 }
 

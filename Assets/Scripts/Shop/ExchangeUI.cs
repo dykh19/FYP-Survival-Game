@@ -11,6 +11,8 @@ public class ExchangeUI : MonoBehaviour
 {
     public Transform container;
     public Transform exchangeItemTemplate;
+    public GameObject PlayerOreCount;
+    public GameObject PlayerEssenceCount;
 
     public int itemIndex;
     public int itemCount;
@@ -35,8 +37,15 @@ public class ExchangeUI : MonoBehaviour
         //Creating the initial buttons
         EssExchangeButton = CreateExchangeButton("EssExchange", Upgrade.EquipmentExchangeType.MonsterEss, "Monster Essence", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.MonsterEss), Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.MonsterEss), 0);
         OreExchangeButton = CreateExchangeButton("OreExchange", Upgrade.EquipmentExchangeType.MonsterOre, "Synthetic Ore", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.MonsterOre), Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.MonsterOre), 1);
+
+        UpdateResourceCount();
     }
 
+    private void Update()
+    {
+        CheckIfCanExchange();
+        UpdateResourceCount();
+    }
     //Function used to create the button for exchanging currency. Function used in Start()
     private Transform CreateExchangeButton(string buttonType, Upgrade.EquipmentExchangeType Exchange, string itemName, int itemCost, string currency, int positionIndex)
     {
@@ -65,7 +74,7 @@ public class ExchangeUI : MonoBehaviour
     //Code for Exchanging Monster Junk with Monster Essence
     private void exchangeItem(Upgrade.EquipmentExchangeType item, int itemCost, string itemName)
     {
-        itemIndex = playerInventory.GetItemIndex(creepDrop);
+/*        itemIndex = playerInventory.GetItemIndex(creepDrop);
         try
         {
             itemCount = GameManager.Instance.PlayerInventory.Items[itemIndex].quantity;
@@ -73,23 +82,45 @@ public class ExchangeUI : MonoBehaviour
         catch
         {
             itemCount = 0;
-        }
+        }*/
         //Exchanges the item with the relevant item.
-        if (item == Upgrade.EquipmentExchangeType.MonsterEss && itemCount - itemCost >= 0)
+        if (item == Upgrade.EquipmentExchangeType.MonsterEss /* && itemCount - itemCost >= 0*/)
         {
-            GameManager.Instance.PlayerInventory.RemoveItem(creepDrop, 10);
-            GameManager.Instance.PlayerInventory.AddItem(monsterEss, 1);
+            GameManager.Instance.PlayerInventory.RemoveItem(creepDrop, itemCost);
+            GameManager.Instance.PlayerStats.AddEssence(1);
+            Debug.Log("Exchanged for Monster Essence");
         }
-        else if (item == Upgrade.EquipmentExchangeType.MonsterOre && itemCount - itemCost >= 0)
+        else if (item == Upgrade.EquipmentExchangeType.MonsterOre/* && itemCount - itemCost >= 0*/)
         {
-            GameManager.Instance.PlayerInventory.RemoveItem(creepDrop, 10);
-            GameManager.Instance.PlayerInventory.AddItem(SyntheticOre, 1);
+            GameManager.Instance.PlayerInventory.RemoveItem(creepDrop, itemCost);
+            GameManager.Instance.PlayerStats.AddOres(1);
+            Debug.Log("Exchanged for Ores");
         }
         else
         {
             Debug.Log("Not enough Materials");
         }
 
-        Debug.Log("Exchanged");
+        UpdateResourceCount();
+    }
+
+    private void CheckIfCanExchange()
+    {
+        if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveItem(creepDrop))
+        {
+            EssExchangeButton.GetComponent<Button>().interactable = true;
+            OreExchangeButton.GetComponent<Button>().interactable = true;
+        }
+        else
+        {
+            EssExchangeButton.GetComponent<Button>().interactable = false;
+            OreExchangeButton.GetComponent<Button>().interactable = false;
+        }
+    }
+
+    private void UpdateResourceCount()
+    {
+        PlayerOreCount.GetComponent<TextMeshProUGUI>().text = "Total Ores: " + GameManager.Instance.PlayerStats.CurrentOresInBase;
+        PlayerEssenceCount.GetComponent<TextMeshProUGUI>().text = "Total Essence: " + GameManager.Instance.PlayerStats.CurrentEssenceInBase;
     }
 }
