@@ -6,11 +6,14 @@ using UnityEngine.AI;
 public class EliteMAI : EnemyBehavior
 {
     private Monster_Spawner parent_MonSpawn;
+    private Animator animatorMAI;
 
     //Pathing Variables
     public Vector3 walkPoint;
     bool walkPointSet;
     public float walkPointRange;
+    public float wanderSpeed = 5f;
+    public float chaseSpeed = 5f;
 
     //Attacking Variables
     public float timeBetweenAttacks;
@@ -24,6 +27,7 @@ public class EliteMAI : EnemyBehavior
         player = GameObject.FindGameObjectWithTag("Player").transform;  //set player object
         baseObj = GameObject.FindGameObjectWithTag("Base").transform; //set base object
         agent = GetComponent<NavMeshAgent>();   //set NavMesh agent
+        animatorMAI = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -47,25 +51,30 @@ public class EliteMAI : EnemyBehavior
         if ((!playerInSightRange && !playerInAttackRange && !playerSpotted && !baseInSightRange && !baseInAttackRange && isWave) ||
             (!playerInSightRange && !playerInAttackRange && !playerSpotted && baseInSightRange && !baseInAttackRange && isWave))
         {
+            animatorMAI.SetBool("isWave", true);
             print("Finding Base(isWave)");
+            agent.speed = chaseSpeed;
             findBase();
         }
         //If during wave, player not spotted and base within sight and attack range. Attack Base.
         if(!playerInSightRange && !playerInAttackRange && !playerSpotted && baseInSightRange && baseInAttackRange && isWave)
         {
             print("Attacking Base(isWave)");
+            animatorMAI.SetBool("AttackBase", true);
             Attack(baseObj);
         }
         //If during wave, player is spotted while elite mob is hitting/spotted/has not spotted base. Chase player.
         if((playerInSightRange && !playerInAttackRange && !playerSpotted && (baseInSightRange || !baseInSightRange) && (baseInAttackRange || !baseInAttackRange) && isWave) ||
             (playerInSightRange && !playerInAttackRange && playerSpotted && (baseInSightRange || !baseInSightRange) && (baseInAttackRange || !baseInAttackRange) && isWave))
         {
+            animatorMAI.SetBool("playerInAttackRange", true);
             print("Chasing Player(isWave)");
             Chase();
         }
         //If during wave, player is within attack range. Attack player.
         if(playerInSightRange && playerInAttackRange && playerSpotted && (baseInSightRange || !baseInSightRange) && (baseInAttackRange || !baseInAttackRange) && isWave)
         {
+            animatorMAI.SetBool("AttackPlayer", true);
             print("Attacking Player(isWave)");
             Attack(player);
         }
@@ -75,17 +84,22 @@ public class EliteMAI : EnemyBehavior
         if ((!playerInSightRange && !playerInAttackRange && !playerSpotted && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave))
         {
             print("Wandering(!isWave)");
+            animatorMAI.SetBool("Wandering", true);
+            agent.speed = wanderSpeed;
             Wandering();
         }
         //If player is in range of enemy's sight, monster will chase.
         if ((playerInSightRange && !playerInAttackRange && (playerSpotted || !playerSpotted) && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave))
         {
+            animatorMAI.SetBool("playerInAttackRange", true);
             print("Chasing Player(!isWave)");
+            agent.speed = chaseSpeed;
             Chase();
         }
         //If player is in attack range and in sight range, monster will attack.
         if (playerInSightRange && playerInAttackRange && playerSpotted && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave)
         {
+            animatorMAI.SetBool("AttackPlayer", true);
             print("Attacking Player(!isWave)");
             Attack(player);
         }
@@ -94,6 +108,10 @@ public class EliteMAI : EnemyBehavior
     //Wandering state
     public override void Wandering()
     {
+        animatorMAI.SetBool("playerInAttackRange", false);
+        animatorMAI.SetBool("AttackPlayer", false);
+        animatorMAI.SetBool("AttackBase", false);
+        isWandering = true;
         if (!walkPointSet)
         {
             findWalkPoint();
@@ -104,7 +122,7 @@ public class EliteMAI : EnemyBehavior
             agent.SetDestination(walkPoint);
         }
 
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+        distanceToWalkPoint = transform.position - walkPoint;
 
         if (distanceToWalkPoint.magnitude < 1f)
         {
@@ -114,16 +132,26 @@ public class EliteMAI : EnemyBehavior
 
     public override void findBase()
     {
+        animatorMAI.SetBool("AttackPlayer", false);
+        animatorMAI.SetBool("AttackBase", false);
         agent.SetDestination(baseObj.transform.position);
     }
 
     //Finding the walk point for the monster's wander phase
     public override void findWalkPoint()
     {
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
+        var rayOrigin = new Vector3(Random.Range(-walkPointRange, walkPointRange), 100f, Random.Range(-walkPointRange, walkPointRange));
+        var ray = new Ray(rayOrigin, Vector3.down);
 
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            walkPoint = hit.point + hit.normal;
+            NavMeshHit closestHit;
+            if (NavMesh.SamplePosition(walkPoint, out closestHit, 500, 1))
+            {
+                walkPoint = closestHit.position;
+            }
+        }
 
         if (Physics.Raycast(walkPoint, -transform.up, 2f, isGround))
         {
@@ -134,6 +162,9 @@ public class EliteMAI : EnemyBehavior
     //Player is spotted and monster gives chase
     public override void Chase()
     {
+        animatorMAI.SetBool("AttackPlayer", false);
+        animatorMAI.SetBool("AttackBase", false);
+        animatorMAI.SetBool("BaseSpotted", false);
         agent.SetDestination(player.transform.position);
     }
 
