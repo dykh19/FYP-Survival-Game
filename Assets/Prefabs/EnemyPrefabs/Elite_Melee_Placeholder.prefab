@@ -9,11 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3514896615558844710}
-  - component: {fileID: 2032909024349749948}
   - component: {fileID: 3071363579399703091}
-  - component: {fileID: 4041477907259022178}
   - component: {fileID: -8754276627231981341}
   - component: {fileID: -6128264813378169247}
+  - component: {fileID: 6786865577367774081}
   m_Layer: 10
   m_Name: Elite_Melee_Placeholder
   m_TagString: Enemy
@@ -39,14 +38,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &2032909024349749948
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40404658589720726}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &3071363579399703091
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -89,19 +80,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &4041477907259022178
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40404658589720726}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-8754276627231981341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,7 +134,23 @@ MonoBehaviour:
   isWandering: 0
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 0
+  wanderSpeed: 5
+  chaseSpeed: 5
   timeBetweenAttacks: 0
+--- !u!136 &6786865577367774081
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40404658589720726}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 3.0080829
+  m_Height: 15.327537
+  m_Direction: 1
+  m_Center: {x: -0.1398716, y: 7.1637683, z: -0.49078965}
 --- !u!1 &1428061774939519914
 GameObject:
   m_ObjectHideFlags: 0
