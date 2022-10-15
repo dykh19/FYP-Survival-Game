@@ -14,16 +14,22 @@ public class ExchangeUI : MonoBehaviour
     public GameObject PlayerOreCount;
     public GameObject PlayerEssenceCount;
 
-    public int itemIndex;
-    public int itemCount;
+    //public int itemIndex;
+    //public int itemCount;
 
-    private Transform EssExchangeButton;
-    private Transform OreExchangeButton;
+    private Transform JunkToEssExchangeButton;
+    private Transform JunkToOreExchangeButton;
+    private Transform RawOreToOreExchangeButton;
+    private Transform AllRawOreToOreExchangeButton;
     public InventoryUI playerInventoryUI;
     public Inventory playerInventory;
-    public GameItem creepDrop;
+    public GameItem monsterJunk;
     public GameItem monsterEss;
-    public GameItem SyntheticOre;
+    public GameItem Damianite;
+    public GameItem Eddirite;
+    public GameItem Josephite;
+    public GameItem Nicholite;
+    public GameItem Seanite;
 
     // Start is called before the first frame update
     void Start()
@@ -35,9 +41,10 @@ public class ExchangeUI : MonoBehaviour
         exchangeItemTemplate = container.Find("ExchangeItemTemplate");
 
         //Creating the initial buttons
-        EssExchangeButton = CreateExchangeButton("EssExchange", Upgrade.EquipmentExchangeType.MonsterEss, "Monster Essence", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.MonsterEss), Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.MonsterEss), 0);
-        OreExchangeButton = CreateExchangeButton("OreExchange", Upgrade.EquipmentExchangeType.MonsterOre, "Synthetic Ore", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.MonsterOre), Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.MonsterOre), 1);
-
+        JunkToEssExchangeButton = CreateExchangeButton(Upgrade.EquipmentExchangeType.JunkToMonsterEssence, "Monster Essence", "Junk", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.JunkToMonsterEssence), 0);
+        JunkToOreExchangeButton = CreateExchangeButton(Upgrade.EquipmentExchangeType.JunkToRefinedOre, "Refined Ore", "Junk", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.JunkToRefinedOre), 1);
+        RawOreToOreExchangeButton = CreateExchangeButton(Upgrade.EquipmentExchangeType.RawOreToRefinedOre, "Refined Ore", "Ore", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.RawOreToRefinedOre), 2);
+        AllRawOreToOreExchangeButton = CreateExchangeButton(Upgrade.EquipmentExchangeType.AllRawOreeToRefinedOre, "Refined Ore", "All Ore", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.AllRawOreeToRefinedOre), 3);
         UpdateResourceCount();
     }
 
@@ -47,7 +54,7 @@ public class ExchangeUI : MonoBehaviour
         UpdateResourceCount();
     }
     //Function used to create the button for exchanging currency. Function used in Start()
-    private Transform CreateExchangeButton(string buttonType, Upgrade.EquipmentExchangeType Exchange, string itemName, int itemCost, string currency, int positionIndex)
+    private Transform CreateExchangeButton(Upgrade.EquipmentExchangeType Exchange, string givenItemName, string takenItemName, int takenItemCost, int positionIndex)
     {
         //Similar concept as the CreateUpgradeButton function
         Transform exchangeTransform = Instantiate(exchangeItemTemplate, container);
@@ -56,14 +63,24 @@ public class ExchangeUI : MonoBehaviour
 
         float vendorItemHeight = 90f;
         exchangeRectTransform.anchoredPosition = new Vector2(0, -vendorItemHeight * positionIndex);
-        exchangeTransform.name = itemName;
-
-        exchangeTransform.Find("exchangeText").GetComponent<TextMeshProUGUI>().SetText(itemName);
-        exchangeTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText(itemCost.ToString());
-
+        exchangeTransform.name = givenItemName;
+        if (takenItemName == "Junk")
+        {
+            exchangeTransform.Find("exchangeText").GetComponent<TextMeshProUGUI>().SetText("Exchange 10 Monster Junk for 1 " + givenItemName);
+        }
+        else if (takenItemName == "Ore")
+        {
+            exchangeTransform.Find("exchangeText").GetComponent<TextMeshProUGUI>().SetText("Exchange 1 Raw Ore for 1 " + givenItemName);
+        }
+        else if (takenItemName == "All Ore")
+        {
+            exchangeTransform.Find("exchangeText").GetComponent<TextMeshProUGUI>().SetText("Exchange all Raw Ore to " + givenItemName);
+        }
+        /*exchangeTransform.Find("exchangeText").GetComponent<TextMeshProUGUI>().SetText(itemName);
+        exchangeTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText(itemCost.ToString());*/
         exchangeTransform.GetComponent<Button_UI>().ClickFunc = () =>
         {
-            exchangeItem(Exchange, itemCost, itemName);
+            exchangeItem(Exchange, takenItemCost, takenItemName);
         };
 
         return exchangeTransform;
@@ -72,55 +89,120 @@ public class ExchangeUI : MonoBehaviour
 
 
     //Code for Exchanging Monster Junk with Monster Essence
-    private void exchangeItem(Upgrade.EquipmentExchangeType item, int itemCost, string itemName)
+    private void exchangeItem(Upgrade.EquipmentExchangeType item, int takenItemCost, string takenItemName)
     {
-/*        itemIndex = playerInventory.GetItemIndex(creepDrop);
-        try
-        {
-            itemCount = GameManager.Instance.PlayerInventory.Items[itemIndex].quantity;
-        }
-        catch
-        {
-            itemCount = 0;
-        }*/
+        /*        itemIndex = playerInventory.GetItemIndex(creepDrop);
+                try
+                {
+                    itemCount = GameManager.Instance.PlayerInventory.Items[itemIndex].quantity;
+                }
+                catch
+                {
+                    itemCount = 0;
+                }*/
         //Exchanges the item with the relevant item.
-        if (item == Upgrade.EquipmentExchangeType.MonsterEss /* && itemCount - itemCost >= 0*/)
+        if (item == Upgrade.EquipmentExchangeType.JunkToMonsterEssence && takenItemName == "Junk")
         {
-            GameManager.Instance.PlayerInventory.RemoveItem(creepDrop, itemCost);
+            GameManager.Instance.PlayerInventory.RemoveItem(monsterJunk, takenItemCost);
             GameManager.Instance.PlayerStats.AddEssence(1);
-            Debug.Log("Exchanged for Monster Essence");
+            Debug.Log("Exchanged Junk for Monster Essence");
         }
-        else if (item == Upgrade.EquipmentExchangeType.MonsterOre/* && itemCount - itemCost >= 0*/)
+        else if (item == Upgrade.EquipmentExchangeType.JunkToRefinedOre && takenItemName == "Junk")
         {
-            GameManager.Instance.PlayerInventory.RemoveItem(creepDrop, itemCost);
+            GameManager.Instance.PlayerInventory.RemoveItem(monsterJunk, takenItemCost);
             GameManager.Instance.PlayerStats.AddOres(1);
-            Debug.Log("Exchanged for Ores");
+            Debug.Log("Exchanged Junk for Ore");
         }
-        else
+        else if (item == Upgrade.EquipmentExchangeType.RawOreToRefinedOre && takenItemName == "Ore")
         {
-            Debug.Log("Not enough Materials");
+            if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Damianite))
+            {
+                GameManager.Instance.PlayerInventory.RemoveItem(Damianite, takenItemCost);
+            }
+            else if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Eddirite))
+            {
+                GameManager.Instance.PlayerInventory.RemoveItem(Eddirite, takenItemCost);
+            }
+            else if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Josephite))
+            {
+                GameManager.Instance.PlayerInventory.RemoveItem(Josephite, takenItemCost);
+            }
+            else if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Nicholite))
+            {
+                GameManager.Instance.PlayerInventory.RemoveItem(Nicholite, takenItemCost);
+            }
+            else if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Seanite))
+            {
+                GameManager.Instance.PlayerInventory.RemoveItem(Seanite, takenItemCost);
+            }
+            GameManager.Instance.PlayerStats.AddOres(1);
+            Debug.Log("Exchanged Raw Ore for Ore");
         }
-
-        UpdateResourceCount();
+        else if (item == Upgrade.EquipmentExchangeType.RawOreToRefinedOre && takenItemName == "All Ore")
+        {
+            while (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Damianite) ||
+            GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Eddirite) ||
+            GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Josephite) ||
+            GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Nicholite) ||
+            GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Seanite))
+            {
+                if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Damianite))
+                {
+                    GameManager.Instance.PlayerInventory.RemoveItem(Damianite, takenItemCost);
+                }
+                else if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Eddirite))
+                {
+                    GameManager.Instance.PlayerInventory.RemoveItem(Eddirite, takenItemCost);
+                }
+                else if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Josephite))
+                {
+                    GameManager.Instance.PlayerInventory.RemoveItem(Josephite, takenItemCost);
+                }
+                else if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Nicholite))
+                {
+                    GameManager.Instance.PlayerInventory.RemoveItem(Nicholite, takenItemCost);
+                }
+                else if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Seanite))
+                {
+                    GameManager.Instance.PlayerInventory.RemoveItem(Seanite, takenItemCost);
+                }
+                GameManager.Instance.PlayerStats.AddOres(1);
+            }
+        }
+            UpdateResourceCount();
     }
 
     private void CheckIfCanExchange()
     {
-        if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveItem(creepDrop))
+        if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveFullItem(monsterJunk))
         {
-            EssExchangeButton.GetComponent<Button>().interactable = true;
-            OreExchangeButton.GetComponent<Button>().interactable = true;
+            JunkToEssExchangeButton.GetComponent<Button>().interactable = true;
+            JunkToOreExchangeButton.GetComponent<Button>().interactable = true;
         }
         else
         {
-            EssExchangeButton.GetComponent<Button>().interactable = false;
-            OreExchangeButton.GetComponent<Button>().interactable = false;
+            JunkToEssExchangeButton.GetComponent<Button>().interactable = false;
+            JunkToOreExchangeButton.GetComponent<Button>().interactable = false;
+        }
+        if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Damianite) ||
+            GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Eddirite)  ||
+            GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Josephite) ||
+            GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Nicholite) ||
+            GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Seanite))
+        {
+            RawOreToOreExchangeButton.GetComponent<Button>().interactable = true;
+            AllRawOreToOreExchangeButton.GetComponent<Button>().interactable = true;
+        }
+        else
+        {
+            RawOreToOreExchangeButton.GetComponent<Button>().interactable = false;
+            AllRawOreToOreExchangeButton.GetComponent<Button>().interactable = false;
         }
     }
 
     private void UpdateResourceCount()
     {
-        PlayerOreCount.GetComponent<TextMeshProUGUI>().text = "Total Ores: " + GameManager.Instance.PlayerStats.CurrentOresInBase;
+        PlayerOreCount.GetComponent<TextMeshProUGUI>().text = "Total Refined Ores: " + GameManager.Instance.PlayerStats.CurrentOresInBase;
         PlayerEssenceCount.GetComponent<TextMeshProUGUI>().text = "Total Essence: " + GameManager.Instance.PlayerStats.CurrentEssenceInBase;
     }
 }

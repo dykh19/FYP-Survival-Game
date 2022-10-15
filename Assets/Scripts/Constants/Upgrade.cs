@@ -8,13 +8,13 @@ public class Upgrade : MonoBehaviour
 {
     public enum EquipmentExchangeType
     {
-        LMelee_1, LMelee_2, LMelee_3, LMelee_4, LMelee_5, LMelee_6, LMelee_7, LMelee_8, LMelee_9, LMeleeMax,
+        /*LMelee_1, LMelee_2, LMelee_3, LMelee_4, LMelee_5, LMelee_6, LMelee_7, LMelee_8, LMelee_9, LMeleeMax,
         HMelee_1, HMelee_2, HMelee_3, HMelee_4, HMelee_5, HMelee_6, HMelee_7, HMelee_8, HMelee_9, HMeleeMax,
         Rifle_1, Rifle_2, Rifle_3, Rifle_4, Rifle_5, Rifle_6, Rifle_7, Rifle_8, Rifle_9, RifleMax,
         Shotgun_1, Shotgun_2, Shotgun_3, Shotgun_4, Shotgun_5, Shotgun_6, Shotgun_7, Shotgun_8, Shotgun_9, ShotgunMax,
         Health_1, Health_2, Health_3, Health_4, Health_5, Health_6, Health_7, Health_8, Health_9, HealthMax,
-        Base_1, Base_2, Base_3, Base_4, BaseMax,
-        Weapon, Health, Base, MonsterEss, MonsterOre
+        Base_1, Base_2, Base_3, Base_4, BaseMax,*/
+        Weapon, Health, Base, JunkToMonsterEssence, JunkToRefinedOre, RawOreToRefinedOre, AllRawOreeToRefinedOre
     }
 
     /*public enum PassiveSkillUpgradeType
@@ -53,9 +53,9 @@ public class Upgrade : MonoBehaviour
             case EquipmentExchangeType.Base:
                 return "SyntheticOre";
             //Exchange Items
-            case EquipmentExchangeType.MonsterEss:
+            case EquipmentExchangeType.JunkToMonsterEssence:
                 return "CreepDrop";
-            case EquipmentExchangeType.MonsterOre:
+            case EquipmentExchangeType.JunkToRefinedOre:
                 return "CreepDrop";
         }
     }
@@ -65,10 +65,12 @@ public class Upgrade : MonoBehaviour
         switch(Exchange)
         {
             default:
-            case EquipmentExchangeType.MonsterEss:
+            case EquipmentExchangeType.JunkToMonsterEssence:
                 return 10;
-            case EquipmentExchangeType.MonsterOre:
+            case EquipmentExchangeType.JunkToRefinedOre:
                 return 10;
+            case EquipmentExchangeType.RawOreToRefinedOre:
+                return 1;
         }
     }
 }

@@ -155,7 +155,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2578113155513363670
 RectTransform:
   m_ObjectHideFlags: 0
@@ -269,8 +269,6 @@ MonoBehaviour:
   exchangeItemTemplate: {fileID: 6194632048147375324}
   PlayerOreCount: {fileID: 1460116551904486825}
   PlayerEssenceCount: {fileID: 8568801388428090325}
-  itemIndex: 0
-  itemCount: 0
   playerInventoryUI: {fileID: 0}
   playerInventory:
     Items:
@@ -315,9 +313,13 @@ MonoBehaviour:
     - item: {fileID: 0}
       quantity: 0
     activeItemIndex: 0
-  creepDrop: {fileID: 11400000, guid: 07d9999ac2c72cf47a2be2aa521addcc, type: 2}
+  monsterJunk: {fileID: 0}
   monsterEss: {fileID: 11400000, guid: 299f0f15ca4b2e943b9540c7185d3c94, type: 2}
-  SyntheticOre: {fileID: 11400000, guid: a26004b23cef9ad4b961fe8747e5f88f, type: 2}
+  Damianite: {fileID: 0}
+  Eddirite: {fileID: 0}
+  Josephite: {fileID: 0}
+  Nicholite: {fileID: 0}
+  Seanite: {fileID: 0}
 --- !u!1 &3402145464783189931
 GameObject:
   m_ObjectHideFlags: 0

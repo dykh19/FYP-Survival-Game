@@ -41,6 +41,10 @@ public class Inventory
     public void RemoveItem(GameItem item, int quantity = 1)
     {
         var itemIndex = GetFullItemIndex(item);
+        if (itemIndex == -1)
+        {
+            itemIndex = GetNotFullItemIndex(item);
+        }
         if (itemIndex != -1)
         {
             Items[itemIndex].quantity -= quantity;
@@ -79,9 +83,18 @@ public class Inventory
         Items = newArray;
     }
 
-    public bool CheckIfCanRemoveItem(GameItem item)
+    public bool CheckIfCanRemoveFullItem(GameItem item)
     {
         if (GetFullItemIndex(item) != -1)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool CheckIfCanRemoveNotFullItem(GameItem item)
+    {
+        if (GetNotFullItemIndex(item) != -1)
         {
             return true;
         }

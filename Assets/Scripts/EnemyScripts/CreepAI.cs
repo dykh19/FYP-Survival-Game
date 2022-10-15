@@ -32,6 +32,8 @@ public class CreepAI : EnemyBehavior
         agent = GetComponent<NavMeshAgent>();   //set NavMesh agent
         Damage = GameStats.BaseEnemyDamage[0] * GameStats.EnemyAttackModifier[(int)GameManager.Instance.CurrentDifficulty];
         animatorCreep = GetComponentInChildren<Animator>();
+        agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
+        //InvokeRepeating("UpdateAI", 1f, 2f);
     }
 
     // Update is called once per frame
@@ -40,7 +42,6 @@ public class CreepAI : EnemyBehavior
         //Check that monster's health is not = 0
         CheckHealth();
         CheckWave();
-
         //If player object within InSightRange sphere, player is spotted & playerInSightRange = true. If within InAttackRange sphere, playerInAttackRange = true
         if (playerInSightRange = Physics.CheckSphere(transform.position, sightRange, isPlayer))
         {
@@ -50,48 +51,7 @@ public class CreepAI : EnemyBehavior
         baseInSightRange = Physics.CheckSphere(transform.position, sightRange, isBase);
         baseInAttackRange = Physics.CheckSphere(transform.position, attackRange, isBase);
 
-        /**********Conditions for state of monster.**********/
-        //When isWave (Creeps solely target the player base)
-        //If during wave, player and base both not in sight or attack range. Find base.
-        if (((!playerInSightRange || playerInSightRange) && (!playerInAttackRange || playerInAttackRange) && (playerSpotted || !playerSpotted) && !baseInSightRange && !baseInAttackRange && isWave) ||
-            ((!playerInSightRange || playerInSightRange) && (!playerInAttackRange || playerInAttackRange) && (playerSpotted || !playerSpotted) && baseInSightRange && !baseInAttackRange && isWave))
-        {
-            //print("Finding Base(isWave)");
-            animatorCreep.SetBool("isWave", true);
-            findBase();
-        }
-        //If during wave, player not spotted and base within sight and attack range. Attack Base.
-        if ((!playerInSightRange || playerInSightRange) && (!playerInAttackRange || playerInAttackRange) && (playerSpotted || !playerSpotted) && baseInSightRange && baseInAttackRange && isWave)
-        {
-            //print("Attacking Base(isWave)");
-            animatorCreep.SetBool("AttackBase", true);
-            Attack(baseObj);
-        }
-
-        //When !isWave (Creeps will target the player)
-        //If not in wave and player not in sight while base in sight/attack range, monster wanders.
-        if ((!playerInSightRange && !playerInAttackRange && (!playerSpotted || playerSpotted) && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave))
-        {
-            //print("Wandering(!isWave)");
-            animatorCreep.SetBool("Wandering", true);
-            agent.speed = wanderSpeed;
-            Wandering();
-        }
-        //If player is in range of enemy's sight, monster will chase.
-        if ((playerInSightRange && !playerInAttackRange && (playerSpotted || !playerSpotted) && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave))
-        {
-            //print("Chasing Player(!isWave)");
-            animatorCreep.SetBool("playerInAttackRange", true);
-            agent.speed = chaseSpeed;
-            Chase();
-        }
-        //If player is in attack range and in sight range, monster will attack.
-        if (playerInSightRange && playerInAttackRange && playerSpotted && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave)
-        {
-            //print("Attacking Player(!isWave)");
-            animatorCreep.SetBool("AttackPlayer", true);
-            Attack(player);
-        }
+        UpdateAI();
     }
 
     //Wandering state
@@ -124,7 +84,18 @@ public class CreepAI : EnemyBehavior
     {
         animatorCreep.SetBool("AttackPlayer", false);
         animatorCreep.SetBool("AttackBase", false);
-        agent.SetDestination(baseObj.transform.position);
+
+        /*NavMeshHit hit = new NavMeshHit();
+        NavMesh.FindClosestEdge(baseObj.position, out hit, -1);*/
+
+        NavMeshPath path = new NavMeshPath();
+        NavMesh.CalculatePath(transform.position,baseObj.position, -1 , path);
+        agent.path = path;
+
+        
+        
+        for (int i = 0; i < agent.path.corners.Length - 1; i++)
+            Debug.DrawLine(agent.path.corners[i], agent.path.corners[i + 1], Color.red);
     }
 
     //Finding the walk point for the monster's wander phase
@@ -211,6 +182,52 @@ public class CreepAI : EnemyBehavior
         if (gameObject != null)
         {
             Destroy(gameObject);
+        }
+    }
+
+    void UpdateAI()
+    {
+        /**********Conditions for state of monster.**********/
+        //When isWave (Creeps solely target the player base)
+        //If during wave, player and base both not in sight or attack range. Find base.
+        if (((!playerInSightRange || playerInSightRange) && (!playerInAttackRange || playerInAttackRange) && (playerSpotted || !playerSpotted) && !baseInSightRange && !baseInAttackRange && isWave) ||
+            ((!playerInSightRange || playerInSightRange) && (!playerInAttackRange || playerInAttackRange) && (playerSpotted || !playerSpotted) && baseInSightRange && !baseInAttackRange && isWave))
+        {
+            //print("Finding Base(isWave)");
+            animatorCreep.SetBool("isWave", true);
+            findBase();
+        }
+        //If during wave, player not spotted and base within sight and attack range. Attack Base.
+        if ((!playerInSightRange || playerInSightRange) && (!playerInAttackRange || playerInAttackRange) && (playerSpotted || !playerSpotted) && baseInSightRange && baseInAttackRange && isWave)
+        {
+            //print("Attacking Base(isWave)");
+            animatorCreep.SetBool("AttackBase", true);
+            Attack(baseObj);
+        }
+
+        //When !isWave (Creeps will target the player)
+        //If not in wave and player not in sight while base in sight/attack range, monster wanders.
+        if ((!playerInSightRange && !playerInAttackRange && (!playerSpotted || playerSpotted) && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave))
+        {
+            //print("Wandering(!isWave)");
+            animatorCreep.SetBool("Wandering", true);
+            agent.speed = wanderSpeed;
+            Wandering();
+        }
+        //If player is in range of enemy's sight, monster will chase.
+        if ((playerInSightRange && !playerInAttackRange && (playerSpotted || !playerSpotted) && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave))
+        {
+            //print("Chasing Player(!isWave)");
+            animatorCreep.SetBool("playerInAttackRange", true);
+            agent.speed = chaseSpeed;
+            Chase();
+        }
+        //If player is in attack range and in sight range, monster will attack.
+        if (playerInSightRange && playerInAttackRange && playerSpotted && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave)
+        {
+            //print("Attacking Player(!isWave)");
+            animatorCreep.SetBool("AttackPlayer", true);
+            Attack(player);
         }
     }
 }
