@@ -21,6 +21,7 @@ public class EliteRAI : EnemyBehavior
     public GameObject bullet;
     private float lastAttackTime = -1f;
     public float Damage;
+    Transform shootPoint;
 
     Monster_Spawner spawn;
 
@@ -32,6 +33,7 @@ public class EliteRAI : EnemyBehavior
         agent = GetComponent<NavMeshAgent>();   //set NavMesh agent
         Damage = GameStats.BaseEnemyDamage[2] * GameStats.EnemyHealthModifier[(int)GameManager.Instance.CurrentDifficulty];
         animatorRAI = GetComponentInChildren<Animator>();
+        shootPoint = transform.Find("ShootPoint");
     }
 
     // Update is called once per frame
@@ -88,7 +90,7 @@ public class EliteRAI : EnemyBehavior
         //If not in wave and player not in sight while base in sight/attack range, monster wanders.
         if ((!playerInSightRange && !playerInAttackRange && (!playerSpotted || playerSpotted) && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave))
         {
-            print("Wandering(!isWave)");
+            //print("Wandering(!isWave)");
             animatorRAI.SetBool("Wandering", true);
             agent.speed = wanderSpeed;
             Wandering();
@@ -97,7 +99,7 @@ public class EliteRAI : EnemyBehavior
         if ((playerInSightRange && !playerInAttackRange && (playerSpotted || !playerSpotted) && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave))
         {
             animatorRAI.SetBool("playerInAttackRange", true);
-            print("Chasing Player(!isWave)");
+            //print("Chasing Player(!isWave)");
             agent.speed = chaseSpeed;
             Chase();
         }
@@ -105,7 +107,7 @@ public class EliteRAI : EnemyBehavior
         if (playerInSightRange && playerInAttackRange && playerSpotted && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && !isWave)
         {
             animatorRAI.SetBool("AttackPlayer", true);
-            print("Attacking Player(!isWave)");
+            //print("Attacking Player(!isWave)");
             Attack(player); 
         }
     }
@@ -181,12 +183,12 @@ public class EliteRAI : EnemyBehavior
         if (Time.time > lastAttackTime + timeBetweenAttacks)
         {
             //~~~~~~~~~~~~~~~~~~~~Attack Code Here~~~~~~~~~~~~~~~~~~~~//
-            Rigidbody rb = Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            Rigidbody rb = Instantiate(bullet, shootPoint.position, Quaternion.identity).GetComponent<Rigidbody>();
             bullet.GetComponent<ProjectileRangedEnemy>().SetDamage(Damage);
             rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 4f, ForceMode.Impulse);
+            rb.AddForce(transform.up * 2f, ForceMode.Impulse);
             Destroy(rb.gameObject, 10);
-            Debug.Log("Attacking " + target.name);
+            //Debug.Log("Attacking " + target.name);
 
             alreadyAttacked = true;
             lastAttackTime = Time.time;

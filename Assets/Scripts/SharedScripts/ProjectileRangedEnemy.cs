@@ -41,14 +41,13 @@ public class ProjectileRangedEnemy : MonoBehaviour
         {
             Destroy(this.gameObject);
             other.gameObject.GetComponent<Health>().TakeDamage(Damage);
-            
+
             Debug.Log("Hit Player");
         }
-
-        if (other.gameObject.tag == "Base")
+        else if (other.gameObject.tag == "Base")
         {
             Destroy(this.gameObject);
-            other.gameObject.GetComponent<Health>().TakeDamage(Damage);
+            other.gameObject.transform.root.GetComponent<Health>().TakeDamage(Damage);
 
             Debug.Log("Hit Base");
         }

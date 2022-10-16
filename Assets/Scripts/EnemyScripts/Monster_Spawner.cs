@@ -270,7 +270,7 @@ public class Monster_Spawner : MonoBehaviour
                 newEliteM.AddComponent<NavMeshAgent>();
             }
             newEliteM.transform.parent = GameObject.Find("Spawner").transform;
-            eliteRSpawned += 1;
+            eliteMSpawned += 1;
         }
     }
 
