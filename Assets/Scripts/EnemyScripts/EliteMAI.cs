@@ -16,6 +16,7 @@ public class EliteMAI : EnemyBehavior
     public float chaseSpeed = 5f;
 
     //Attacking Variables
+    public float Damage;
     public float timeBetweenAttacks;
     bool alreadyAttacked;
 
@@ -176,6 +177,19 @@ public class EliteMAI : EnemyBehavior
 
         if (!alreadyAttacked)
         {
+            if (target.gameObject.tag == "Player")
+            {
+                target.gameObject.GetComponent<Health>().TakeDamage(Damage);
+
+                Debug.Log("Hit Player");
+            }
+
+            if (target.gameObject.tag == "Base")
+            {
+                target.gameObject.GetComponent<Health>().TakeDamage(Damage);
+
+                Debug.Log("Hit Base");
+            }
             //~~~~~~~~~~~~~~~~~~~~Attack Code Here~~~~~~~~~~~~~~~~~~~~//
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);

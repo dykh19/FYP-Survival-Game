@@ -152,17 +152,17 @@ public class Monster_Spawner : MonoBehaviour
         creepCountToEndWave = 1; //Change value here (Previously 30)
         creepSpawned = 0;
         creepKilled = 0;
-        eliteRCountToEndWave = 2;
+        //eliteRCountToEndWave = 2;
         eliteMCountToEndWave = 2;
 
         for(int i = 0; i < creepCountToEndWave; i++)
         {
             spawnCreep(mapxPosMin, mapxPosMax, mapzPosMin, mapzPosMax);
         }
-        for(int i = 0; i < eliteRCountToEndWave; i++)
-        {
-            spawnEliteR(mapxPosMin, mapxPosMax, mapzPosMin, mapzPosMax);
-        }
+        //for(int i = 0; i < eliteRCountToEndWave; i++)
+        //{
+        //    spawnEliteR(mapxPosMin, mapxPosMax, mapzPosMin, mapzPosMax);
+        //}
         for(int i = 0; i < eliteMCountToEndWave; i++)
         {
             spawnEliteM(mapxPosMin, mapxPosMax, mapzPosMin, mapzPosMax);
