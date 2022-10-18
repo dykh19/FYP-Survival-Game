@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -8754276627231981341}
   - component: {fileID: -6128264813378169247}
   - component: {fileID: 6786865577367774081}
+  - component: {fileID: 5321397793151592178}
   m_Layer: 10
   m_Name: Elite_Melee_Placeholder
   m_TagString: Enemy
@@ -148,10 +149,26 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1.0918852
-  m_Height: 8.973352
+  m_Radius: 0.7309269
+  m_Height: 7.6605573
   m_Direction: 1
-  m_Center: {x: -0.033718705, y: 3.120349, z: -0.49078965}
+  m_Center: {x: 0, y: 3.84, z: -0.024019599}
+--- !u!114 &5321397793151592178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40404658589720726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf931fd97eb19b342a619c9a8b04d53a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthBarImage: {fileID: 480545367630105947}
+  HealthBar: {fileID: 2677733040128717536}
+  HideFullHealthBar: 0
+  ViewDistance: 20
 --- !u!1 &1428061774939519914
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,7 +193,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428061774939519914}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: 0}
+  m_LocalPosition: {x: 0, y: 5.16, z: 0}
   m_LocalScale: {x: 0.125, y: 0.03126, z: 0.125}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -252,6 +269,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c2dcc92e3b46204ba7324e470bab55b, type: 3}
+--- !u!114 &480545367630105947 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3178054453310752635, guid: 8c2dcc92e3b46204ba7324e470bab55b, type: 3}
+  m_PrefabInstance: {fileID: 3076392683714038304}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2677733040128717536 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1123844764627646656, guid: 8c2dcc92e3b46204ba7324e470bab55b, type: 3}

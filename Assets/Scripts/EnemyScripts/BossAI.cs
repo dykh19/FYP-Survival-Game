@@ -35,7 +35,6 @@ public class BossAI : EnemyBehavior
     // Update is called once per frame
     void Update()
     {
-        CheckHealth();
         CheckWave();
 
         if(playerInSightRange = Physics.CheckSphere(transform.position, sightRange, isPlayer))

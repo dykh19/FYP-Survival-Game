@@ -34,7 +34,6 @@ public class EliteMAI : EnemyBehavior
     // Update is called once per frame
     private void Update()
     {
-        CheckHealth();
         CheckWave();
 
         //If player object within InSightRange sphere, player is spotted & playerInSightRange = true. If within InAttackRange sphere, playerInAttackRange = true

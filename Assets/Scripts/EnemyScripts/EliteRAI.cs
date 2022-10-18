@@ -39,8 +39,6 @@ public class EliteRAI : EnemyBehavior
     // Update is called once per frame
     private void Update()
     {
-        //Check that monster's health is not = 0
-        CheckHealth();
         CheckWave();
 
         //If player object within InSightRange sphere, player is spotted & playerInSightRange = true. If within InAttackRange sphere, playerInAttackRange = true

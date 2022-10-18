@@ -11,8 +11,8 @@ public class EnemyBehavior : MonoBehaviour
     public Transform baseObj;
     public LayerMask isGround, isPlayer, isBase;
 
-    public float currHealth;
-    public float maxHealth;
+/*    public float currHealth;
+    public float maxHealth;*/
     public Vector3 distanceToWalkPoint;
 
     public bool isDead, isWave = false;
@@ -22,7 +22,7 @@ public class EnemyBehavior : MonoBehaviour
     public bool playerInSightRange, playerInAttackRange, baseInSightRange, baseInAttackRange, playerSpotted;
     public bool isWandering;
 
-    public virtual void CheckHealth()
+/*    public virtual void CheckHealth()
     {
         if (currHealth >= maxHealth)
         {
@@ -34,7 +34,7 @@ public class EnemyBehavior : MonoBehaviour
             isDead = true;
             Die();
         }
-    }
+    }*/
 
     public virtual void Die()
     {
@@ -85,8 +85,8 @@ public class EnemyBehavior : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, sightRange);
     }
 
-    public void TakeDamage(float damage)
+/*    public void TakeDamage(float damage)
     {
         currHealth -= damage;
-    }
+    }*/
 }

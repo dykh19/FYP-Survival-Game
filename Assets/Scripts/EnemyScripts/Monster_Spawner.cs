@@ -140,7 +140,7 @@ public class Monster_Spawner : MonoBehaviour
         //    OpenWorldSpawn();
         //}
 
-        if(!isWave && !inWave && (eliteRSpawned == 0 || (eliteRCountToEndWave != 0 && (eliteRSpawned == eliteRKilled))))
+        if(!isWave && !inWave && (eliteMSpawned == 0 || (eliteMCountToEndWave != 0 && (eliteMSpawned == eliteMKilled))))
         {
             OpenWorldSpawn();
         }
