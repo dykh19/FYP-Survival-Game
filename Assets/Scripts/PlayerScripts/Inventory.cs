@@ -4,7 +4,7 @@ using System;
 [System.Serializable]
 public class Inventory
 {
-    //public static Inventory Main { get; private set; }
+    public static Inventory Main { get; private set; }
 
     public InventoryItem[] Items;// { get; private set; }
     public int activeItemIndex;
@@ -14,7 +14,11 @@ public class Inventory
 
     public Inventory()
     {
-        //Main = this;
+        if (Main != null && Main != this)
+        {
+            Main = this;
+        }
+        
         Items = new InventoryItem[defaultInventorySize];
     }
 

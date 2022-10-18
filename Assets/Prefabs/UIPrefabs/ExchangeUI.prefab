@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -219.99994, y: -60.00006}
+  m_AnchoredPosition: {x: -295, y: -60.00006}
   m_SizeDelta: {x: 350, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5914729013480956789
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Total Ores: 0'
+  m_text: 'Total Refined Ores: 0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -313,13 +313,13 @@ MonoBehaviour:
     - item: {fileID: 0}
       quantity: 0
     activeItemIndex: 0
-  monsterJunk: {fileID: 0}
+  monsterJunk: {fileID: 11400000, guid: 07d9999ac2c72cf47a2be2aa521addcc, type: 2}
   monsterEss: {fileID: 11400000, guid: 299f0f15ca4b2e943b9540c7185d3c94, type: 2}
-  Damianite: {fileID: 0}
-  Eddirite: {fileID: 0}
-  Josephite: {fileID: 0}
-  Nicholite: {fileID: 0}
-  Seanite: {fileID: 0}
+  Damianite: {fileID: 11400000, guid: 28078084bc611094cb2d997303a88f1f, type: 2}
+  Eddirite: {fileID: 11400000, guid: f9bd78b39b6bfdf44bfc2be8bb1dd3a5, type: 2}
+  Josephite: {fileID: 11400000, guid: 7270d134f65833c45b178e050afbf2d7, type: 2}
+  Nicholite: {fileID: 11400000, guid: b6c632ef1549af74995340d50e3025b7, type: 2}
+  Seanite: {fileID: 11400000, guid: 7f2a378f8e703ac4796876c21ae89a8d, type: 2}
 --- !u!1 &3402145464783189931
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,7 +769,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -1146, y: -809}
-  m_SizeDelta: {x: 300, y: 60}
+  m_SizeDelta: {x: 600, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7502292945586085182
 CanvasRenderer:
@@ -940,7 +940,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Exchange monster drops for useful resources
+  m_text: Exchange monster drops and raw ores for useful resources
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -967,7 +967,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
+  m_fontSize: 34.1
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

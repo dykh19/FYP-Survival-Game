@@ -76,8 +76,9 @@ public class ExchangeUI : MonoBehaviour
         {
             exchangeTransform.Find("exchangeText").GetComponent<TextMeshProUGUI>().SetText("Exchange all Raw Ore to " + givenItemName);
         }
-        /*exchangeTransform.Find("exchangeText").GetComponent<TextMeshProUGUI>().SetText(itemName);
-        exchangeTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText(itemCost.ToString());*/
+        //exchangeTransform.Find("exchangeText").GetComponent<TextMeshProUGUI>().SetText(itemName);
+        //exchangeTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText(itemCost.ToString());
+        exchangeTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText("");
         exchangeTransform.GetComponent<Button_UI>().ClickFunc = () =>
         {
             exchangeItem(Exchange, takenItemCost, takenItemName);
