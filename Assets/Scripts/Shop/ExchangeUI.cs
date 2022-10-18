@@ -44,7 +44,7 @@ public class ExchangeUI : MonoBehaviour
         JunkToEssExchangeButton = CreateExchangeButton(Upgrade.EquipmentExchangeType.JunkToMonsterEssence, "Monster Essence", "Junk", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.JunkToMonsterEssence), 0);
         JunkToOreExchangeButton = CreateExchangeButton(Upgrade.EquipmentExchangeType.JunkToRefinedOre, "Refined Ore", "Junk", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.JunkToRefinedOre), 1);
         RawOreToOreExchangeButton = CreateExchangeButton(Upgrade.EquipmentExchangeType.RawOreToRefinedOre, "Refined Ore", "Ore", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.RawOreToRefinedOre), 2);
-        AllRawOreToOreExchangeButton = CreateExchangeButton(Upgrade.EquipmentExchangeType.AllRawOreeToRefinedOre, "Refined Ore", "All Ore", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.AllRawOreeToRefinedOre), 3);
+        AllRawOreToOreExchangeButton = CreateExchangeButton(Upgrade.EquipmentExchangeType.AllRawOreToRefinedOre, "Refined Ore", "All Ore", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.AllRawOreToRefinedOre), 3);
         UpdateResourceCount();
     }
 
@@ -138,7 +138,7 @@ public class ExchangeUI : MonoBehaviour
             GameManager.Instance.PlayerStats.AddOres(1);
             Debug.Log("Exchanged Raw Ore for Ore");
         }
-        else if (item == Upgrade.EquipmentExchangeType.RawOreToRefinedOre && takenItemName == "All Ore")
+        else if (item == Upgrade.EquipmentExchangeType.AllRawOreToRefinedOre && takenItemName == "All Ore")
         {
             while (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Damianite) ||
             GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Eddirite) ||
@@ -149,24 +149,28 @@ public class ExchangeUI : MonoBehaviour
                 if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Damianite))
                 {
                     GameManager.Instance.PlayerInventory.RemoveItem(Damianite, takenItemCost);
+                    GameManager.Instance.PlayerStats.AddOres(1);
                 }
                 else if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Eddirite))
                 {
                     GameManager.Instance.PlayerInventory.RemoveItem(Eddirite, takenItemCost);
+                    GameManager.Instance.PlayerStats.AddOres(1);
                 }
                 else if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Josephite))
                 {
                     GameManager.Instance.PlayerInventory.RemoveItem(Josephite, takenItemCost);
+                    GameManager.Instance.PlayerStats.AddOres(1);
                 }
                 else if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Nicholite))
                 {
                     GameManager.Instance.PlayerInventory.RemoveItem(Nicholite, takenItemCost);
+                    GameManager.Instance.PlayerStats.AddOres(1);
                 }
                 else if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Seanite))
                 {
                     GameManager.Instance.PlayerInventory.RemoveItem(Seanite, takenItemCost);
+                    GameManager.Instance.PlayerStats.AddOres(1);
                 }
-                GameManager.Instance.PlayerStats.AddOres(1);
             }
         }
             UpdateResourceCount();
@@ -178,11 +182,15 @@ public class ExchangeUI : MonoBehaviour
         {
             JunkToEssExchangeButton.GetComponent<Button>().interactable = true;
             JunkToOreExchangeButton.GetComponent<Button>().interactable = true;
+            JunkToEssExchangeButton.GetComponent<Button_UI>().enabled = true;
+            JunkToOreExchangeButton.GetComponent<Button_UI>().enabled = true;
         }
         else
         {
             JunkToEssExchangeButton.GetComponent<Button>().interactable = false;
             JunkToOreExchangeButton.GetComponent<Button>().interactable = false;
+            JunkToEssExchangeButton.GetComponent<Button_UI>().enabled = false;
+            JunkToOreExchangeButton.GetComponent<Button_UI>().enabled = false;
         }
         if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Damianite) ||
             GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Eddirite)  ||
@@ -192,11 +200,15 @@ public class ExchangeUI : MonoBehaviour
         {
             RawOreToOreExchangeButton.GetComponent<Button>().interactable = true;
             AllRawOreToOreExchangeButton.GetComponent<Button>().interactable = true;
+            RawOreToOreExchangeButton.GetComponent<Button_UI>().enabled = true;
+            AllRawOreToOreExchangeButton.GetComponent<Button_UI>().enabled = true;
         }
         else
         {
             RawOreToOreExchangeButton.GetComponent<Button>().interactable = false;
             AllRawOreToOreExchangeButton.GetComponent<Button>().interactable = false;
+            RawOreToOreExchangeButton.GetComponent<Button_UI>().enabled = false;
+            AllRawOreToOreExchangeButton.GetComponent<Button_UI>().enabled = false;
         }
     }
 

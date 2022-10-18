@@ -418,55 +418,67 @@ public class VendorUI : MonoBehaviour
         if (GameManager.Instance.PlayerStats.CurrentEssenceInBase < RifleCost)
         {
             RifleButton.GetComponent<Button>().interactable = false;
+            RifleButton.GetComponent<Button_UI>().enabled = false;
         }
         else
         {
             RifleButton.GetComponent<Button>().interactable = true;
+            RifleButton.GetComponent<Button_UI>().enabled = true;
         }
 
         if (GameManager.Instance.PlayerStats.CurrentEssenceInBase < ShotgunCost)
         {
             ShotgunButton.GetComponent<Button>().interactable = false;
+            ShotgunButton.GetComponent<Button_UI>().enabled = false;
         }
         else
         {
             ShotgunButton.GetComponent<Button>().interactable = true;
+            ShotgunButton.GetComponent<Button_UI>().enabled = true;
         }
 
         if (GameManager.Instance.PlayerStats.CurrentEssenceInBase < AxeCost)
         {
             AxeButton.GetComponent<Button>().interactable = false;
+            AxeButton.GetComponent<Button_UI>().enabled = false;
         }
         else
         {
             AxeButton.GetComponent<Button>().interactable = true;
+            AxeButton.GetComponent<Button_UI>().enabled = true;
         }
 
         if (GameManager.Instance.PlayerStats.CurrentEssenceInBase < SwordCost)
         {
             SwordButton.GetComponent<Button>().interactable = false;
+            SwordButton.GetComponent<Button_UI>().enabled = false;
         }
         else
         {
             SwordButton.GetComponent<Button>().interactable = true;
+            SwordButton.GetComponent<Button_UI>().enabled = true;
         }
 
         if (GameManager.Instance.PlayerStats.CurrentEssenceInBase < HealthCost)
         {
             HealthButton.GetComponent<Button>().interactable = false;
+            HealthButton.GetComponent<Button_UI>().enabled = false;
         }
         else
         {
             HealthButton.GetComponent<Button>().interactable = true;
+            HealthButton.GetComponent<Button_UI>().enabled = true;
         }
 
         if (GameManager.Instance.PlayerStats.CurrentOresInBase < BaseCost)
         {
             BaseButton.GetComponent<Button>().interactable = false;
+            BaseButton.GetComponent<Button_UI>().enabled = false;
         }
         else
         {
             BaseButton.GetComponent<Button>().interactable = true;
+            BaseButton.GetComponent<Button_UI>().enabled = true;
         }
     }
 
