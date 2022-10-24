@@ -274,6 +274,39 @@ public class Monster_Spawner : MonoBehaviour
         }
     }
 
+    public void spawnBoss(float xPosMin, float xPosMax, float zPosMin, float zPosMax)
+    {
+        bool validSpawn = false;
+        float x = 0f;
+        float z = 0f;
+        // Generate until position is outside of radius around base then spawn
+        while (!validSpawn)
+        {
+            x = Random.Range(xPosMin, xPosMax);
+            z = Random.Range(zPosMin, zPosMax);
+            if ((new Vector3(x, baseObj.transform.position.y, z) - baseObj.transform.position).sqrMagnitude >= 25f * 25f)
+            {
+                validSpawn = true;
+            }
+        }
+        var rayOrigin = new Vector3(x, 100f, z);
+        var ray = new Ray(rayOrigin, Vector3.down);
+
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            GameObject newBoss = Instantiate(boss);
+            newBoss.transform.position = hit.point + hit.normal;
+            NavMeshHit closestHit;
+            if (NavMesh.SamplePosition(newBoss.transform.position, out closestHit, 500, 1))
+            {
+                newBoss.transform.position = closestHit.position;
+                newBoss.AddComponent<NavMeshAgent>();
+            }
+            newBoss.transform.parent = GameObject.Find("Spawner").transform;
+            bossSpawned += 1;
+        }
+    }
+
     //Function to start the wave and spawn monsters
     public void StartWave()
     {
@@ -289,7 +322,8 @@ public class Monster_Spawner : MonoBehaviour
         bossKilled = 0;
         creepCountToEndWave = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
         eliteRSpawn = 0;
-        eliteMSpawn = 0;
+        eliteMSpawn = 1;
+        bossSpawn = 0;
 
         
         isWave = true;
@@ -316,6 +350,10 @@ public class Monster_Spawner : MonoBehaviour
         for (int i = 0; i < eliteMSpawn; i++)
         {
             spawnEliteM(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
+        }
+        for(int i = 0; i < bossSpawn; i++)
+        {
+            spawnBoss(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
         }
     }
 

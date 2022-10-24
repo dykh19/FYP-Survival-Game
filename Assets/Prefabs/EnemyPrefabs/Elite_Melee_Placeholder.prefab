@@ -120,13 +120,11 @@ MonoBehaviour:
   isBase:
     serializedVersion: 2
     m_Bits: 512
-  currHealth: 0
-  maxHealth: 0
   distanceToWalkPoint: {x: 0, y: 0, z: 0}
   isDead: 0
   isWave: 0
-  sightRange: 10
-  attackRange: 5
+  sightRange: 20
+  attackRange: 1
   playerInSightRange: 0
   playerInAttackRange: 0
   baseInSightRange: 0
@@ -134,11 +132,11 @@ MonoBehaviour:
   playerSpotted: 0
   isWandering: 0
   walkPoint: {x: 0, y: 0, z: 0}
-  walkPointRange: 5
+  walkPointRange: 100
   wanderSpeed: 3
   chaseSpeed: 5
   Damage: 0
-  timeBetweenAttacks: 2
+  timeBetweenAttacks: 1.1
 --- !u!136 &6786865577367774081
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -150,9 +148,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.7309269
-  m_Height: 7.6605573
+  m_Height: 5.6976757
   m_Direction: 1
-  m_Center: {x: 0, y: 3.84, z: -0.024019599}
+  m_Center: {x: 0, y: 2.8585591, z: -0.024019599}
 --- !u!114 &5321397793151592178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,7 +227,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1123844764627646656, guid: 8c2dcc92e3b46204ba7324e470bab55b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 16
+      value: 6.6
       objectReference: {fileID: 0}
     - target: {fileID: 1123844764627646656, guid: 8c2dcc92e3b46204ba7324e470bab55b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -302,15 +300,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000012531979720, guid: 5bcbf31ded2e353449622ec74f8954da, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4000012531979720, guid: 5bcbf31ded2e353449622ec74f8954da, type: 3}
       propertyPath: m_LocalScale.y
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4000012531979720, guid: 5bcbf31ded2e353449622ec74f8954da, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4000012531979720, guid: 5bcbf31ded2e353449622ec74f8954da, type: 3}
       propertyPath: m_LocalPosition.x

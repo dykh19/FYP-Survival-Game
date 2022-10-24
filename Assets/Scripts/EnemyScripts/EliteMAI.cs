@@ -28,6 +28,7 @@ public class EliteMAI : EnemyBehavior
         player = GameObject.FindGameObjectWithTag("Player").transform;  //set player object
         baseObj = GameObject.FindGameObjectWithTag("Base").transform; //set base object
         agent = GetComponent<NavMeshAgent>();   //set NavMesh agent
+        Damage = GameStats.BaseEnemyDamage[1] * GameStats.EnemyAttackModifier[(int)GameManager.Instance.CurrentDifficulty];
         animatorMAI = GetComponentInChildren<Animator>();
     }
 
@@ -68,6 +69,7 @@ public class EliteMAI : EnemyBehavior
             (playerInSightRange && !playerInAttackRange && playerSpotted && (baseInSightRange || !baseInSightRange) && (baseInAttackRange || !baseInAttackRange) && isWave))
         {
             animatorMAI.SetBool("playerInAttackRange", true);
+            animatorMAI.SetBool("isWave", false); //Used to trigger attack anim for Elite Melee during Waves
             print("Chasing Player(isWave)");
             Chase();
         }
@@ -75,6 +77,7 @@ public class EliteMAI : EnemyBehavior
         if(playerInSightRange && playerInAttackRange && playerSpotted && (baseInSightRange || !baseInSightRange) && (baseInAttackRange || !baseInAttackRange) && isWave)
         {
             animatorMAI.SetBool("AttackPlayer", true);
+            animatorMAI.SetBool("isWave", false); //Used to trigger attack anim for Elite Melee during Waves
             print("Attacking Player(isWave)");
             Attack(player);
         }
@@ -119,7 +122,10 @@ public class EliteMAI : EnemyBehavior
 
         if (walkPointSet)
         {
-            agent.SetDestination(walkPoint);
+            //agent.SetDestination(walkPoint);
+            NavMeshPath path = new NavMeshPath();
+            NavMesh.CalculatePath(transform.position, walkPoint, -1, path);
+            agent.path = path;
         }
 
         distanceToWalkPoint = transform.position - walkPoint;
@@ -134,7 +140,10 @@ public class EliteMAI : EnemyBehavior
     {
         animatorMAI.SetBool("AttackPlayer", false);
         animatorMAI.SetBool("AttackBase", false);
-        agent.SetDestination(baseObj.transform.position);
+        //agent.SetDestination(baseObj.transform.position);
+        NavMeshPath path = new NavMeshPath();
+        NavMesh.CalculatePath(transform.position, baseObj.transform.position, -1, path);
+        agent.path = path;
     }
 
     //Finding the walk point for the monster's wander phase
@@ -165,13 +174,19 @@ public class EliteMAI : EnemyBehavior
         animatorMAI.SetBool("AttackPlayer", false);
         animatorMAI.SetBool("AttackBase", false);
         animatorMAI.SetBool("BaseSpotted", false);
-        agent.SetDestination(player.transform.position);
+        //agent.SetDestination(player.transform.position);
+        NavMeshPath path = new NavMeshPath();
+        NavMesh.CalculatePath(transform.position, player.transform.position, -1, path);
+        agent.path = path;
     }
 
     //When player is within monster attack range, monster stops moving and hits the player
     public override void Attack(Transform target)
     {
-        agent.SetDestination(transform.position);
+        //agent.SetDestination(transform.position);
+        NavMeshPath path = new NavMeshPath();
+        NavMesh.CalculatePath(transform.position, transform.position, -1, path);
+        agent.path = path;
         transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
 
         if (!alreadyAttacked)
