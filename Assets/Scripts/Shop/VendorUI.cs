@@ -25,7 +25,7 @@ public class VendorUI : MonoBehaviour
     [SerializeField]
     private int HealthCost = 1;
     [SerializeField]
-    private int BaseCost = 25; //To update according to specs.
+    private int BaseCost = GameStats.PlayerBaseUpgradeCost[1]; //To update according to specs.
 
     public int itemIndex;
     public int currencyCount;
@@ -48,15 +48,15 @@ public class VendorUI : MonoBehaviour
         //Assigning the relevant objects
         playerInventoryUI = FindObjectOfType<InventoryUI>();
         playerInventory = GameManager.Instance.PlayerInventory;
-        upgradeManager = this.GetComponent<UpgradeManager>();
+        upgradeManager = FindObjectOfType<UpgradeManager>();
 
         //Creating the initial buttons
-        RifleButton = CreateRifleButton("Rifle", "Rifle Upgrade!", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 0);
-        ShotgunButton = CreateShotgunButton("Shotgun", "Shotgun Upgrade!", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
-        AxeButton = CreateAxeButton("Axe", "Axe Upgrade!", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 2);
-        SwordButton = CreateSwordButton("Sword", "Sword Upgrade!", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 3);
-        HealthButton = CreateHealthButton("Health", "Health Upgrade!", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Health), 4);
-        BaseButton = CreateBaseButton("Base", "Base Upgrade!", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Base), 5);
+        RifleButton = CreateRifleButton("Rifle", "Rifle Upgrade Button", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 0);
+        ShotgunButton = CreateShotgunButton("Shotgun", "Shotgun Upgrade Button", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
+        AxeButton = CreateAxeButton("Axe", "Axe Upgrade Button", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 2);
+        SwordButton = CreateSwordButton("Sword", "Sword Upgrade Button", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 3);
+        HealthButton = CreateHealthButton("Health", "Health Upgrad Button", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Health), 4);
+        BaseButton = CreateBaseButton("Base", "Base Upgrade Button", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Base), 5);
 
         UpdateResourceCount();
     }
@@ -79,7 +79,7 @@ public class VendorUI : MonoBehaviour
 
         if(upgradeManager.playerRifleLevel < 10)
         {
-            rifleButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Rifle Upgrade!");
+            rifleButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Upgrade Rifle to level " + (upgradeManager.playerRifleLevel + 1));
             rifleButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText("Essence Cost: " + RifleCost.ToString());
         }
         if(upgradeManager.playerRifleLevel >= 10)
@@ -99,7 +99,7 @@ public class VendorUI : MonoBehaviour
                     upgradeManager.playerRifleLevel++;
                     upgradeManager.UpgradePlayerWeapon(0);
                     RifleCost = RifleCost + 5;
-                    rifleButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Rifle Upgrade!");
+                    rifleButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Upgrade Rifle to level " + (upgradeManager.playerRifleLevel + 1));
                     rifleButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText("Essence Cost: " + RifleCost.ToString());
                 }
                 if (upgradeManager.playerRifleLevel >= 10)
@@ -126,7 +126,7 @@ public class VendorUI : MonoBehaviour
 
         if(upgradeManager.playerShotgunLevel < 10)
         {
-            shotgunButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Shotgun Upgrade!");
+            shotgunButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Upgrade Shotgun to level " + (upgradeManager.playerShotgunLevel + 1));
             shotgunButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText("Essence Cost: " + ShotgunCost.ToString());
         }
         if (upgradeManager.playerShotgunLevel >= 10)
@@ -148,7 +148,7 @@ public class VendorUI : MonoBehaviour
                     upgradeManager.playerShotgunLevel++;
                     upgradeManager.UpgradePlayerWeapon(1);
                     ShotgunCost = ShotgunCost + 5;
-                    shotgunButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Shotgun Upgrade!");
+                    shotgunButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Upgrade Shotgun to level " + (upgradeManager.playerShotgunLevel + 1));
                     shotgunButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText("Essence Cost: " + ShotgunCost.ToString());
                 }
                 if (upgradeManager.playerShotgunLevel >= 10)
@@ -174,7 +174,7 @@ public class VendorUI : MonoBehaviour
 
         if (upgradeManager.playerAxeLevel < 10)
         {
-            axeButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Axe Upgrade!");
+            axeButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Upgrade Axe to level " + (upgradeManager.playerAxeLevel + 1));
             axeButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText("Essence Cost: " + AxeCost.ToString());
         }
         if (upgradeManager.playerAxeLevel >= 10)
@@ -194,7 +194,7 @@ public class VendorUI : MonoBehaviour
                     upgradeManager.playerAxeLevel++;
                     upgradeManager.UpgradePlayerWeapon(2);
                     AxeCost = AxeCost + 5;
-                    axeButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Axe Upgrade!");
+                    axeButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Upgrade Axe to level " + (upgradeManager.playerAxeLevel + 1));
                     axeButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText("Essence Cost: " + AxeCost.ToString());
                 }
                 if (upgradeManager.playerAxeLevel >= 10)
@@ -221,7 +221,7 @@ public class VendorUI : MonoBehaviour
 
         if(upgradeManager.playerSwordLevel < 10)
         {
-            swordButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Sword Upgrade!");
+            swordButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Upgrade Sword to level " + (upgradeManager.playerSwordLevel + 1));
             swordButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText("Essence Cost: " + SwordCost.ToString());
         }
         if(upgradeManager.playerSwordLevel >= 10)
@@ -243,7 +243,7 @@ public class VendorUI : MonoBehaviour
                     upgradeManager.playerSwordLevel++;
                     upgradeManager.UpgradePlayerWeapon(3);
                     SwordCost = SwordCost + 5;
-                    swordButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Sword Upgrade!");
+                    swordButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Upgrade Sword to level " + (upgradeManager.playerSwordLevel + 1));
                     swordButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText("Essence Cost: " + SwordCost.ToString());
                 }
                 if (upgradeManager.playerSwordLevel >= 10)
@@ -270,7 +270,7 @@ public class VendorUI : MonoBehaviour
 
         if (upgradeManager.playerHealthLevel < 10)
         {
-            healthButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Health Upgrade!");
+            healthButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Upgrade Health to level " + (upgradeManager.playerHealthLevel + 1));
             healthButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText("Essence Cost: " + HealthCost.ToString());
         }
         if (upgradeManager.playerHealthLevel >= 10)
@@ -290,7 +290,7 @@ public class VendorUI : MonoBehaviour
                     upgradeManager.playerHealthLevel++;
                     upgradeManager.UpgradePlayerHealth();
                     HealthCost = HealthCost + 5;
-                    healthButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Health Upgrade!");
+                    healthButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Upgrade Health to level " + (upgradeManager.playerHealthLevel + 1));
                     healthButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText("Essence Cost: " + HealthCost.ToString());
                 }
                 if (upgradeManager.playerHealthLevel >= 10)
@@ -315,12 +315,12 @@ public class VendorUI : MonoBehaviour
         baseItemRectTransform.anchoredPosition = new Vector2(0, -buttonHeight * positionIndex);
         baseButtonTransform.name = itemName;
 
-        if (upgradeManager.baseLevel < 10)
+        if (upgradeManager.baseLevel < 4)
         {
-            baseButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Base Upgrade!");
+            baseButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Upgrade Base to level " + (upgradeManager.baseLevel + 1));
             baseButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText("Refined Ore Cost: " + BaseCost.ToString());
         }
-        if (upgradeManager.baseLevel >= 10)
+        if (upgradeManager.baseLevel >= 4)
         {
             baseButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Base MAX Level!");
             baseButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText("");
@@ -333,16 +333,19 @@ public class VendorUI : MonoBehaviour
             currencyCount = GameManager.Instance.PlayerStats.CurrentOresInBase;
             if (currencyCount - BaseCost >= 0)
             {
-                if (upgradeManager.baseLevel < 10)
+                if (upgradeManager.baseLevel < 4)
                 {
                     GameManager.Instance.PlayerStats.DeductOres(BaseCost);
                     upgradeManager.baseLevel++;
                     upgradeManager.UpgradeBase();
-                    BaseCost = BaseCost + 5;
-                    baseButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Base Upgrade!");
-                    baseButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText("Refined Ore Cost: " + BaseCost.ToString());
+                    if (upgradeManager.baseLevel < 4)
+                    {
+                        BaseCost = GameStats.PlayerBaseUpgradeCost[upgradeManager.baseLevel + 1];
+                        baseButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Upgrade Base to level " + (upgradeManager.baseLevel + 1));
+                        baseButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText("Refined Ore Cost: " + BaseCost.ToString());
+                    }   
                 }
-                if (upgradeManager.baseLevel >= 10)
+                if (upgradeManager.baseLevel >= 4)
                 {
                     baseButtonTransform.Find("upgradeText").GetComponent<TextMeshProUGUI>().SetText("Base MAX Level!");
                     baseButtonTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText("");
