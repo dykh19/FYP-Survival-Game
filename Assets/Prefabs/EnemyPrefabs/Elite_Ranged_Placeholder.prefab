@@ -63,8 +63,6 @@ MonoBehaviour:
   isBase:
     serializedVersion: 2
     m_Bits: 512
-  currHealth: 10
-  maxHealth: 10
   distanceToWalkPoint: {x: 0, y: 0, z: 0}
   isDead: 0
   isWave: 0
@@ -77,6 +75,8 @@ MonoBehaviour:
   playerSpotted: 0
   isWandering: 0
   parent_MonSpawn: {fileID: 0}
+  creepDrop: {fileID: 11400000, guid: 07d9999ac2c72cf47a2be2aa521addcc, type: 2}
+  essence: {fileID: 11400000, guid: 299f0f15ca4b2e943b9540c7185d3c94, type: 2}
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
   wanderSpeed: 3

@@ -8,6 +8,9 @@ public class BossAI : EnemyBehavior
     public Monster_Spawner parent_MonSpawn;
     private Animator animatorBoss;
     public Health Health;
+    public GameItem creepDrop;
+    public GameItem essence;
+    //Add Boss Core//
 
     //Pathing Variables
     public Vector3 walkPoint;
@@ -72,9 +75,9 @@ public class BossAI : EnemyBehavior
         if(Health.CurrentHealth >= Health.MaxHealth * 0.75)
         {
             print("Boss Phase 1");
-            newTimeBetweenAttacks = 2 * 0.9;
-            timeBetweenAttacks = (float)newTimeBetweenAttacks;
-            Damage = phase1Dmg;
+            //newTimeBetweenAttacks = 2 * 0.9;
+            //timeBetweenAttacks = (float)newTimeBetweenAttacks;
+            //Damage = phase1Dmg;
             //Phase 1
         }
         if(Health.CurrentHealth >= Health.MaxHealth * 0.50 && Health.CurrentHealth < Health.MaxHealth * 0.75)
@@ -142,7 +145,15 @@ public class BossAI : EnemyBehavior
     {
         print("Boss Dying");
         parent_MonSpawn.bossDie();
-        if(gameObject != null)
+        if (creepDrop != null)
+        {
+            GameManager.Instance.PlayerInventory.AddItem(creepDrop, 2);
+        }
+        if (Random.Range(0, 101) <= 50 && essence != null)
+        {
+            GameManager.Instance.PlayerInventory.AddItem(essence);
+        }
+        if (gameObject != null)
         {
             Destroy(this.gameObject);
         }

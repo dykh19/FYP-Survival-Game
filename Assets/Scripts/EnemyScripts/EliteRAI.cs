@@ -7,7 +7,8 @@ public class EliteRAI : EnemyBehavior
 {
     public Monster_Spawner parent_MonSpawn;
     private Animator animatorRAI;
-    public GameItem RAIDrop;
+    public GameItem creepDrop;
+    public GameItem essence;
 
     //Pathing Variables
     public Vector3 walkPoint;
@@ -205,6 +206,14 @@ public class EliteRAI : EnemyBehavior
     {
         print("Elite Range Dying");
         parent_MonSpawn.eliteRDie();
+        if (creepDrop != null)
+        {
+            GameManager.Instance.PlayerInventory.AddItem(creepDrop);
+        }
+        if (Random.Range(0, 101) <= 20 && essence != null)
+        {
+            GameManager.Instance.PlayerInventory.AddItem(essence);
+        }
         if (this.gameObject != null)
         {
             Destroy(this.gameObject);

@@ -8,6 +8,7 @@ public class CreepAI : EnemyBehavior
     private Monster_Spawner parent_MonSpawn;
     private Animator animatorCreep;
     public GameItem creepDrop;
+    public GameItem essence;
 
     //Pathing Variables
     public Vector3 walkPoint;
@@ -38,7 +39,6 @@ public class CreepAI : EnemyBehavior
     private void Update()
     {
         //Check that monster's health is not = 0
-        CheckHealth();
         CheckWave();
 
         //If player object within InSightRange sphere, player is spotted & playerInSightRange = true. If within InAttackRange sphere, playerInAttackRange = true
@@ -198,9 +198,13 @@ public class CreepAI : EnemyBehavior
         animatorCreep.SetBool("Die", true); //Need to find a way to implement death anim
         print("Creep Dying");
         parent_MonSpawn.creepDie();
-        if (creepDrop != null)
+        if (Random.Range(0, 101) <= 71 && creepDrop != null)
         {
             GameManager.Instance.PlayerInventory.AddItem(creepDrop);
+        }
+        if(Random.Range(0,101) <= 10 && essence != null)
+        {
+            GameManager.Instance.PlayerInventory.AddItem(essence);
         }
         if (Random.Range(0, 101) <= 10)
         {

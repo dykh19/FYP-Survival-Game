@@ -7,6 +7,8 @@ public class EliteMAI : EnemyBehavior
 {
     private Monster_Spawner parent_MonSpawn;
     private Animator animatorMAI;
+    public GameItem creepDrop;
+    public GameItem essence;
 
     //Pathing Variables
     public Vector3 walkPoint;
@@ -222,6 +224,14 @@ public class EliteMAI : EnemyBehavior
     {
         print("Elite Melee Dying");
         parent_MonSpawn.eliteMDie();
+        if (creepDrop != null)
+        {
+            GameManager.Instance.PlayerInventory.AddItem(creepDrop);
+        }
+        if (Random.Range(0, 101) <= 20 && essence != null)
+        {
+            GameManager.Instance.PlayerInventory.AddItem(essence);
+        }
         if (gameObject != null)
         {
             Destroy(this.gameObject);
