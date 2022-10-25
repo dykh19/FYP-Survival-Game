@@ -131,21 +131,29 @@ public class GameManager : MonoBehaviour
                 CurrentGameState = GameState.INGAME;
                 PlayerStats = SaveLoadManager.Instance.ReadPlayerDataFromFile();
 
-                switch (CurrentDifficulty)
+                if (CurrentGameMode == GameMode.NORMAL)
                 {
-                    case Difficulty.EASY:
-                        WaveCountToWin = EasyWaveCount;
-                        break;
-                    case Difficulty.NORMAL:
-                        WaveCountToWin = NormalWaveCount;
-                        break;
-                    case Difficulty.HARD:
-                        WaveCountToWin = HardWaveCount;
-                        break;
-                    default:
-                        WaveCountToWin = 1;
-                        break;
+                    switch (CurrentDifficulty)
+                    {
+                        case Difficulty.EASY:
+                            WaveCountToWin = EasyWaveCount;
+                            break;
+                        case Difficulty.NORMAL:
+                            WaveCountToWin = NormalWaveCount;
+                            break;
+                        case Difficulty.HARD:
+                            WaveCountToWin = HardWaveCount;
+                            break;
+                        default:
+                            WaveCountToWin = 1;
+                            break;
+                    }
                 }
+                else if (CurrentGameMode == GameMode.ENDLESS)
+                {
+                    WaveCountToWin = -1;
+                }
+                
 
                 for (int i = 0; i < PlayerStats.PlayerInventory.Items.Length; i++)
                 {
@@ -162,6 +170,8 @@ public class GameManager : MonoBehaviour
                 UserInterfaces[0].userInterface = GameObject.Find("PlayerHUD").GetComponent<Canvas>();
                 UserInterfaces[1].userInterface = GameObject.Find("PauseMenuUI").GetComponent<Canvas>();
                 UserInterfaces[2].userInterface = GameObject.Find("InventoryUI").GetComponent<Canvas>();
+                UserInterfaces[3].userInterface = GameObject.Find("VendorUI").GetComponent<Canvas>();
+                UserInterfaces[4].userInterface = GameObject.Find("ExchangeUI").GetComponent<Canvas>();
 
                 WorldGen = GameObject.Find("World Generator").GetComponent<WorldGenerator>();
                 WorldGen.LoadWorldData(PlayerStats.WorldGenSaveData);
@@ -174,20 +184,27 @@ public class GameManager : MonoBehaviour
             {
                 CurrentGameState = GameState.INGAME;
 
-                switch (CurrentDifficulty)
+                if (CurrentGameMode == GameMode.NORMAL)
                 {
-                    case Difficulty.EASY:
-                        WaveCountToWin = EasyWaveCount;
-                        break;
-                    case Difficulty.NORMAL:
-                        WaveCountToWin = NormalWaveCount;
-                        break;
-                    case Difficulty.HARD:
-                        WaveCountToWin = HardWaveCount;
-                        break;
-                    default:
-                        WaveCountToWin = 1;
-                        break;
+                    switch (CurrentDifficulty)
+                    {
+                        case Difficulty.EASY:
+                            WaveCountToWin = EasyWaveCount;
+                            break;
+                        case Difficulty.NORMAL:
+                            WaveCountToWin = NormalWaveCount;
+                            break;
+                        case Difficulty.HARD:
+                            WaveCountToWin = HardWaveCount;
+                            break;
+                        default:
+                            WaveCountToWin = 1;
+                            break;
+                    }
+                }
+                else if (CurrentGameMode == GameMode.ENDLESS)
+                {
+                    WaveCountToWin = -1;
                 }
 
                 PlayerInventory = new Inventory();
@@ -195,6 +212,8 @@ public class GameManager : MonoBehaviour
                 UserInterfaces[0].userInterface = GameObject.Find("PlayerHUD").GetComponent<Canvas>();
                 UserInterfaces[1].userInterface = GameObject.Find("PauseMenuUI").GetComponent<Canvas>();
                 UserInterfaces[2].userInterface = GameObject.Find("InventoryUI").GetComponent<Canvas>();
+                UserInterfaces[3].userInterface = GameObject.Find("VendorUI").GetComponent<Canvas>();
+                UserInterfaces[4].userInterface = GameObject.Find("ExchangeUI").GetComponent<Canvas>();
 
                 WorldGen = GameObject.Find("World Generator").GetComponent<WorldGenerator>();
                 WorldGen.CreateWorld(false);

@@ -96,4 +96,26 @@ public class PlayerStatistics
     {
         TotalEnemiesKilled = TotalCreepKilled + TotalEliteRKilled + TotalEliteMKilled + TotalBossKilled;
     }
+
+    public void AddOres(int oresToAdd)
+    {
+        TotalOresObtained += oresToAdd;
+        CurrentOresInBase += oresToAdd;
+    }
+
+    public void AddEssence(int essenceToAdd)
+    {
+        TotalEssenceObtained += essenceToAdd;
+        CurrentEssenceInBase += essenceToAdd;
+    }
+
+    public void DeductOres(int oresToDeduct)
+    {
+        CurrentOresInBase -= oresToDeduct;
+    }
+
+    public void DeductEssence(int essenceToDeduct)
+    {
+        CurrentEssenceInBase -= essenceToDeduct;
+    }
 }

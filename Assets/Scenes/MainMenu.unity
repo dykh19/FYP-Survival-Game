@@ -8057,6 +8057,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6206563619497944814, guid: 6cd9f6c817a5eee4ba93347c94ca4d36, type: 3}
+      propertyPath: UserInterfaces.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6206563619497944814, guid: 6cd9f6c817a5eee4ba93347c94ca4d36, type: 3}
+      propertyPath: UserInterfaces.Array.data[3].name
+      value: Vendor
+      objectReference: {fileID: 0}
+    - target: {fileID: 6206563619497944814, guid: 6cd9f6c817a5eee4ba93347c94ca4d36, type: 3}
+      propertyPath: UserInterfaces.Array.data[4].name
+      value: Exchange
+      objectReference: {fileID: 0}
+    - target: {fileID: 6206563619497944814, guid: 6cd9f6c817a5eee4ba93347c94ca4d36, type: 3}
+      propertyPath: UserInterfaces.Array.data[3].keyCode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6206563619497944814, guid: 6cd9f6c817a5eee4ba93347c94ca4d36, type: 3}
+      propertyPath: UserInterfaces.Array.data[4].keyCode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6206563619497944814, guid: 6cd9f6c817a5eee4ba93347c94ca4d36, type: 3}
+      propertyPath: UserInterfaces.Array.data[3].userInterface
+      value: 
+      objectReference: {fileID: 9102110979277821931, guid: fec17e0897c93344f90835ccaac4ae05, type: 3}
+    - target: {fileID: 6206563619497944814, guid: 6cd9f6c817a5eee4ba93347c94ca4d36, type: 3}
+      propertyPath: UserInterfaces.Array.data[4].userInterface
+      value: 
+      objectReference: {fileID: 1361991722362308775, guid: 98bae55e7f062a140b6740d432d40473, type: 3}
     - target: {fileID: 6206563619497944815, guid: 6cd9f6c817a5eee4ba93347c94ca4d36, type: 3}
       propertyPath: m_Name
       value: GameManager

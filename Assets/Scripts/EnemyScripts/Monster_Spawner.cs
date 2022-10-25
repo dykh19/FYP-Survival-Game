@@ -130,7 +130,7 @@ public class Monster_Spawner : MonoBehaviour
                 EndWave();
             }
         }
-        if (!isWave && !inWave && waveNumber == GameManager.Instance.WaveCountToWin + 1)
+        if (!isWave && !inWave && GameManager.Instance.CurrentGameMode == GameMode.NORMAL && waveNumber == GameManager.Instance.WaveCountToWin + 1)
         {
             GameManager.Instance.WinGame();
         }
