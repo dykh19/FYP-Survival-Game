@@ -162,6 +162,8 @@ public class GameManager : MonoBehaviour
                 UserInterfaces[0].userInterface = GameObject.Find("PlayerHUD").GetComponent<Canvas>();
                 UserInterfaces[1].userInterface = GameObject.Find("PauseMenuUI").GetComponent<Canvas>();
                 UserInterfaces[2].userInterface = GameObject.Find("InventoryUI").GetComponent<Canvas>();
+                UserInterfaces[3].userInterface = GameObject.Find("VendorUI").GetComponent<Canvas>();
+                UserInterfaces[4].userInterface = GameObject.Find("ExchangeUI").GetComponent<Canvas>();
 
                 WorldGen = GameObject.Find("World Generator").GetComponent<WorldGenerator>();
                 WorldGen.LoadWorldData(PlayerStats.WorldGenSaveData);
@@ -195,6 +197,8 @@ public class GameManager : MonoBehaviour
                 UserInterfaces[0].userInterface = GameObject.Find("PlayerHUD").GetComponent<Canvas>();
                 UserInterfaces[1].userInterface = GameObject.Find("PauseMenuUI").GetComponent<Canvas>();
                 UserInterfaces[2].userInterface = GameObject.Find("InventoryUI").GetComponent<Canvas>();
+                UserInterfaces[3].userInterface = GameObject.Find("VendorUI").GetComponent<Canvas>();
+                UserInterfaces[4].userInterface = GameObject.Find("ExchangeUI").GetComponent<Canvas>();
 
                 WorldGen = GameObject.Find("World Generator").GetComponent<WorldGenerator>();
                 WorldGen.CreateWorld(false);

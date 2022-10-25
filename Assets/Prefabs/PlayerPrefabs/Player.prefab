@@ -251,6 +251,7 @@ GameObject:
   - component: {fileID: 4029703380950846377}
   - component: {fileID: 4029703380950848598}
   - component: {fileID: 1986104532}
+  - component: {fileID: 339363838435293675}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -338,7 +339,7 @@ MonoBehaviour:
   LandSfx: {fileID: 8300000, guid: fc34feae196916546b10bc0cb3fb5abf, type: 3}
   FallDamageSfx: {fileID: 8300000, guid: 124e058ce68d7b549894042e86d18c54, type: 3}
   HitSound: {fileID: 8300000, guid: c39440de55b683b4386442460c2d392b, type: 3}
-  RecievesFallDamage: 0
+  ReceivesFallDamage: 0
   MinSpeedForFallDamage: 10
   MaxSpeedForFallDamage: 30
   FallDamageAtMinSpeed: 10
@@ -412,7 +413,16 @@ MonoBehaviour:
   FpsWeaponLayer:
     serializedVersion: 2
     m_Bits: 64
-  Crosshair: {fileID: 0}
+  m_WeaponSlots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!82 &4029703380950848598
 AudioSource:
   m_ObjectHideFlags: 0
@@ -519,6 +529,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 946473a0104c1dd46b69c6dd085a3be8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &339363838435293675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4029703380950846368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea25cfd67a43d2640863c0e7542be6e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4029703381038330434

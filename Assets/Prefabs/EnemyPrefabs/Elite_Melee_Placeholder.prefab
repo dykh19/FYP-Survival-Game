@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4041477907259022178}
   - component: {fileID: -8754276627231981341}
   - component: {fileID: -6128264813378169247}
+  - component: {fileID: 2885387598974680158}
   m_Layer: 10
   m_Name: Elite_Melee_Placeholder
   m_TagString: Enemy
@@ -140,6 +141,7 @@ MonoBehaviour:
     m_Bits: 0
   currHealth: 0
   maxHealth: 0
+  distanceToWalkPoint: {x: 0, y: 0, z: 0}
   isDead: 0
   isWave: 0
   sightRange: 0
@@ -149,6 +151,23 @@ MonoBehaviour:
   baseInSightRange: 0
   baseInAttackRange: 0
   playerSpotted: 0
+  isWandering: 0
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 0
   timeBetweenAttacks: 0
+--- !u!114 &2885387598974680158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40404658589720726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf931fd97eb19b342a619c9a8b04d53a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthBarImage: {fileID: 0}
+  HealthBar: {fileID: 0}
+  HideFullHealthBar: 0
+  ViewDistance: 0
