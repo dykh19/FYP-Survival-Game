@@ -131,21 +131,29 @@ public class GameManager : MonoBehaviour
                 CurrentGameState = GameState.INGAME;
                 PlayerStats = SaveLoadManager.Instance.ReadPlayerDataFromFile();
 
-                switch (CurrentDifficulty)
+                if (CurrentGameMode == GameMode.NORMAL)
                 {
-                    case Difficulty.EASY:
-                        WaveCountToWin = EasyWaveCount;
-                        break;
-                    case Difficulty.NORMAL:
-                        WaveCountToWin = NormalWaveCount;
-                        break;
-                    case Difficulty.HARD:
-                        WaveCountToWin = HardWaveCount;
-                        break;
-                    default:
-                        WaveCountToWin = 1;
-                        break;
+                    switch (CurrentDifficulty)
+                    {
+                        case Difficulty.EASY:
+                            WaveCountToWin = EasyWaveCount;
+                            break;
+                        case Difficulty.NORMAL:
+                            WaveCountToWin = NormalWaveCount;
+                            break;
+                        case Difficulty.HARD:
+                            WaveCountToWin = HardWaveCount;
+                            break;
+                        default:
+                            WaveCountToWin = 1;
+                            break;
+                    }
                 }
+                else if (CurrentGameMode == GameMode.ENDLESS)
+                {
+                    WaveCountToWin = -1;
+                }
+                
 
                 for (int i = 0; i < PlayerStats.PlayerInventory.Items.Length; i++)
                 {
@@ -176,20 +184,27 @@ public class GameManager : MonoBehaviour
             {
                 CurrentGameState = GameState.INGAME;
 
-                switch (CurrentDifficulty)
+                if (CurrentGameMode == GameMode.NORMAL)
                 {
-                    case Difficulty.EASY:
-                        WaveCountToWin = EasyWaveCount;
-                        break;
-                    case Difficulty.NORMAL:
-                        WaveCountToWin = NormalWaveCount;
-                        break;
-                    case Difficulty.HARD:
-                        WaveCountToWin = HardWaveCount;
-                        break;
-                    default:
-                        WaveCountToWin = 1;
-                        break;
+                    switch (CurrentDifficulty)
+                    {
+                        case Difficulty.EASY:
+                            WaveCountToWin = EasyWaveCount;
+                            break;
+                        case Difficulty.NORMAL:
+                            WaveCountToWin = NormalWaveCount;
+                            break;
+                        case Difficulty.HARD:
+                            WaveCountToWin = HardWaveCount;
+                            break;
+                        default:
+                            WaveCountToWin = 1;
+                            break;
+                    }
+                }
+                else if (CurrentGameMode == GameMode.ENDLESS)
+                {
+                    WaveCountToWin = -1;
                 }
 
                 PlayerInventory = new Inventory();

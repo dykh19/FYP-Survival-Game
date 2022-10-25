@@ -159,7 +159,15 @@ public class WaveTimerManager : MonoBehaviour
     // Function to update the wave progress text
     public void UpdateWaveCountText()
     {
-        WaveCountUI.text = "Wave Progress: " + MonsterSpawner.waveNumber + "/" + GameManager.Instance.WaveCountToWin;
+        if (GameManager.Instance.CurrentGameMode == GameMode.NORMAL)
+        {
+            WaveCountUI.text = "Wave Progress: " + MonsterSpawner.waveNumber + "/" + GameManager.Instance.WaveCountToWin;
+        }
+        else if (GameManager.Instance.CurrentGameMode == GameMode.ENDLESS)
+        {
+            WaveCountUI.text = "Wave Progress: " + MonsterSpawner.waveNumber + "/ Endless";
+        }
+        
     }
 
     public void LoadTimerData()

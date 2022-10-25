@@ -23,7 +23,7 @@ public class MainMenuManager : MonoBehaviour
         NormalButton.onClick.AddListener(delegate { GameManager.Instance.SetDifficulty(1); });
         HardButton.onClick.AddListener(delegate { GameManager.Instance.SetDifficulty(2); });
         NormalModeButton.onClick.AddListener(delegate { GameManager.Instance.SetGameMode(0); });
-        EndlessModeButton.onClick.AddListener(delegate { GameManager.Instance.SetGameMode(1); GameManager.Instance.SetDifficulty(3);});
+        EndlessModeButton.onClick.AddListener(delegate { GameManager.Instance.SetGameMode(1); GameManager.Instance.SetDifficulty(1);});
     }
 
     //Quit game

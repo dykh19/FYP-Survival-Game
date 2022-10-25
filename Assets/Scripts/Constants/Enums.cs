@@ -6,8 +6,7 @@ public enum Difficulty
 {
     EASY,
     NORMAL,
-    HARD,
-    ENDLESS
+    HARD
 }
 
 //Game Mode of the game

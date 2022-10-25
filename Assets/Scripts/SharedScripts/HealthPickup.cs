@@ -11,11 +11,13 @@ public class HealthPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<Health>().Heal(HealAmount);
-            transform.GetChild(0).gameObject.SetActive(false);
-            other.GetComponent<AudioSource>().PlayOneShot(HealSFX);
-            Invoke("DelayedDestroy", 2);
-            
+            if (other.GetComponent<Health>().CurrentHealth < other.GetComponent<Health>().MaxHealth)
+            {
+                other.GetComponent<Health>().Heal(HealAmount);
+                transform.GetChild(0).gameObject.SetActive(false);
+                other.GetComponent<AudioSource>().PlayOneShot(HealSFX);
+                Invoke("DelayedDestroy", 2);
+            }
         }
     }
 
