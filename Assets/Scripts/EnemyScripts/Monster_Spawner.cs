@@ -13,29 +13,24 @@ public class Monster_Spawner : MonoBehaviour
 
     //Monster Numbers for elite Ranged
     public int eliteRCountToEndWave = 0;
-    private int eliteRSpawn = 0;
     public int eliteRSpawned = 0;
     public int eliteRKilled = 0;
 /*    private int eliteRKilledThisInstance;
     private int eliteRKilledFromSave;*/
 
     public int eliteMCountToEndWave = 0;
-    private int eliteMSpawn = 0;
     public int eliteMSpawned = 0;
     public int eliteMKilled = 0;
     /*    private int eliteMKilledThisInstance;
         private int eliteMKilledFromSave;*/
 
     public int bossCountToEndWave = 0;
-    private int bossSpawn = 0;
     public int bossSpawned = 0;
     public int bossKilled = 0;
 /*    private int bossKilledThisInstance;
     private int bossKilledFromSave;*/
 
     private int creepCountToEndWave = 0;
-
-
     public int creepSpawned = 0;
     public int creepKilled = 0;
 /*    private int creepKilledThisInstance;
@@ -321,10 +316,12 @@ public class Monster_Spawner : MonoBehaviour
         bossSpawned = 0;
         bossKilled = 0;
         creepCountToEndWave = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
-        eliteRSpawn = 0;
-        eliteMSpawn = 1;
-        bossSpawn = 0;
-
+        eliteRCountToEndWave = monsterCap - bossCountToEndWave - eliteMCountToEndWave;
+        eliteMCountToEndWave = Mathf.CeilToInt((monsterCap - bossCountToEndWave) * 0.7258244816f);
+        if(waveNumber % 5 == 0)
+        {
+            bossCountToEndWave += 1;
+        }
         
         isWave = true;
         inWave = true;
@@ -338,7 +335,7 @@ public class Monster_Spawner : MonoBehaviour
             GameObject.Destroy(child.gameObject); //Destroys all existing mobs
         }
 
-        for (int i = 0; i < eliteRSpawn; i++)
+        for (int i = 0; i < eliteRCountToEndWave; i++)
         {
             spawnEliteR(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
             /*~~~~~~~~Add spawn timer here if want~~~~~~~~*/
@@ -347,11 +344,11 @@ public class Monster_Spawner : MonoBehaviour
         {
             spawnCreep(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
         }
-        for (int i = 0; i < eliteMSpawn; i++)
+        for (int i = 0; i < eliteMCountToEndWave; i++)
         {
             spawnEliteM(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
         }
-        for(int i = 0; i < bossSpawn; i++)
+        for(int i = 0; i < bossCountToEndWave; i++)
         {
             spawnBoss(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
         }
@@ -400,8 +397,12 @@ public class Monster_Spawner : MonoBehaviour
         bossSpawned = 0;
         bossKilled = 0;
         creepCountToEndWave = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
-        eliteRCountToEndWave = 1; //Mathf.FloorToInt(monsterCap - bossCountToEndWave - eliteMCountToEndWave);
-        eliteMCountToEndWave = Mathf.CeilToInt((monsterCap - bossCountToEndWave) * 0.605320401f);
+        eliteMCountToEndWave = Mathf.CeilToInt((monsterCap - bossCountToEndWave) * 0.7258244816f);
+        eliteRCountToEndWave = Mathf.FloorToInt(monsterCap - bossCountToEndWave - eliteMCountToEndWave);
+        if (waveNumber % 5 == 0)
+        {
+            bossCountToEndWave += 1;
+        }
 
         WaveTimerManager.Instance.IncomingWave();
         saveGameButton.interactable = false;
@@ -430,6 +431,10 @@ public class Monster_Spawner : MonoBehaviour
         for (int i = 0; i < eliteMCountToEndWave; i++)
         {
             spawnEliteM(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
+        }
+        for (int i = 0; i < bossCountToEndWave; i++)
+        {
+            spawnBoss(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
         }
     }
 

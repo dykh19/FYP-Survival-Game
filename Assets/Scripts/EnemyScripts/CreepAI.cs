@@ -124,7 +124,9 @@ public class CreepAI : EnemyBehavior
     {
         animatorCreep.SetBool("AttackPlayer", false);
         animatorCreep.SetBool("AttackBase", false);
-        agent.SetDestination(baseObj.transform.position);
+        NavMeshPath path = new NavMeshPath();
+        NavMesh.CalculatePath(transform.position, baseObj.transform.position, -1, path);
+        agent.path = path;
     }
 
     //Finding the walk point for the monster's wander phase
@@ -155,7 +157,9 @@ public class CreepAI : EnemyBehavior
         animatorCreep.SetBool("AttackPlayer", false);
         animatorCreep.SetBool("AttackBase", false);
         animatorCreep.SetBool("BaseSpotted", false);
-        agent.SetDestination(player.transform.position);
+        NavMeshPath path = new NavMeshPath();
+        NavMesh.CalculatePath(transform.position, player.transform.position, -1, path);
+        agent.path = path;
     }
 
     //When player is within monster attack range, monster stops moving and hits the player
