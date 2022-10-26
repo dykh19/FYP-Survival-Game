@@ -9,6 +9,9 @@ public class Health : MonoBehaviour
 
     public float CurrentHealth;
 
+    public float HealthRegenValue = 0f;
+    public float TimeLastRegen;
+
     //public UnityAction OnPlayerDie;
 
     public bool IsDead = false;
@@ -67,6 +70,11 @@ public class Health : MonoBehaviour
             CurrentHealth = MaxHealth;
         }
         
+    }
+
+    private void Update()
+    {
+        HealthRegen();
     }
 
     //Heal the entity by given argument
@@ -130,6 +138,20 @@ public class Health : MonoBehaviour
     {
         MaxHealth = newHealth;
         CurrentHealth = newHealth;
+    }
+
+    public void HealthRegen()
+    {
+        TimeLastRegen += Time.deltaTime;
+        if (TimeLastRegen >= 1f)
+        {
+            TimeLastRegen = 0f;
+            CurrentHealth += HealthRegenValue;
+            if (CurrentHealth > MaxHealth)
+            {
+                CurrentHealth = MaxHealth;
+            }
+        }
     }
 
     void LoadPlayerHealth()
