@@ -80,6 +80,7 @@ MonoBehaviour:
   essence: {fileID: 11400000, guid: 299f0f15ca4b2e943b9540c7185d3c94, type: 2}
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 100
+  chaseSpeed: 7
   timeBetweenAttacks: 3
   newTimeBetweenAttacks: 5
   Damage: 2
@@ -97,6 +98,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 1000
   CurrentHealth: 0
+  HealthRegenValue: 0
+  TimeLastRegen: 0
   IsDead: 0
 --- !u!136 &9122991342034176757
 CapsuleCollider:
@@ -108,10 +111,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 3.7224288
-  m_Height: 16.069122
+  m_Radius: 3.2581263
+  m_Height: 19.733606
   m_Direction: 1
-  m_Center: {x: -0.3594699, y: 4.736767, z: 1.1479783}
+  m_Center: {x: -0.14890528, y: 6.54058, z: -0.84321165}
 --- !u!114 &-7128189923063534191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,7 +260,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: GolemPrefab
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6464614735045049383, guid: e812c04705f47d645beb13e90ec0ff93, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e812c04705f47d645beb13e90ec0ff93, type: 3}
 --- !u!4 &4478252557027407091 stripped
 Transform:

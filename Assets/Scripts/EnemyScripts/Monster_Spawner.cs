@@ -135,7 +135,7 @@ public class Monster_Spawner : MonoBehaviour
         //    OpenWorldSpawn();
         //}
 
-        if(!isWave && !inWave && (eliteMSpawned == 0 || (eliteMCountToEndWave != 0 && (eliteMSpawned == eliteMKilled))))
+        if(!isWave && !inWave && (bossSpawned == 0 || (bossCountToEndWave != 0 && (bossSpawned == bossKilled))))
         {
             OpenWorldSpawn();
         }
@@ -148,7 +148,8 @@ public class Monster_Spawner : MonoBehaviour
         creepSpawned = 0;
         creepKilled = 0;
         //eliteRCountToEndWave = 2;
-        eliteMCountToEndWave = 2;
+        //eliteMCountToEndWave = 2;
+        bossCountToEndWave = 1;
 
         for(int i = 0; i < creepCountToEndWave; i++)
         {
@@ -158,11 +159,14 @@ public class Monster_Spawner : MonoBehaviour
         //{
         //    spawnEliteR(mapxPosMin, mapxPosMax, mapzPosMin, mapzPosMax);
         //}
-        for(int i = 0; i < eliteMCountToEndWave; i++)
+        //for(int i = 0; i < eliteMCountToEndWave; i++)
+        //{
+        //    spawnEliteM(mapxPosMin, mapxPosMax, mapzPosMin, mapzPosMax);
+        //}
+        for(int i = 0; i < bossCountToEndWave; i++)
         {
-            spawnEliteM(mapxPosMin, mapxPosMax, mapzPosMin, mapzPosMax);
+            spawnBoss(mapxPosMin, mapxPosMax, mapzPosMin, mapzPosMax);
         }
-        
     }
 
     //Function to spawn Creeps (Mainly for waves)

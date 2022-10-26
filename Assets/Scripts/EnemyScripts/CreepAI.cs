@@ -165,7 +165,9 @@ public class CreepAI : EnemyBehavior
     //When player is within monster attack range, monster stops moving and hits the player
     public override void Attack(Transform target)
     {
-        agent.SetDestination(transform.position);
+        NavMeshPath path = new NavMeshPath();
+        NavMesh.CalculatePath(transform.position, transform.position, -1, path);
+        agent.path = path;
         transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
 
         if(!alreadyAttacked)

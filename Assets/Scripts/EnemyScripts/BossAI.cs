@@ -16,6 +16,7 @@ public class BossAI : EnemyBehavior
     public Vector3 walkPoint;
     bool walkPointSet;
     public float walkPointRange;
+    public float chaseSpeed = 7f;
 
     //Attacking Variables
     public float timeBetweenAttacks;
@@ -63,11 +64,14 @@ public class BossAI : EnemyBehavior
         //if player not spotted yet / at all
         if(((!playerInSightRange || playerInSightRange) && !playerInAttackRange && (!playerSpotted || playerSpotted)))
         {
+            Debug.Log("Chasing Player");
+            agent.speed = chaseSpeed;
             Chase();
         }
         //if player in attack range
         if(playerInSightRange && playerInAttackRange && playerSpotted)
         {
+            Debug.Log("Attacking Player");
             Attack(player);
         }
         
@@ -83,7 +87,7 @@ public class BossAI : EnemyBehavior
         if(Health.CurrentHealth >= Health.MaxHealth * 0.50 && Health.CurrentHealth < Health.MaxHealth * 0.75)
         {
             print("Boss Phase 2");
-            newTimeBetweenAttacks = 2 * 0.8;
+            newTimeBetweenAttacks = 2 * 0.9;
             timeBetweenAttacks = (float)newTimeBetweenAttacks;
             Damage = phase2Dmg;
             //Phase 2
@@ -91,7 +95,7 @@ public class BossAI : EnemyBehavior
         if(Health.CurrentHealth >= Health.MaxHealth * 0.25 && Health.CurrentHealth < Health.MaxHealth * 0.50)
         {
             print("Boss Phase 3");
-            newTimeBetweenAttacks = 2 * 0.7;
+            newTimeBetweenAttacks = 2 * 0.8;
             timeBetweenAttacks = (float)newTimeBetweenAttacks;
             Damage = phase3Dmg;
             //Phase 3
@@ -99,7 +103,7 @@ public class BossAI : EnemyBehavior
         if(Health.CurrentHealth <= Health.MaxHealth * 0.25)
         {
             print("Boss Final Phase");
-            newTimeBetweenAttacks = 2 * 0.5;
+            newTimeBetweenAttacks = 2 * 0.6;
             timeBetweenAttacks = (float)newTimeBetweenAttacks;
             Damage = phase4Dmg;
             //Final Phase
@@ -109,6 +113,8 @@ public class BossAI : EnemyBehavior
     public override void Chase()
     {
         //agent.SetDestination(player.transform.position);
+        animatorBoss.SetBool("ChasingPlayer", true);
+        //Debug.Log("Chasing Player");
         NavMeshPath path = new NavMeshPath();
         NavMesh.CalculatePath(transform.position, player.transform.position, -1, path);
         agent.path = path;
@@ -118,9 +124,10 @@ public class BossAI : EnemyBehavior
     {
         //agent.SetDestination(transform.position);
         NavMeshPath path = new NavMeshPath();
-        NavMesh.CalculatePath(transform.position, transform.position, -1, path);
+        NavMesh.CalculatePath(transform.position, player.transform.position, -1, path);
         agent.path = path;
         transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
+        animatorBoss.SetBool("AttackPlayer", true);
 
         if(!alreadyAttacked)
         {
