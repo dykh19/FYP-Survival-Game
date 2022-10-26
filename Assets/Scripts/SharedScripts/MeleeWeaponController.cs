@@ -122,19 +122,38 @@ public class MeleeWeaponController : WeaponController
         var halfWidth = attackWidth;
 
         var hitList = new List<RaycastHit>();
-
-        for (var i = -halfWidth; i < halfWidth; i++)
+        if(swingSideways)
         {
-            var direction = Quaternion.AngleAxis(i, camera.up) * camera.forward;
-            var hits = Physics.RaycastAll(origin, direction, attackRange);
+            for (var i = -halfWidth; i < halfWidth; i++)
+            {
+                var direction = Quaternion.AngleAxis(i, camera.up) * camera.forward;
+                var hits = Physics.RaycastAll(origin, direction, attackRange);
 
-            Debug.DrawRay(origin, direction * attackRange, Color.red, 1, false);
+                Debug.DrawRay(origin, direction * attackRange, Color.red, 1, false);
 
-            var uniqueHits = hits
-                .Where(hit => !hitList
-                .Any(h => h.transform.name == hit.transform.name));
+                var uniqueHits = hits
+                    .Where(hit => !hitList
+                    .Any(h => h.transform.name == hit.transform.name));
 
-            hitList.AddRange(uniqueHits);
+                hitList.AddRange(uniqueHits);
+            }
+        }
+        else
+        {
+            for (var i = -halfWidth; i < halfWidth; i++)
+            {
+                var direction = Quaternion.AngleAxis(i, camera.right) * camera.forward;
+                var hits = Physics.RaycastAll(origin, direction, attackRange);
+
+                Debug.DrawRay(origin, direction * attackRange, Color.red, 1, false);
+
+                var uniqueHits = hits
+                    .Where(hit => !hitList
+                    .Any(h => h.transform.name == hit.transform.name));
+
+                hitList.AddRange(uniqueHits);
+            }
+
         }
 
         return hitList.ToArray();
