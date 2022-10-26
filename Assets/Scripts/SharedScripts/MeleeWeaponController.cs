@@ -20,13 +20,17 @@ public class MeleeWeaponController : WeaponController
     [Range(45, 135)] public float swingAngle = 80;
     public bool swingSideways;
 
+    public float lastAttackTime;
+
     public Transform modelObject;
-    private MeleeWeaponAnimator animator;
+    //private MeleeWeaponAnimator animator;
+    public Animator animator;
 
     public void Awake()
     {
         modelObject = this.transform;
-        animator = new MeleeWeaponAnimator(modelObject, attackSpeed, swingAngle);
+        //animator = new MeleeWeaponAnimator(modelObject, attackSpeed, swingAngle);
+        animator = transform.GetComponentInChildren<Animator>();
         
         this.gameObject.SetActive(false);
     }
@@ -38,7 +42,8 @@ public class MeleeWeaponController : WeaponController
 
     public void Update()
     {
-        animator.UpdateAnimation(swingSideways);
+        //animator.UpdateAnimation(swingSideways);
+        lastAttackTime += Time.deltaTime;
     }
 
     /*public void OnHoldStay()
@@ -61,9 +66,11 @@ public class MeleeWeaponController : WeaponController
 
     public void OnUse()
     {
-        if (animator.StartAnimation())
+        /*if (animator.StartAnimation())
             HitTargets();
-            animator.UpdateAnimation(swingSideways);
+            animator.UpdateAnimation(swingSideways);*/
+        animator.SetTrigger("Attack");
+        HitTargets();
     }
 
     private void WeaponFollow()
@@ -135,8 +142,9 @@ public class MeleeWeaponController : WeaponController
 
     public void HandleShootInputs(bool inputDown, bool inputHeld, bool inputUp)
     {
-        if(inputDown)
+        if(inputDown && lastAttackTime > attackSpeed)
         {
+            lastAttackTime = 0f;
             OnUse();
         }
     }
@@ -147,7 +155,7 @@ public class MeleeWeaponController : WeaponController
     }
 }
 
-public class MeleeWeaponAnimator
+/*public class MeleeWeaponAnimator
 {
     private readonly Transform modelObject;
     private readonly float attackSpeed;
@@ -217,4 +225,4 @@ public class MeleeWeaponAnimator
         Forward,
         Reverse
     }
-}
+}*/

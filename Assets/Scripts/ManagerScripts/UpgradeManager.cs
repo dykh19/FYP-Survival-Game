@@ -151,7 +151,7 @@ public class UpgradeManager : MonoBehaviour
                     playerWeaponManager.m_WeaponSlots[2].GetComponent<MeleeWeaponController>().damage = newDamage;
 
                     //Set Fire Rate
-                    float newFireRate = playerWeaponManager.m_WeaponSlots[2].GetComponent<MeleeWeaponController>().attackSpeed - 0.2f;
+                    float newFireRate = playerWeaponManager.m_WeaponSlots[2].GetComponent<MeleeWeaponController>().attackSpeed - 0.02f;
                     playerWeaponManager.m_WeaponSlots[2].GetComponent<MeleeWeaponController>().attackSpeed = newFireRate;
 
                     //Set Range
@@ -169,7 +169,7 @@ public class UpgradeManager : MonoBehaviour
                     playerWeaponManager.m_WeaponSlots[3].GetComponent<MeleeWeaponController>().damage = newDamage;
 
                     //Set Fire Rate
-                    float newFireRate = playerWeaponManager.m_WeaponSlots[3].GetComponent<MeleeWeaponController>().attackSpeed - 0.5f;
+                    float newFireRate = playerWeaponManager.m_WeaponSlots[3].GetComponent<MeleeWeaponController>().attackSpeed - 0.05f;
                     playerWeaponManager.m_WeaponSlots[3].GetComponent<MeleeWeaponController>().attackSpeed = newFireRate;
 
                     //Set Range
