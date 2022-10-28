@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abac838000a3d439396a80bfe1c58fcb, type: 3}
+  m_Name: Ranged Damage
+  m_EditorClassIdentifier: 
+  name: Ranged Damage
+  icon: {fileID: 21300000, guid: 79085323a229d40d69c5a9bb130ccaa0, type: 3}
+  maxLevel: 5
+  prerequisite: {fileID: 11400000, guid: 0fd5bf46a522b4553a8d16f4d588fcbd, type: 2}
