@@ -16,6 +16,7 @@ public class BossAI : EnemyBehavior
     public Vector3 walkPoint;
     bool walkPointSet;
     public float walkPointRange;
+    public float wanderSpeed = 5f;
     public float chaseSpeed = 7f;
 
     //Attacking Variables
@@ -29,7 +30,6 @@ public class BossAI : EnemyBehavior
     private float phase3Dmg;
     private float phase4Dmg;
 
-
     Monster_Spawner spawn;
 
     // Start is called before the first frame update
@@ -41,6 +41,7 @@ public class BossAI : EnemyBehavior
         baseObj = GameObject.FindGameObjectWithTag("Base").transform;
         agent = GetComponent<NavMeshAgent>();
         Damage = GameStats.BaseEnemyDamage[4] * GameStats.EnemyHealthModifier[(int)GameManager.Instance.CurrentDifficulty];
+        animatorBoss = GetComponentInChildren<Animator>();
         phase1Dmg = Damage + (Damage * 0.1f);
         phase2Dmg = Damage + (Damage * 0.2f);
         phase3Dmg = Damage + (Damage * 0.3f);
@@ -54,29 +55,41 @@ public class BossAI : EnemyBehavior
     {
         CheckWave();
 
-        if(playerInSightRange = Physics.CheckSphere(transform.position, sightRange, isPlayer))
+        if (playerInSightRange = Physics.CheckSphere(transform.position, sightRange, isPlayer))
         {
             playerSpotted = true;
         }
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, isPlayer);
+        baseInSightRange = Physics.CheckSphere(transform.position, sightRange, isBase);
+        baseInAttackRange = Physics.CheckSphere(transform.position, attackRange, isBase);
 
         //Boss only spawns in Waves
         //if player not spotted yet / at all
-        if(((!playerInSightRange || playerInSightRange) && !playerInAttackRange && (!playerSpotted || playerSpotted)))
+        if ((!playerInSightRange && !playerInAttackRange && (!playerSpotted || playerSpotted) && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && (isWave || !isWave)))
         {
-            Debug.Log("Chasing Player");
+            //print("Wandering(!isWave)");
+            animatorBoss.SetBool("ChasingPlayer", true);
+            agent.speed = wanderSpeed;
+            Wandering();
+        }
+        //If player is in range of enemy's sight, monster will chase.
+        if ((playerInSightRange && !playerInAttackRange && (playerSpotted || !playerSpotted) && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && (isWave || !isWave)))
+        {
+            //print("Chasing Player(!isWave)");
+            animatorBoss.SetBool("ChasingPlayer", true);
             agent.speed = chaseSpeed;
             Chase();
         }
-        //if player in attack range
-        if(playerInSightRange && playerInAttackRange && playerSpotted)
+        //If player is in attack range and in sight range, monster will attack.
+        if (playerInSightRange && playerInAttackRange && playerSpotted && (!baseInSightRange || baseInSightRange) && (!baseInAttackRange || baseInAttackRange) && (isWave || !isWave))
         {
-            Debug.Log("Attacking Player");
+            //print("Attacking Player(!isWave)");
+            animatorBoss.SetBool("AttackPlayer", true);
             Attack(player);
         }
-        
+
         //Need to have different health mechanics if loops
-        if(Health.CurrentHealth >= Health.MaxHealth * 0.75)
+        if (Health.CurrentHealth >= Health.MaxHealth * 0.75)
         {
             print("Boss Phase 1");
             //newTimeBetweenAttacks = 2 * 0.9;
@@ -110,24 +123,63 @@ public class BossAI : EnemyBehavior
         }
     }
 
+    public override void Wandering()
+    {
+        animatorBoss.SetBool("ChasingPlayer", false);
+        animatorBoss.SetBool("AttackPlayer", false);
+        isWandering = true;
+        if (!walkPointSet)
+        {
+            findWalkPoint();
+        }
+
+        if (walkPointSet)
+        {
+            agent.SetDestination(walkPoint);
+        }
+
+        distanceToWalkPoint = transform.position - walkPoint;
+
+        if (distanceToWalkPoint.magnitude < 1f)
+        {
+            walkPointSet = false;
+        }
+    }
+
     public override void Chase()
     {
-        //agent.SetDestination(player.transform.position);
-        animatorBoss.SetBool("ChasingPlayer", true);
-        //Debug.Log("Chasing Player");
         NavMeshPath path = new NavMeshPath();
         NavMesh.CalculatePath(transform.position, player.transform.position, -1, path);
         agent.path = path;
     }
 
+    public override void findWalkPoint()
+    {
+        var rayOrigin = new Vector3(Random.Range(-walkPointRange, walkPointRange), 100f, Random.Range(-walkPointRange, walkPointRange));
+        var ray = new Ray(rayOrigin, Vector3.down);
+
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            walkPoint = hit.point + hit.normal;
+            NavMeshHit closestHit;
+            if (NavMesh.SamplePosition(walkPoint, out closestHit, 500, 1))
+            {
+                walkPoint = closestHit.position;
+            }
+        }
+
+        if (Physics.Raycast(walkPoint, -transform.up, 2f, isGround))
+        {
+            walkPointSet = true;
+        }
+    }
+
     public override void Attack(Transform target)
     {
-        //agent.SetDestination(transform.position);
         NavMeshPath path = new NavMeshPath();
-        NavMesh.CalculatePath(transform.position, player.transform.position, -1, path);
+        NavMesh.CalculatePath(transform.position, transform.position, -1, path);
         agent.path = path;
         transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
-        animatorBoss.SetBool("AttackPlayer", true);
 
         if(!alreadyAttacked)
         {
