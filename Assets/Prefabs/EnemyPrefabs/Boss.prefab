@@ -66,7 +66,7 @@ MonoBehaviour:
   distanceToWalkPoint: {x: 0, y: 0, z: 0}
   isDead: 0
   isWave: 0
-  sightRange: 5
+  sightRange: 50
   attackRange: 3
   playerInSightRange: 0
   playerInAttackRange: 0
@@ -80,6 +80,7 @@ MonoBehaviour:
   essence: {fileID: 11400000, guid: 299f0f15ca4b2e943b9540c7185d3c94, type: 2}
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 100
+  wanderSpeed: 5
   chaseSpeed: 7
   timeBetweenAttacks: 3
   newTimeBetweenAttacks: 5

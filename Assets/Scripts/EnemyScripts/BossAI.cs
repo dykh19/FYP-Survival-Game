@@ -40,7 +40,7 @@ public class BossAI : EnemyBehavior
         player = GameObject.FindGameObjectWithTag("Player").transform;
         baseObj = GameObject.FindGameObjectWithTag("Base").transform;
         agent = GetComponent<NavMeshAgent>();
-        Damage = GameStats.BaseEnemyDamage[4] * GameStats.EnemyHealthModifier[(int)GameManager.Instance.CurrentDifficulty];
+        Damage = GameStats.BaseEnemyDamage[3] * GameStats.EnemyHealthModifier[(int)GameManager.Instance.CurrentDifficulty];
         animatorBoss = GetComponentInChildren<Animator>();
         phase1Dmg = Damage + (Damage * 0.1f);
         phase2Dmg = Damage + (Damage * 0.2f);
@@ -100,7 +100,7 @@ public class BossAI : EnemyBehavior
         if(Health.CurrentHealth >= Health.MaxHealth * 0.50 && Health.CurrentHealth < Health.MaxHealth * 0.75)
         {
             print("Boss Phase 2");
-            newTimeBetweenAttacks = 2 * 0.9;
+            newTimeBetweenAttacks = 2 * 1.1;
             timeBetweenAttacks = (float)newTimeBetweenAttacks;
             Damage = phase2Dmg;
             //Phase 2
@@ -108,7 +108,7 @@ public class BossAI : EnemyBehavior
         if(Health.CurrentHealth >= Health.MaxHealth * 0.25 && Health.CurrentHealth < Health.MaxHealth * 0.50)
         {
             print("Boss Phase 3");
-            newTimeBetweenAttacks = 2 * 0.8;
+            newTimeBetweenAttacks = 2 * 1.2;
             timeBetweenAttacks = (float)newTimeBetweenAttacks;
             Damage = phase3Dmg;
             //Phase 3
@@ -116,7 +116,7 @@ public class BossAI : EnemyBehavior
         if(Health.CurrentHealth <= Health.MaxHealth * 0.25)
         {
             print("Boss Final Phase");
-            newTimeBetweenAttacks = 2 * 0.6;
+            newTimeBetweenAttacks = 2 * 1.4;
             timeBetweenAttacks = (float)newTimeBetweenAttacks;
             Damage = phase4Dmg;
             //Final Phase

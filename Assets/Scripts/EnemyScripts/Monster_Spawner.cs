@@ -144,12 +144,12 @@ public class Monster_Spawner : MonoBehaviour
     //Spawning mechanic when !isWave
     public void OpenWorldSpawn()
     {
-        creepCountToEndWave = 1; //Change value here (Previously 30)
+        creepCountToEndWave = 30; //Change value here (Previously 30)
         creepSpawned = 0;
         creepKilled = 0;
         //eliteRCountToEndWave = 2;
         //eliteMCountToEndWave = 2;
-        bossCountToEndWave = 1;
+        //bossCountToEndWave = 1;
 
         for(int i = 0; i < creepCountToEndWave; i++)
         {
@@ -163,10 +163,10 @@ public class Monster_Spawner : MonoBehaviour
         //{
         //    spawnEliteM(mapxPosMin, mapxPosMax, mapzPosMin, mapzPosMax);
         //}
-        for(int i = 0; i < bossCountToEndWave; i++)
-        {
-            spawnBoss(mapxPosMin, mapxPosMax, mapzPosMin, mapzPosMax);
-        }
+        //(int i = 0; i < bossCountToEndWave; i++)
+        //{
+        //    spawnBoss(mapxPosMin, mapxPosMax, mapzPosMin, mapzPosMax);
+        //}
     }
 
     //Function to spawn Creeps (Mainly for waves)
