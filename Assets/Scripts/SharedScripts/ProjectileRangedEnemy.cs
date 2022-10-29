@@ -5,6 +5,30 @@ using UnityEngine;
 public class ProjectileRangedEnemy : MonoBehaviour
 {
     public float Damage;
+    /*    public GameObject player;
+        public Vector3 targetPlayer;
+        public Vector3 direction;
+        public float speed = 2f;
+
+    private void Start()
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                targetPlayer = player.transform.position;
+            }
+            else
+            {
+                print("Player = null");
+            }
+
+            direction = (targetPlayer - transform.position).normalized * speed;
+        }
+
+        private void Update()
+        {
+            transform.Translate(direction * Time.deltaTime);
+        }*/
 
     public void SetDamage(float Damage)
     {
@@ -17,14 +41,13 @@ public class ProjectileRangedEnemy : MonoBehaviour
         {
             Destroy(this.gameObject);
             other.gameObject.GetComponent<Health>().TakeDamage(Damage);
-            
+
             Debug.Log("Hit Player");
         }
-
-        if (other.gameObject.tag == "Base")
+        else if (other.gameObject.tag == "Base")
         {
             Destroy(this.gameObject);
-            other.gameObject.GetComponent<Health>().TakeDamage(Damage);
+            other.gameObject.transform.root.GetComponent<Health>().TakeDamage(Damage);
 
             Debug.Log("Hit Base");
         }

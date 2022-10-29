@@ -9,21 +9,22 @@ using TMPro;
 public class Monster_Spawner : MonoBehaviour
 {
     public int waveNumber = 0;
+    public int monsterCap = 0;
 
     //Monster Numbers for elite Ranged
-    private int eliteRSpawn = 0;
+    public int eliteRCountToEndWave = 0;
     public int eliteRSpawned = 0;
     public int eliteRKilled = 0;
 /*    private int eliteRKilledThisInstance;
     private int eliteRKilledFromSave;*/
 
-    private int eliteMSpawn = 0;
+    public int eliteMCountToEndWave = 0;
     public int eliteMSpawned = 0;
     public int eliteMKilled = 0;
-/*    private int eliteMKilledThisInstance;
-    private int eliteMKilledFromSave;*/
+    /*    private int eliteMKilledThisInstance;
+        private int eliteMKilledFromSave;*/
 
-    private int bossSpawn = 0;
+    public int bossCountToEndWave = 0;
     public int bossSpawned = 0;
     public int bossKilled = 0;
 /*    private int bossKilledThisInstance;
@@ -129,7 +130,12 @@ public class Monster_Spawner : MonoBehaviour
             GameManager.Instance.WinGame();
         }
 
-        if(!isWave && !inWave && ((creepSpawned == 0) || (creepCountToEndWave != 0 && (creepSpawned == creepKilled))))
+        //if(!isWave && !inWave && ((creepSpawned == 0) || (creepCountToEndWave != 0 && (creepSpawned == creepKilled))))
+        //{
+        //    OpenWorldSpawn();
+        //}
+
+        if(!isWave && !inWave && (bossSpawned == 0 || (bossCountToEndWave != 0 && (bossSpawned == bossKilled))))
         {
             OpenWorldSpawn();
         }
@@ -138,15 +144,29 @@ public class Monster_Spawner : MonoBehaviour
     //Spawning mechanic when !isWave
     public void OpenWorldSpawn()
     {
-        creepCountToEndWave = 30; //Change value here
+        creepCountToEndWave = 30; //Change value here (Previously 30)
         creepSpawned = 0;
         creepKilled = 0;
+        //eliteRCountToEndWave = 2;
+        //eliteMCountToEndWave = 2;
+        //bossCountToEndWave = 1;
 
         for(int i = 0; i < creepCountToEndWave; i++)
         {
             spawnCreep(mapxPosMin, mapxPosMax, mapzPosMin, mapzPosMax);
         }
-        
+        //for(int i = 0; i < eliteRCountToEndWave; i++)
+        //{
+        //    spawnEliteR(mapxPosMin, mapxPosMax, mapzPosMin, mapzPosMax);
+        //}
+        //for(int i = 0; i < eliteMCountToEndWave; i++)
+        //{
+        //    spawnEliteM(mapxPosMin, mapxPosMax, mapzPosMin, mapzPosMax);
+        //}
+        //(int i = 0; i < bossCountToEndWave; i++)
+        //{
+        //    spawnBoss(mapxPosMin, mapxPosMax, mapzPosMin, mapzPosMax);
+        //}
     }
 
     //Function to spawn Creeps (Mainly for waves)
@@ -189,7 +209,20 @@ public class Monster_Spawner : MonoBehaviour
     //Function to spawn Elite Ranged Monsters
     public void spawnEliteR(float xPosMin, float xPosMax, float zPosMin, float zPosMax)
     {
-        var rayOrigin = new Vector3(Random.Range(xPosMin, xPosMax), 100f, Random.Range(zPosMin, zPosMax));
+        bool validSpawn = false;
+        float x = 0f;
+        float z = 0f;
+        // Generate until position is outside of radius around base then spawn
+        while (!validSpawn)
+        {
+            x = Random.Range(xPosMin, xPosMax);
+            z = Random.Range(zPosMin, zPosMax);
+            if ((new Vector3(x, baseObj.transform.position.y, z) - baseObj.transform.position).sqrMagnitude >= 25f * 25f)
+            {
+                validSpawn = true;
+            }
+        }
+        var rayOrigin = new Vector3(x, 100f, z);
         var ray = new Ray(rayOrigin, Vector3.down);
 
         if (Physics.Raycast(ray, out RaycastHit hit))
@@ -209,7 +242,20 @@ public class Monster_Spawner : MonoBehaviour
 
     public void spawnEliteM(float xPosMin, float xPosMax, float zPosMin, float zPosMax)
     {
-        var rayOrigin = new Vector3(Random.Range(xPosMin, xPosMax), 100f, Random.Range(zPosMin, zPosMax));
+        bool validSpawn = false;
+        float x = 0f;
+        float z = 0f;
+        // Generate until position is outside of radius around base then spawn
+        while (!validSpawn)
+        {
+            x = Random.Range(xPosMin, xPosMax);
+            z = Random.Range(zPosMin, zPosMax);
+            if ((new Vector3(x, baseObj.transform.position.y, z) - baseObj.transform.position).sqrMagnitude >= 25f * 25f)
+            {
+                validSpawn = true;
+            }
+        }
+        var rayOrigin = new Vector3(x, 100f, z);
         var ray = new Ray(rayOrigin, Vector3.down);
 
         if (Physics.Raycast(ray, out RaycastHit hit))
@@ -223,7 +269,40 @@ public class Monster_Spawner : MonoBehaviour
                 newEliteM.AddComponent<NavMeshAgent>();
             }
             newEliteM.transform.parent = GameObject.Find("Spawner").transform;
-            eliteRSpawned += 1;
+            eliteMSpawned += 1;
+        }
+    }
+
+    public void spawnBoss(float xPosMin, float xPosMax, float zPosMin, float zPosMax)
+    {
+        bool validSpawn = false;
+        float x = 0f;
+        float z = 0f;
+        // Generate until position is outside of radius around base then spawn
+        while (!validSpawn)
+        {
+            x = Random.Range(xPosMin, xPosMax);
+            z = Random.Range(zPosMin, zPosMax);
+            if ((new Vector3(x, baseObj.transform.position.y, z) - baseObj.transform.position).sqrMagnitude >= 25f * 25f)
+            {
+                validSpawn = true;
+            }
+        }
+        var rayOrigin = new Vector3(x, 100f, z);
+        var ray = new Ray(rayOrigin, Vector3.down);
+
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            GameObject newBoss = Instantiate(boss);
+            newBoss.transform.position = hit.point + hit.normal;
+            NavMeshHit closestHit;
+            if (NavMesh.SamplePosition(newBoss.transform.position, out closestHit, 500, 1))
+            {
+                newBoss.transform.position = closestHit.position;
+                newBoss.AddComponent<NavMeshAgent>();
+            }
+            newBoss.transform.parent = GameObject.Find("Spawner").transform;
+            bossSpawned += 1;
         }
     }
 
@@ -241,10 +320,12 @@ public class Monster_Spawner : MonoBehaviour
         bossSpawned = 0;
         bossKilled = 0;
         creepCountToEndWave = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
-
-        eliteRSpawn = 0; //To change based on specs
-        eliteMSpawn = 0;
-
+        eliteRCountToEndWave = monsterCap - bossCountToEndWave - eliteMCountToEndWave;
+        eliteMCountToEndWave = Mathf.CeilToInt((monsterCap - bossCountToEndWave) * 0.7258244816f);
+        if(waveNumber % 5 == 0)
+        {
+            bossCountToEndWave += 1;
+        }
         
         isWave = true;
         inWave = true;
@@ -258,7 +339,7 @@ public class Monster_Spawner : MonoBehaviour
             GameObject.Destroy(child.gameObject); //Destroys all existing mobs
         }
 
-        for (int i = 0; i < eliteRSpawn; i++)
+        for (int i = 0; i < eliteRCountToEndWave; i++)
         {
             spawnEliteR(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
             /*~~~~~~~~Add spawn timer here if want~~~~~~~~*/
@@ -267,9 +348,13 @@ public class Monster_Spawner : MonoBehaviour
         {
             spawnCreep(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
         }
-        for (int i = 0; i < eliteMSpawn; i++)
+        for (int i = 0; i < eliteMCountToEndWave; i++)
         {
             spawnEliteM(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
+        }
+        for(int i = 0; i < bossCountToEndWave; i++)
+        {
+            spawnBoss(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
         }
     }
 
@@ -293,6 +378,7 @@ public class Monster_Spawner : MonoBehaviour
         bossSpawned = 0;
         bossKilled = 0;
         isWave = false;
+        monsterCap = Mathf.FloorToInt(10 * Mathf.Pow(waveNumber, 0.4f)) - 10;
 
         WaveTimerManager.Instance.ShowTimer();
         WaveTimerManager.Instance.StartNewWaveTimer();
@@ -315,6 +401,12 @@ public class Monster_Spawner : MonoBehaviour
         bossSpawned = 0;
         bossKilled = 0;
         creepCountToEndWave = Mathf.FloorToInt(10 * (Mathf.Pow(waveNumber, 0.5f)));
+        eliteMCountToEndWave = Mathf.CeilToInt((monsterCap - bossCountToEndWave) * 0.7258244816f);
+        eliteRCountToEndWave = Mathf.FloorToInt(monsterCap - bossCountToEndWave - eliteMCountToEndWave);
+        if (waveNumber % 5 == 0)
+        {
+            bossCountToEndWave += 1;
+        }
 
         WaveTimerManager.Instance.IncomingWave();
         saveGameButton.interactable = false;
@@ -332,7 +424,7 @@ public class Monster_Spawner : MonoBehaviour
         }
         
 
-        for (int i = 0; i < eliteRSpawn; i++)
+        for (int i = 0; i < eliteRCountToEndWave; i++)
         {
             spawnEliteR(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
         }
@@ -340,9 +432,13 @@ public class Monster_Spawner : MonoBehaviour
         {
             spawnCreep(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
         }
-        for (int i = 0; i < eliteMSpawn; i++)
+        for (int i = 0; i < eliteMCountToEndWave; i++)
         {
             spawnEliteM(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
+        }
+        for (int i = 0; i < bossCountToEndWave; i++)
+        {
+            spawnBoss(basexPosMin, basexPosMax, basezPosMin, basezPosMax);
         }
     }
 
