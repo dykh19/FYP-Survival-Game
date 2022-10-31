@@ -156,7 +156,6 @@ public class CreepAI : EnemyBehavior
     {
         animatorCreep.SetBool("AttackPlayer", false);
         animatorCreep.SetBool("AttackBase", false);
-        animatorCreep.SetBool("BaseSpotted", false);
         NavMeshPath path = new NavMeshPath();
         NavMesh.CalculatePath(transform.position, player.transform.position, -1, path);
         agent.path = path;

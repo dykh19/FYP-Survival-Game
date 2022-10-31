@@ -170,7 +170,6 @@ public class EliteRAI : EnemyBehavior
     {
         animatorRAI.SetBool("AttackPlayer", false);
         animatorRAI.SetBool("AttackBase", false);
-        animatorRAI.SetBool("BaseSpotted", false);
         agent.SetDestination(player.transform.position);
     }
 

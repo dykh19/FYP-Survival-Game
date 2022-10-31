@@ -175,7 +175,6 @@ public class EliteMAI : EnemyBehavior
     {
         animatorMAI.SetBool("AttackPlayer", false);
         animatorMAI.SetBool("AttackBase", false);
-        animatorMAI.SetBool("BaseSpotted", false);
         //agent.SetDestination(player.transform.position);
         NavMeshPath path = new NavMeshPath();
         NavMesh.CalculatePath(transform.position, player.transform.position, -1, path);
