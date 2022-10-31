@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41568b9ad73474a719987b39954dc57a, type: 3}
+  m_Name: Exchange Rate
+  m_EditorClassIdentifier: 
+  name: Exchange Rate
+  icon: {fileID: 21300000, guid: 085ad8bee8eb64a028a4a2e4d0936556, type: 3}
+  maxLevel: 3
+  prerequisite: {fileID: 11400000, guid: 676c9cb8e36b349769e7bf82a43a429a, type: 2}
+  refinedOresRequired: 0
+  requirements: []
