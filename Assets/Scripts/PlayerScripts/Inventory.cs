@@ -6,7 +6,7 @@ public class Inventory
 {
     public static Inventory Main { get; private set; }
 
-    public InventoryItem[] Items;// { get; private set; }
+    public InventoryItem[] Items { get; private set; }
     public int activeItemIndex;
     private const int defaultInventorySize = 20;
 

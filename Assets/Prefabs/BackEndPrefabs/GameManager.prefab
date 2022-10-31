@@ -44,15 +44,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c5ac5d1aee3f1b4f845a46cd83c438b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoadingSavedGame: 0
   CurrentGameMode: 0
   CurrentDifficulty: 0
   CurrentGameState: 0
   WaveCountToWin: 0
   TimeToNextWave: 300
-  EasyWaveCount: 1
+  EasyWaveCount: 5
   NormalWaveCount: 5
-  HardWaveCount: 7
+  HardWaveCount: 5
   WorldGen: {fileID: 0}
+  playerReference: {fileID: 0}
+  PlayerInventory:
+    activeItemIndex: 0
   StartingItems: []
   UserInterfaces:
   - name: Default
@@ -64,3 +68,48 @@ MonoBehaviour:
   - name: Inventory
     keyCode: 105
     userInterface: {fileID: 7195239745950500977, guid: ac78ccb6565ea9e4cb25ca688a5ef7c9, type: 3}
+  - name: Vendor
+    keyCode: 0
+    userInterface: {fileID: 9102110979277821931, guid: fec17e0897c93344f90835ccaac4ae05, type: 3}
+  - name: Exchange
+    keyCode: 0
+    userInterface: {fileID: 1361991722362308775, guid: 98bae55e7f062a140b6740d432d40473, type: 3}
+  PlayerStats:
+    CurrentGameMode: 0
+    CurrentDifficutly: 0
+    TotalEnemiesKilled: 0
+    CurrentWaveEnemiesKilled: 0
+    TotalCreepKilled: 0
+    TotalEliteRKilled: 0
+    TotalEliteMKilled: 0
+    TotalBossKilled: 0
+    TotalOresObtained: 0
+    CurrentOresInBase: 0
+    TotalEssenceObtained: 0
+    CurrentEssenceInBase: 0
+    TotalBossCoresObtained: 0
+    CurrentBossCoresInBase: 0
+    WavesCleared: 0
+    currentWave: 0
+    TimeLeftToNextWave: 0
+    maxHealth: 0
+    currentHealth: 0
+    maxBaseHealth: 0
+    currentBaseHealth: 0
+    playerHealthLevel: 0
+    baseLevel: 0
+    playerRifleLevel: 0
+    playerShotgunLevel: 0
+    playerAxeLevel: 0
+    playerSwordLevel: 0
+    PlayerInventory:
+      activeItemIndex: 0
+    WorldGenSaveData:
+      randomSeed: 1
+      seed: 0
+      offset: {x: 0, y: 0}
+      flattenCenter: 1
+      groundLevel: 0
+      radius: 0
+      radialSmoothing: 0
+      worldObjects: []

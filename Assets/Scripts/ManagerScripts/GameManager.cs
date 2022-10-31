@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
 
     public WorldGenerator WorldGen;
 
+    public GameObject playerReference;
+
     // Player Inventory
     public Inventory PlayerInventory;
     public GameItem[] StartingItems;
@@ -126,6 +128,7 @@ public class GameManager : MonoBehaviour
         // Perform Initial Loading Stuff Here
         if (SceneManager.GetActiveScene().name == "GamePlay")
         {
+            playerReference = GameObject.FindGameObjectWithTag("Player");
             if (LoadingSavedGame == true)
             {
                 CurrentGameState = GameState.INGAME;

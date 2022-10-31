@@ -118,7 +118,9 @@ public class PlayerHUD : UIController
         var barDoubleOffsetY = barOffset.y * 2;
 
         var healthRatio = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().CurrentHealth / GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().MaxHealth;
-        var BaseHealthRatio = GameObject.FindGameObjectWithTag("Base").GetComponent<Health>().CurrentHealth / GameObject.FindGameObjectWithTag("Base").GetComponent<Health>().MaxHealth;
+        var BaseHealthRatio = GameObject.FindGameObjectWithTag("Base").transform.root.GetComponent<Health>().CurrentHealth / GameObject.FindGameObjectWithTag("Base").transform.root.GetComponent<Health>().MaxHealth;
+
+        
 
         healthBar.sizeDelta = new Vector2(barSizeFullX * healthRatio, barSize.y - barDoubleOffsetY);
         BaseHealthBar.sizeDelta = new Vector2(barSizeFullX * BaseHealthRatio, barSize.y - barDoubleOffsetY);
