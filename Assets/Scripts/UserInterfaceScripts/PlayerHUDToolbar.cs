@@ -148,8 +148,9 @@ public class PlayerHUDToolbar : UIController
         for (int i = 0; i < slots.Length; i++)
         {
             var item = GameManager.Instance.PlayerInventory.Items[i];
+            var itemState = (GameManager.Instance.PlayerInventory.Items[i]?.item == null) ? true : false;
 
-            if (item is not null)
+            if (!itemState)
             {
                 var slot = slots[i].transform;
                 var icon = InventoryUI.DisplayItemIcon(item.item, slot);

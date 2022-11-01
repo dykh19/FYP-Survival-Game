@@ -6,7 +6,7 @@ public class Inventory
 {
     public static Inventory Main { get; private set; }
 
-    public InventoryItem[] Items { get; private set; }
+    public InventoryItem[] Items;
     public int activeItemIndex;
     private const int defaultInventorySize = 20;
 
@@ -31,7 +31,7 @@ public class Inventory
         else
         {
             for (int i = 0; i < Items.Length; i++)
-                if (Items[i] is null)
+                if (Items[i] is null || Items[i].item is null)
                 {
                     Items[i] = new InventoryItem(newItem, quantity);
                     break;
@@ -75,7 +75,7 @@ public class Inventory
     public int GetNotFullItemIndex(GameItem item)
     {
         return Array.FindIndex(Items, invItem =>
-            (invItem != null) && (invItem.item.name == item.name) && invItem.quantity != maxItemStack);
+            (invItem != null) && (invItem.item?.name == item.name) && invItem.quantity != maxItemStack);
     }
 
     public void ResizeInventory(int newSize)
