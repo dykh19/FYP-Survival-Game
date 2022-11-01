@@ -866,7 +866,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9102110979277821930
 RectTransform:
   m_ObjectHideFlags: 0
@@ -979,47 +979,6 @@ MonoBehaviour:
   currencyCount: 0
   playerInventoryUI: {fileID: 0}
   playerInventory:
-    Items:
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
     activeItemIndex: 0
   upgradeManager: {fileID: 0}
   playerHealth: {fileID: 0}
