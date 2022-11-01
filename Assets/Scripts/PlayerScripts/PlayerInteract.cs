@@ -16,11 +16,11 @@ public class PlayerInteract : MonoBehaviour
         openUI = GetComponent<PlayerOpenUI>();
         foreach (UserInterface ui in GameManager.Instance.UserInterfaces)
         {
-            if (ui.name == "Vendor")
+            if (ui.name == "VendorUI")
             {
                 vendorUI = ui;
             }
-            if (ui.name == "Exchange")
+            if (ui.name == "ExchangeUI")
             {
                 exchangeUI = ui;
             }
