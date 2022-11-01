@@ -231,7 +231,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2578113155513363670
 RectTransform:
   m_ObjectHideFlags: 0
@@ -348,47 +348,6 @@ MonoBehaviour:
   PlayerEssenceCount: {fileID: 8568801388428090325}
   playerInventoryUI: {fileID: 0}
   playerInventory:
-    Items:
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
-    - item: {fileID: 0}
-      quantity: 0
     activeItemIndex: 0
   monsterJunk: {fileID: 11400000, guid: 07d9999ac2c72cf47a2be2aa521addcc, type: 2}
   monsterEss: {fileID: 11400000, guid: 299f0f15ca4b2e943b9540c7185d3c94, type: 2}
