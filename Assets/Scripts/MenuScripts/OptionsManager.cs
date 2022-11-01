@@ -50,11 +50,11 @@ public class OptionsManager : MonoBehaviour
 
     public void SetMusicVolume(float volume)
     {
-        AudioMixer.SetFloat("Music Volume", volume);
+        AudioMixer.SetFloat("Music Volume", Mathf.Log10(volume) * 20);
     }
 
    public void SetSFXVolume(float volume)
     {
-        AudioMixer.SetFloat("SFX Volume", volume);
+        AudioMixer.SetFloat("SFX Volume", Mathf.Log10(volume) * 20);
     }
 }

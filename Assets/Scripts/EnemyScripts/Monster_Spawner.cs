@@ -118,15 +118,18 @@ public class Monster_Spawner : MonoBehaviour
             else if (waveNumber >= 1 && !inWave)
             {
                 NextWave();
+                
             }
 
             if (creepKilled == creepCountToEndWave && eliteRKilled == eliteRSpawned && eliteMKilled == eliteMSpawned && bossKilled == bossSpawned)
             {
                 EndWave();
+                AudioManager.instance.PlayOpenWorld();
             }
         }
         if (!isWave && !inWave && GameManager.Instance.CurrentGameMode == GameMode.NORMAL && waveNumber == GameManager.Instance.WaveCountToWin + 1)
         {
+            AudioManager.instance.PlayMainMenu();
             GameManager.Instance.WinGame();
         }
 
@@ -309,6 +312,8 @@ public class Monster_Spawner : MonoBehaviour
     //Function to start the wave and spawn monsters
     public void StartWave()
     {
+        AudioManager.instance.PlayWave();
+
         waveNumber = 1;
 
         creepSpawned = 0;
@@ -389,6 +394,8 @@ public class Monster_Spawner : MonoBehaviour
     //Function to start the next wave
     public void NextWave()
     {
+        AudioManager.instance.PlayWave();
+
         isWave = true;
         inWave = true;
 

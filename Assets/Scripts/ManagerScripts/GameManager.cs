@@ -151,6 +151,7 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
             CurrentGameState = GameState.START;
+            AudioManager.instance.PlayMainMenu();
             ResumeGame();
         }
     }
@@ -166,6 +167,7 @@ public class GameManager : MonoBehaviour
 
         WorldGen = GameObject.Find("World Generator").GetComponent<WorldGenerator>();
         WorldGen.CreateWorld(false);
+        AudioManager.instance.PlayOpenWorld();
     }
 
     private void LoadSavedGame()
@@ -186,6 +188,7 @@ public class GameManager : MonoBehaviour
         WorldGen.LoadWorldData(PlayerStats.WorldGenSaveData);
         WorldGen.CreateWorld(true);
         WorldGen.LoadWorldObjects(PlayerStats.WorldGenSaveData);
+        AudioManager.instance.PlayOpenWorld();
 
         StartCoroutine(ResetLoadingSavedGame());
     }
