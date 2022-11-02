@@ -109,6 +109,13 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    public void SaveAndExitToMainMenu()
+    {
+        SaveLoadManager.Instance.SavePlayerDataToFile();
+        ResetPlayerStats();
+        SceneManager.LoadScene(0);
+    }
+
     // Function to run when the player completes the game objective
     public void WinGame()
     {
