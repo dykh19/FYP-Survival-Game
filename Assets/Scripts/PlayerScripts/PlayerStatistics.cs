@@ -56,6 +56,9 @@ public class PlayerStatistics
     public int playerAxeLevel = 0;
     public int playerSwordLevel = 0;
 
+    public float[] playerPos;
+    public float[] playerRot;
+
 
     public Inventory PlayerInventory;
 
@@ -86,6 +89,9 @@ public class PlayerStatistics
 
         maxHealth = 0;
         currentHealth = 0;
+
+        playerPos = new float[3];
+        playerRot = new float[4];
 
         PlayerInventory = new Inventory();
 

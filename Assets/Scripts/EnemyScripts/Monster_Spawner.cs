@@ -106,7 +106,7 @@ public class Monster_Spawner : MonoBehaviour
     {
         if (inWave)
         {
-            EnemiesLeftText.text = "Enemies Left This Wave: " + (creepCountToEndWave - creepKilled);
+            EnemiesLeftText.text = "Enemies Left This Wave: " + ((creepCountToEndWave - creepKilled)+(eliteMCountToEndWave - eliteMKilled)+(eliteRCountToEndWave - eliteRKilled)+(bossCountToEndWave - bossKilled));
         }
 
         if (isWave)

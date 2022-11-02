@@ -188,6 +188,11 @@ public class GameManager : MonoBehaviour
         LoadData.Invoke();
         LoadData = null;
 
+        //Load Player Transform
+        playerReference.transform.position = new Vector3(PlayerStats.playerPos[0], PlayerStats.playerPos[1], PlayerStats.playerPos[2]);
+
+        playerReference.transform.rotation.Set(PlayerStats.playerRot[1], PlayerStats.playerRot[2], PlayerStats.playerRot[3], PlayerStats.playerRot[0]);
+
         PlayerInventory = PlayerStats.PlayerInventory;
         LoadUserInterfaces();
 
@@ -241,6 +246,17 @@ public class GameManager : MonoBehaviour
         PlayerStats.CurrentDifficutly = CurrentDifficulty;
         PlayerStats.CurrentGameMode = CurrentGameMode;
         PlayerStats.PlayerInventory = PlayerInventory;
+
+        //Save Player Transform
+        PlayerStats.playerPos[0] = playerReference.transform.position.x;
+        PlayerStats.playerPos[1] = playerReference.transform.position.y;
+        PlayerStats.playerPos[2] = playerReference.transform.position.z;
+
+        PlayerStats.playerRot[0] = playerReference.transform.rotation.w;
+        PlayerStats.playerRot[1] = playerReference.transform.rotation.x;
+        PlayerStats.playerRot[2] = playerReference.transform.rotation.y;
+        PlayerStats.playerRot[3] = playerReference.transform.rotation.z;
+
 
         // Update stuff with unity action.
         SaveData.Invoke();
