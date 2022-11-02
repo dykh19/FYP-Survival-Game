@@ -13,6 +13,7 @@ public class ExchangeUI : MonoBehaviour
     public Transform exchangeItemTemplate;
     public GameObject PlayerOreCount;
     public GameObject PlayerEssenceCount;
+    public GameObject PlayerCoreCount;
 
     //public int itemIndex;
     //public int itemCount;
@@ -22,10 +23,12 @@ public class ExchangeUI : MonoBehaviour
     private Transform RawOreToOreExchangeButton;
     private Transform AllRawOreToOreExchangeButton;
     private Transform TransferEssenceExchangeButton;
+    private Transform TransferCoreExchangeButton;
     public InventoryUI playerInventoryUI;
     public Inventory playerInventory;
     public GameItem monsterJunk;
     public GameItem monsterEss;
+    public GameItem bossCore;
     public GameItem Damianite;
     public GameItem Eddirite;
     public GameItem Josephite;
@@ -47,6 +50,7 @@ public class ExchangeUI : MonoBehaviour
         RawOreToOreExchangeButton = CreateExchangeButton(Upgrade.EquipmentExchangeType.RawOreToRefinedOre, "Refined Ore", "Ore", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.RawOreToRefinedOre), 2);
         AllRawOreToOreExchangeButton = CreateExchangeButton(Upgrade.EquipmentExchangeType.AllRawOreToRefinedOre, "Refined Ore", "All Ore", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.AllRawOreToRefinedOre), 3);
         TransferEssenceExchangeButton = CreateExchangeButton(Upgrade.EquipmentExchangeType.TransferEssence, "Monster Essence", "Monster Essence", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.TransferEssence), 4);
+        TransferCoreExchangeButton = CreateExchangeButton(Upgrade.EquipmentExchangeType.TransferCore, "Boss Core", "Boss Core", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.TransferCore), 5);
         UpdateResourceCount();
     }
 
@@ -81,6 +85,10 @@ public class ExchangeUI : MonoBehaviour
         else if (takenItemName == "Monster Essence")
         {
             exchangeTransform.Find("exchangeText").GetComponent<TextMeshProUGUI>().SetText("Transfer all Monster Essence to Base");
+        }
+        else if (takenItemName == "Boss Core")
+        {
+            exchangeTransform.Find("exchangeText").GetComponent<TextMeshProUGUI>().SetText("Transfer all Boss Core to Base");
         }
         //exchangeTransform.Find("exchangeText").GetComponent<TextMeshProUGUI>().SetText(itemName);
         //exchangeTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText(itemCost.ToString());
@@ -188,6 +196,14 @@ public class ExchangeUI : MonoBehaviour
                 GameManager.Instance.PlayerStats.AddEssence(1);
             }
         }
+        else if (item == Upgrade.EquipmentExchangeType.TransferCore && takenItemName == "Boss Core")
+        {
+            while(GameManager.Instance.PlayerInventory.CheckIfCanRemoveFullItem(bossCore))
+            {
+                GameManager.Instance.PlayerInventory.RemoveItem(bossCore, takenItemCost);
+                GameManager.Instance.PlayerStats.AddCores(1);
+            }
+        }
         UpdateResourceCount();
     }
 
@@ -235,11 +251,22 @@ public class ExchangeUI : MonoBehaviour
             TransferEssenceExchangeButton.GetComponent<Button>().interactable = false;
             TransferEssenceExchangeButton.GetComponent<Button_UI>().enabled = false;
         }
+        if(GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(bossCore))
+        {
+            TransferCoreExchangeButton.GetComponent<Button>().interactable = true;
+            TransferCoreExchangeButton.GetComponent<Button_UI>().enabled = true;
+        }
+        else
+        {
+            TransferCoreExchangeButton.GetComponent<Button>().interactable = false;
+            TransferCoreExchangeButton.GetComponent<Button_UI>().enabled = false;
+        }
     }
 
     private void UpdateResourceCount()
     {
         PlayerOreCount.GetComponent<TextMeshProUGUI>().text = "Total Refined Ores: " + GameManager.Instance.PlayerStats.CurrentOresInBase;
         PlayerEssenceCount.GetComponent<TextMeshProUGUI>().text = "Total Essence: " + GameManager.Instance.PlayerStats.CurrentEssenceInBase;
+        PlayerCoreCount.GetComponent<TextMeshProUGUI>().text = "Total Cores: " + GameManager.Instance.PlayerStats.CurrentBossCoresInBase;
     }
 }

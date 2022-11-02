@@ -75,8 +75,15 @@ public class EliteMAI : EnemyBehavior
             print("Chasing Player(isWave)");
             Chase();
         }
+        //Keeping Aggro
+        if ((!playerInSightRange) && (!playerInAttackRange) && playerSpotted && (baseInSightRange || !baseInSightRange) && (baseInAttackRange || !baseInAttackRange) && isWave)
+        {
+            animatorMAI.SetBool("playerInAttackRange", true);
+            //print("Chasing Player(isWave)");
+            Chase();
+        }
         //If during wave, player is within attack range. Attack player.
-        if(playerInSightRange && playerInAttackRange && playerSpotted && (baseInSightRange || !baseInSightRange) && (baseInAttackRange || !baseInAttackRange) && isWave)
+        if (playerInSightRange && playerInAttackRange && playerSpotted && (baseInSightRange || !baseInSightRange) && (baseInAttackRange || !baseInAttackRange) && isWave)
         {
             animatorMAI.SetBool("AttackPlayer", true);
             animatorMAI.SetBool("isWave", false); //Used to trigger attack anim for Elite Melee during Waves
