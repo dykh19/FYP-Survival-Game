@@ -63,13 +63,13 @@ public class Inventory
     public int GetItemIndex(GameItem item)
     {
         return Array.FindIndex(Items, invItem =>
-            (invItem != null) && (invItem.item.name == item.name));
+            (invItem != null) && (invItem.item?.name == item.name));
     }
 
     public int GetFullItemIndex(GameItem item)
     {
         return Array.FindIndex(Items, invItem =>
-            (invItem != null) && (invItem.item.name == item.name) && invItem.quantity == maxItemStack);
+            (invItem != null) && (invItem.item?.name == item.name) && invItem.quantity == maxItemStack);
     }
 
     public int GetNotFullItemIndex(GameItem item)

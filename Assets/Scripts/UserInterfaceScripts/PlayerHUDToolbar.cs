@@ -27,7 +27,7 @@ public class PlayerHUDToolbar : UIController
     {
         CreateContainer();
         CreateSlots();
-        CreateSelectionSquare();
+        //CreateSelectionSquare();
         DisplayItems();
     }
 

@@ -21,6 +21,7 @@ public class ExchangeUI : MonoBehaviour
     private Transform JunkToOreExchangeButton;
     private Transform RawOreToOreExchangeButton;
     private Transform AllRawOreToOreExchangeButton;
+    private Transform TransferEssenceExchangeButton;
     public InventoryUI playerInventoryUI;
     public Inventory playerInventory;
     public GameItem monsterJunk;
@@ -45,6 +46,7 @@ public class ExchangeUI : MonoBehaviour
         JunkToOreExchangeButton = CreateExchangeButton(Upgrade.EquipmentExchangeType.JunkToRefinedOre, "Refined Ore", "Junk", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.JunkToRefinedOre), 1);
         RawOreToOreExchangeButton = CreateExchangeButton(Upgrade.EquipmentExchangeType.RawOreToRefinedOre, "Refined Ore", "Ore", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.RawOreToRefinedOre), 2);
         AllRawOreToOreExchangeButton = CreateExchangeButton(Upgrade.EquipmentExchangeType.AllRawOreToRefinedOre, "Refined Ore", "All Ore", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.AllRawOreToRefinedOre), 3);
+        TransferEssenceExchangeButton = CreateExchangeButton(Upgrade.EquipmentExchangeType.TransferEssence, "Monster Essence", "Monster Essence", Upgrade.ExchangeRate(Upgrade.EquipmentExchangeType.TransferEssence), 4);
         UpdateResourceCount();
     }
 
@@ -75,6 +77,10 @@ public class ExchangeUI : MonoBehaviour
         else if (takenItemName == "All Ore")
         {
             exchangeTransform.Find("exchangeText").GetComponent<TextMeshProUGUI>().SetText("Exchange all Raw Ore to " + givenItemName);
+        }
+        else if (takenItemName == "Monster Essence")
+        {
+            exchangeTransform.Find("exchangeText").GetComponent<TextMeshProUGUI>().SetText("Transfer all Monster Essence to Base");
         }
         //exchangeTransform.Find("exchangeText").GetComponent<TextMeshProUGUI>().SetText(itemName);
         //exchangeTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText(itemCost.ToString());
@@ -174,7 +180,15 @@ public class ExchangeUI : MonoBehaviour
                 }
             }
         }
-            UpdateResourceCount();
+        else if (item == Upgrade.EquipmentExchangeType.TransferEssence && takenItemName == "Monster Essence")
+        {
+            while(GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(monsterEss))
+            {
+                GameManager.Instance.PlayerInventory.RemoveItem(monsterEss, takenItemCost);
+                GameManager.Instance.PlayerStats.AddEssence(1);
+            }
+        }
+        UpdateResourceCount();
     }
 
     private void CheckIfCanExchange()
@@ -210,6 +224,16 @@ public class ExchangeUI : MonoBehaviour
             AllRawOreToOreExchangeButton.GetComponent<Button>().interactable = false;
             RawOreToOreExchangeButton.GetComponent<Button_UI>().enabled = false;
             AllRawOreToOreExchangeButton.GetComponent<Button_UI>().enabled = false;
+        }
+        if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(monsterEss))
+        {
+            TransferEssenceExchangeButton.GetComponent<Button>().interactable = true;
+            TransferEssenceExchangeButton.GetComponent<Button_UI>().enabled = true;
+        }
+        else
+        {
+            TransferEssenceExchangeButton.GetComponent<Button>().interactable = false;
+            TransferEssenceExchangeButton.GetComponent<Button_UI>().enabled = false;
         }
     }
 
