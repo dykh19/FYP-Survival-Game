@@ -15,15 +15,15 @@ public class VendorUI : MonoBehaviour
     public GameObject PlayerEssenceCount;
 
     [SerializeField]
-    private int SwordCost = 1; //10 previously;
+    private int SwordCost = 10; //10 previously;
     [SerializeField]
-    private int AxeCost = 1;
+    private int AxeCost = 10;
     [SerializeField]
-    private int RifleCost = 1;
+    private int RifleCost = 10;
     [SerializeField]
-    private int ShotgunCost = 1;
+    private int ShotgunCost = 10;
     [SerializeField]
-    private int HealthCost = 1;
+    private int HealthCost = 10;
     [SerializeField]
     private int BaseCost = GameStats.PlayerBaseUpgradeCost[1]; //To update according to specs.
 
@@ -50,6 +50,19 @@ public class VendorUI : MonoBehaviour
         playerInventory = GameManager.Instance.PlayerInventory;
         upgradeManager = FindObjectOfType<UpgradeManager>();
 
+        if(GameManager.Instance.LoadingSavedGame == true)
+        {
+            RifleCost = RifleCost + upgradeManager.playerRifleLevel * 5;
+            ShotgunCost = ShotgunCost + upgradeManager.playerShotgunLevel * 5;
+            SwordCost = SwordCost + upgradeManager.playerSwordLevel * 5;
+            AxeCost = AxeCost + upgradeManager.playerAxeLevel * 5;
+            HealthCost = HealthCost + upgradeManager.playerHealthLevel * 5;
+            if (upgradeManager.baseLevel < 4)
+            {
+                BaseCost = GameStats.PlayerBaseUpgradeCost[upgradeManager.baseLevel + 1];
+            }
+        }
+
         //Creating the initial buttons
         RifleButton = CreateRifleButton("Rifle", "Rifle Upgrade Button", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 0);
         ShotgunButton = CreateShotgunButton("Shotgun", "Shotgun Upgrade Button", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 1);
@@ -57,6 +70,7 @@ public class VendorUI : MonoBehaviour
         SwordButton = CreateSwordButton("Sword", "Sword Upgrade Button", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 3);
         HealthButton = CreateHealthButton("Health", "Health Upgrad Button", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Health), 4);
         BaseButton = CreateBaseButton("Base", "Base Upgrade Button", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Base), 5);
+        
 
         UpdateResourceCount();
     }

@@ -969,16 +969,57 @@ MonoBehaviour:
   vendorItemTemplate: {fileID: 9102110979514941712}
   PlayerOreCount: {fileID: 1377986783335316499}
   PlayerEssenceCount: {fileID: 1984753988670266648}
-  SwordCost: 1
-  AxeCost: 1
-  RifleCost: 1
-  ShotgunCost: 1
-  HealthCost: 1
+  SwordCost: 10
+  AxeCost: 10
+  RifleCost: 10
+  ShotgunCost: 10
+  HealthCost: 10
   BaseCost: 25
   itemIndex: 0
   currencyCount: 0
   playerInventoryUI: {fileID: 0}
   playerInventory:
+    Items:
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
     activeItemIndex: 0
   upgradeManager: {fileID: 0}
   playerHealth: {fileID: 0}

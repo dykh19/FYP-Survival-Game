@@ -20,6 +20,10 @@ public class UpgradeManager : MonoBehaviour
 
     PlayerWeaponsManager playerWeaponManager;
 
+    private void Awake()
+    {
+
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -33,15 +37,6 @@ public class UpgradeManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetButtonDown("DebugN"))
-        {
-            Debug.Log("Upgraded Base!");
-            baseLevel++;
-            UpgradeBase();
-        }
-    }
 
     // Call this to upgrade player health by 1 level
     public void UpgradePlayerHealth()

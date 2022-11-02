@@ -102,11 +102,13 @@ public class TurretController : MonoBehaviour
                 RaycastHit hit;
                 Physics.Raycast(detectionSourcePoint.position, (child.GetChild(0).position - detectionSourcePoint.position).normalized, out hit, detectionRange, -1, QueryTriggerInteraction.Ignore);
                 bool foundValidHit = false;
-                if (hit.distance < closestValidHit.distance && hit.collider.CompareTag("Enemy"))
+                if(hit.collider != null)
                 {
-                    closestValidHit = hit;
-                    foundValidHit = true;
-                }
+                    if (hit.distance < closestValidHit.distance && hit.collider.CompareTag("Enemy"))
+                    {
+                        closestValidHit = hit;
+                        foundValidHit = true;
+                    }
                     /*foreach (var hit in hits)
                     {
                         if (hit.distance < closestValidHit.distance && hit.collider.CompareTag("Enemy"))
@@ -116,12 +118,13 @@ public class TurretController : MonoBehaviour
                         }
                     }*/
 
-                if (foundValidHit)
-                {
-                    isTargetInDetectionRange = true;
-                    closestSqrDistance = sqrDistance;
-                    timeLastSeenTarget = Time.time;
-                    knownDetectedTarget = child.gameObject;
+                    if (foundValidHit)
+                    {
+                        isTargetInDetectionRange = true;
+                        closestSqrDistance = sqrDistance;
+                        timeLastSeenTarget = Time.time;
+                        knownDetectedTarget = child.gameObject;
+                    }
                 }
             }
         }
