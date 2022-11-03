@@ -168,7 +168,7 @@ public class GameManager : MonoBehaviour
         CurrentGameState = GameState.INGAME;
 
         LoadWaveCount();
-
+        PlayerStats = new PlayerStatistics();
         PlayerInventory = new Inventory();
         LoadUserInterfaces();
 

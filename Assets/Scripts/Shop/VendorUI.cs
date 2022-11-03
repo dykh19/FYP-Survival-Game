@@ -50,18 +50,17 @@ public class VendorUI : MonoBehaviour
         playerInventory = GameManager.Instance.PlayerInventory;
         upgradeManager = FindObjectOfType<UpgradeManager>();
 
-        if(GameManager.Instance.LoadingSavedGame == true)
+
+        RifleCost = RifleCost + upgradeManager.playerRifleLevel * 5;
+        ShotgunCost = ShotgunCost + upgradeManager.playerShotgunLevel * 5;
+        SwordCost = SwordCost + upgradeManager.playerSwordLevel * 5;
+        AxeCost = AxeCost + upgradeManager.playerAxeLevel * 5;
+        HealthCost = HealthCost + upgradeManager.playerHealthLevel * 5;
+        if (upgradeManager.baseLevel < 4)
         {
-            RifleCost = RifleCost + upgradeManager.playerRifleLevel * 5;
-            ShotgunCost = ShotgunCost + upgradeManager.playerShotgunLevel * 5;
-            SwordCost = SwordCost + upgradeManager.playerSwordLevel * 5;
-            AxeCost = AxeCost + upgradeManager.playerAxeLevel * 5;
-            HealthCost = HealthCost + upgradeManager.playerHealthLevel * 5;
-            if (upgradeManager.baseLevel < 4)
-            {
-                BaseCost = GameStats.PlayerBaseUpgradeCost[upgradeManager.baseLevel + 1];
-            }
+            BaseCost = GameStats.PlayerBaseUpgradeCost[upgradeManager.baseLevel + 1];
         }
+
 
         //Creating the initial buttons
         RifleButton = CreateRifleButton("Rifle", "Rifle Upgrade Button", Upgrade.GetCurrency(Upgrade.EquipmentExchangeType.Weapon), 0);
