@@ -120,18 +120,17 @@ public class SkillsInteraction : MonoBehaviour
     {
         foreach (var target in items)
         {
-            Debug.Log(target.item.name);
-            var inventory = GameManager.Instance.PlayerStats.PlayerInventory;
-            var ok = inventory.Any(itemRef =>
-            {
-                var exists = itemRef?.item.name == target.item.name;
-                var enough = itemRef?.quantity >= target.quantity;
-
-                return exists && enough;
-            });
+            var ok = false;
+            if (target.item.name == "Monster Essence" && GameManager.Instance.PlayerStats.CurrentEssenceInBase > 0 )
+                ok = true;
+            else if  (target.item.name == "Boss Core" && GameManager.Instance.PlayerStats.CurrentBossCoresInBase > 0)
+                ok = true;
 
             if (!ok) return false;
         }
+
+        if (refinedOres > GameManager.Instance.PlayerStats.CurrentOresInBase)
+            return false;
 
         return true;
     }
@@ -140,8 +139,15 @@ public class SkillsInteraction : MonoBehaviour
     {
         foreach (var target in items)
         {
-            GameManager.Instance.PlayerInventory
-                .RemoveItem(target.item, target.quantity);
+            if (target.item.name == "Monster Essence" && GameManager.Instance.PlayerStats.CurrentEssenceInBase >= target.quantity )
+            {
+                GameManager.Instance.PlayerStats.DeductEssence(target.quantity);
+            }
+            else if (target.item.name == "Boss Core")
+            {
+                GameManager.Instance.PlayerInventory.RemoveItem(target.item, target.quantity);
+            }
+           
         }
 
         if (GameManager.Instance.PlayerStats.CurrentOresInBase >= refinedOres)

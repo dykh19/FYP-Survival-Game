@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Attack Speed", menuName = "Skills/Attack Speed")]
 public class AttackSpeed : Skill
 {
-    [Min(0)] public float increasePerLevel = 0.2f;
+    [Min(0)] public float increasePerLevel = 0.03f;
 
     private MeleeWeaponController[] meleeWeapons;
     private RangedWeaponController[] rangedWeapons;
@@ -20,16 +20,27 @@ public class AttackSpeed : Skill
 
     public override void OnLevelUp(int level)
     {
-        description = string.Format(" by {0:P1}.", increasePerLevel * level);
-
+        description = string.Format(" by {0:P0}.", increasePerLevel * level);
         foreach (var meleeWeapon in meleeWeapons)
         {
-            meleeWeapon.attackSpeed = 1 + (increasePerLevel * level);
+            if (level == 1)
+                meleeWeapon.attackSpeed = meleeWeapon.attackSpeed - increasePerLevel;
+            else
+            {
+                meleeWeapon.attackSpeed = meleeWeapon.attackSpeed + (increasePerLevel * (level - 1));
+                meleeWeapon.attackSpeed = meleeWeapon.attackSpeed - (increasePerLevel * level);
+            }
         }
 
         foreach (var rangedWeapon in rangedWeapons)
         {
-            rangedWeapon.delayBetweenShots = 0.5f - (increasePerLevel * level / 4);
+            if (level == 1)
+                rangedWeapon.delayBetweenShots = rangedWeapon.delayBetweenShots - increasePerLevel;
+            else
+            {
+                rangedWeapon.delayBetweenShots = rangedWeapon.delayBetweenShots + (increasePerLevel * (level - 1));
+                rangedWeapon.delayBetweenShots = rangedWeapon.delayBetweenShots - (increasePerLevel * level);
+            }
         }
     }
 

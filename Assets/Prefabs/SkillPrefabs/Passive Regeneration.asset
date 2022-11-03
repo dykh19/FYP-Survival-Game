@@ -20,4 +20,4 @@ MonoBehaviour:
   requirements:
   - item: {fileID: 11400000, guid: 299f0f15ca4b2e943b9540c7185d3c94, type: 2}
     quantity: 2
-  increasePerLevel: 2
+  increasePerLevel: 5
