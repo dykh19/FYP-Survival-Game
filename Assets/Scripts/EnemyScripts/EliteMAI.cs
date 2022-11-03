@@ -22,8 +22,6 @@ public class EliteMAI : EnemyBehavior
     public float timeBetweenAttacks;
     bool alreadyAttacked;
 
-    Monster_Spawner spawn;
-
     public void Start()
     {
         parent_MonSpawn = GetComponentInParent<Monster_Spawner>();  //set parent's Monster_Spawner script

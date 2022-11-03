@@ -23,8 +23,6 @@ public class CreepAI : EnemyBehavior
     bool alreadyAttacked;
     public float Damage;
 
-    Monster_Spawner spawn;
-
     public void Start()
     {
         parent_MonSpawn = GetComponentInParent<Monster_Spawner>();  //set parent's Monster_Spawner script

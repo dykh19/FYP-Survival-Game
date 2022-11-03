@@ -25,7 +25,6 @@ public class EliteRAI : EnemyBehavior
     public float Damage;
     Transform shootPoint;
 
-    Monster_Spawner spawn;
 
     public void Start()
     {

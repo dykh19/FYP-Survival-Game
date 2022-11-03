@@ -27,7 +27,6 @@ public class VendorUI : MonoBehaviour
     [SerializeField]
     private int BaseCost = GameStats.PlayerBaseUpgradeCost[1]; //To update according to specs.
 
-    public int itemIndex;
     public int currencyCount;
 
     private Transform SwordButton;

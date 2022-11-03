@@ -31,8 +31,6 @@ public class BossAI : EnemyBehavior
     private float phase3Dmg;
     private float phase4Dmg;
 
-    Monster_Spawner spawn;
-
     // Start is called before the first frame update
     void Start()
     {
