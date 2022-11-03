@@ -95,6 +95,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 80
   CurrentHealth: 80
+  HealingBonus: 0
+  HealthRegenValue: 0
+  TimeLastRegen: 0
   IsDead: 0
 --- !u!114 &-6128264813378169247
 MonoBehaviour:
@@ -123,8 +126,8 @@ MonoBehaviour:
   distanceToWalkPoint: {x: 0, y: 0, z: 0}
   isDead: 0
   isWave: 0
-  sightRange: 20
-  attackRange: 1
+  sightRange: 10
+  attackRange: 2
   playerInSightRange: 0
   playerInAttackRange: 0
   baseInSightRange: 0

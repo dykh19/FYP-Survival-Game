@@ -10,6 +10,7 @@ public class BossAI : EnemyBehavior
     public Health Health;
     public GameItem creepDrop;
     public GameItem essence;
+    public GameItem bossCore;
     //Add Boss Core//
 
     //Pathing Variables
@@ -211,6 +212,10 @@ public class BossAI : EnemyBehavior
         if (Random.Range(0, 101) <= 50 && essence != null)
         {
             GameManager.Instance.PlayerInventory.AddItem(essence, 1 + dropBonus);
+        }
+        if(Random.Range(0, 101) <= 10 && bossCore != null)
+        {
+            GameManager.Instance.PlayerInventory.AddItem(bossCore, 1 + dropBonus);
         }
         if (gameObject != null)
         {

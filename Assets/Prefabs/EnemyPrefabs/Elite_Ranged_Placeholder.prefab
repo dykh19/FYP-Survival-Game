@@ -98,6 +98,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 80
   CurrentHealth: 0
+  HealingBonus: 0
+  HealthRegenValue: 0
+  TimeLastRegen: 0
   IsDead: 0
 --- !u!136 &9122991342034176757
 CapsuleCollider:
@@ -1006,7 +1009,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1253357864006695773}
   - component: {fileID: 8185255746892397265}
-  - component: {fileID: 3674777052783013395}
   m_Layer: 0
   m_Name: CrabMonster 1
   m_TagString: Untagged
@@ -1052,19 +1054,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3674777052783013395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1993914647713195832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd59c5d72a7b3fb46b2aa65394d9294d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 8185255746892397265}
 --- !u!1 &2014079312688787907
 GameObject:
   m_ObjectHideFlags: 0

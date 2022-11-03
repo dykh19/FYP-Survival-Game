@@ -115,6 +115,12 @@ public class PlayerStatistics
         CurrentEssenceInBase += essenceToAdd;
     }
 
+    public void AddCores(int coresToAdd)
+    {
+        TotalBossCoresObtained += coresToAdd;
+        CurrentBossCoresInBase += coresToAdd;
+    }
+
     public void DeductOres(int oresToDeduct)
     {
         CurrentOresInBase -= oresToDeduct;
