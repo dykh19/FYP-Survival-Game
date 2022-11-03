@@ -15,7 +15,9 @@ MonoBehaviour:
   name: Melee Damage
   icon: {fileID: 21300000, guid: 4d80a5c9c0c244198b1ce393b355cad4, type: 3}
   maxLevel: 5
-  prerequisite: {fileID: 11400000, guid: 0fd5bf46a522b4553a8d16f4d588fcbd, type: 2}
+  prerequisite:
+    skill: {fileID: 11400000, guid: 0fd5bf46a522b4553a8d16f4d588fcbd, type: 2}
+    level: 3
   refinedOresRequired: 0
   requirements:
   - item: {fileID: 11400000, guid: 299f0f15ca4b2e943b9540c7185d3c94, type: 2}

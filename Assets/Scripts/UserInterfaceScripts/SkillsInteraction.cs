@@ -189,12 +189,12 @@ public class SkillsInteraction : MonoBehaviour
     {
         var prerequisite = skillRef.skill.prerequisite;
 
-        if (prerequisite != null)
+        if (prerequisite.skill != null)
         {
             var skills = GameManager.Instance.PlayerSkills.skills;
-            var prereqRef = skills.FirstOrDefault(s => s.skill.name == prerequisite.name);
+            var prereqRef = skills.FirstOrDefault(s => s.skill.name == prerequisite.skill.name);
 
-            return prereqRef.level > 0;
+            return prereqRef.level >= prerequisite.level;
         }
 
         return true;

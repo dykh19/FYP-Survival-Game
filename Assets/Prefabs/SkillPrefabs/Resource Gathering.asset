@@ -15,7 +15,9 @@ MonoBehaviour:
   name: Resource Gathering
   icon: {fileID: 21300000, guid: cbede119e44c54f04ae306c79c6e7330, type: 3}
   maxLevel: 3
-  prerequisite: {fileID: 11400000, guid: f5a34d85cba9042e38a3d374b5c70156, type: 2}
+  prerequisite:
+    skill: {fileID: 11400000, guid: f5a34d85cba9042e38a3d374b5c70156, type: 2}
+    level: 1
   refinedOresRequired: 5
   requirements:
   - item: {fileID: 11400000, guid: 299f0f15ca4b2e943b9540c7185d3c94, type: 2}

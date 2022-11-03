@@ -15,7 +15,9 @@ MonoBehaviour:
   name: Jump Height
   icon: {fileID: 21300000, guid: 9357b9095aab04678959c6100d34a75a, type: 3}
   maxLevel: 5
-  prerequisite: {fileID: 11400000, guid: 2aaf9087299c945beb392153b236a6c6, type: 2}
+  prerequisite:
+    skill: {fileID: 11400000, guid: 2aaf9087299c945beb392153b236a6c6, type: 2}
+    level: 3
   refinedOresRequired: 0
   requirements:
   - item: {fileID: 11400000, guid: 299f0f15ca4b2e943b9540c7185d3c94, type: 2}
