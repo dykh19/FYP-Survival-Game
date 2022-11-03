@@ -16,3 +16,9 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 26091bad95395449ba2d3f201a2b7d97, type: 3}
   maxLevel: 1
   prerequisite: {fileID: 0}
+  refinedOresRequired: 5
+  requirements:
+  - item: {fileID: 11400000, guid: 299f0f15ca4b2e943b9540c7185d3c94, type: 2}
+    quantity: 5
+  - item: {fileID: 11400000, guid: d0dbaef9bcab8b946900b3ee7c1545dd, type: 2}
+    quantity: 1

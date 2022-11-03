@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Wave Time
   icon: {fileID: 21300000, guid: 0a233530173054f1db3113a943435c8d, type: 3}
-  maxLevel: 1
+  maxLevel: 6
   prerequisite: {fileID: 0}
   refinedOresRequired: 0
-  requirements: []
+  requirements:
+  - item: {fileID: 11400000, guid: 299f0f15ca4b2e943b9540c7185d3c94, type: 2}
+    quantity: 2
+  increasePerLevel: 10

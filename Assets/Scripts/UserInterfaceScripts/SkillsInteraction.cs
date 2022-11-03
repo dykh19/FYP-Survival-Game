@@ -70,7 +70,7 @@ public class SkillsInteraction : MonoBehaviour
 
             bool skillNotMax = skillRef.level < skillRef.skill.maxLevel;
             bool prereqUnlocked = CheckPrerequisiteUnlocked(skillRef);
-            bool playerHasItems = CheckItemsOwned(skillRef.skill.requirements);
+            bool playerHasItems = CheckItemsOwned(skillRef.skill.requirements, skillRef.skill.refinedOresRequired);
 
             if (skillNotMax && prereqUnlocked && playerHasItems)
             {
@@ -116,11 +116,12 @@ public class SkillsInteraction : MonoBehaviour
         return (_string.Length > 0) ? ("\n\n" + _string) : null;
     }
 
-    private static bool CheckItemsOwned(ItemRequirement[] items)
+    private static bool CheckItemsOwned(ItemRequirement[] items, int refinedOres)
     {
         foreach (var target in items)
         {
-            var inventory = GameManager.Instance.PlayerInventory.Items;
+            Debug.Log(target.item.name);
+            var inventory = GameManager.Instance.PlayerStats.PlayerInventory;
             var ok = inventory.Any(itemRef =>
             {
                 var exists = itemRef?.item.name == target.item.name;
