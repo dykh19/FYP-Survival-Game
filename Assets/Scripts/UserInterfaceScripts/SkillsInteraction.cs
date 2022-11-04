@@ -176,7 +176,7 @@ public class SkillsInteraction : MonoBehaviour
 
     private static string GetButtonString(PlayerSkill skillRef)
     {
-        if (skillRef.skill.prerequisite.skill != null)
+        if (skillRef.skill.prerequisite.skill != null &&  skillRef.level == 0)
             return string.Format("Req: {0}, {1}", skillRef.skill.prerequisite.skill.name, skillRef.skill.prerequisite.level);
 
         if (skillRef.level == 0)
