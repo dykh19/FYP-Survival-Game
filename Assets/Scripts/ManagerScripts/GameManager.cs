@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
         PlayerStats = new PlayerStatistics();
         LoadingSavedGame = false;
         OnPlayerDie += LoseGame;
-        PlayerSkills.Initialize();
+        //PlayerSkills.Initialize();
     }
 
     // When Scene changes to the game level, run the OnNewGameLevelLoaded function
@@ -73,7 +73,10 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        PlayerSkills.Update();
+        if (PlayerSkills != null && PlayerSkills.initialized == true)
+        {
+            PlayerSkills.Update();
+        }
     }
 
     // Set Game Mode base on integer given
@@ -158,6 +161,7 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
             CurrentGameState = GameState.START;
+            PlayerSkills.Reset();
             AudioManager.instance.PlayMainMenu();
             ResumeGame();
         }
@@ -169,6 +173,7 @@ public class GameManager : MonoBehaviour
 
         LoadWaveCount();
         PlayerStats = new PlayerStatistics();
+        PlayerSkills.Initialize();
         PlayerInventory = new Inventory();
         LoadUserInterfaces();
 
@@ -194,6 +199,7 @@ public class GameManager : MonoBehaviour
         playerReference.transform.rotation.Set(PlayerStats.playerRot[1], PlayerStats.playerRot[2], PlayerStats.playerRot[3], PlayerStats.playerRot[0]);
 
         PlayerInventory = PlayerStats.PlayerInventory;
+        PlayerSkills = PlayerStats.PlayerSkills;
         LoadUserInterfaces();
 
         WorldGen = GameObject.Find("World Generator").GetComponent<WorldGenerator>();
@@ -246,6 +252,7 @@ public class GameManager : MonoBehaviour
         PlayerStats.CurrentDifficutly = CurrentDifficulty;
         PlayerStats.CurrentGameMode = CurrentGameMode;
         PlayerStats.PlayerInventory = PlayerInventory;
+        PlayerStats.PlayerSkills = PlayerSkills;
 
         //Save Player Transform
         PlayerStats.playerPos[0] = playerReference.transform.position.x;

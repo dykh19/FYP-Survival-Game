@@ -61,6 +61,7 @@ public class PlayerStatistics
 
 
     public Inventory PlayerInventory;
+    public Skills PlayerSkills;
 
     public WorldGenData WorldGenSaveData;
 

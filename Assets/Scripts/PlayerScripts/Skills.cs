@@ -7,6 +7,7 @@ public class Skills
 {
     [SerializeField] private Skill[] _skills;
     [HideInInspector] public PlayerSkill[] skills;
+    public bool initialized = false;
 
     public void Initialize()
     {
@@ -14,6 +15,8 @@ public class Skills
 
         for (int i = 0; i < skills.Length; i++)
             skills[i] = new PlayerSkill(_skills[i]);
+
+        initialized = true;
     }
 
     public void Update()
@@ -22,8 +25,14 @@ public class Skills
             if (skill.level != 0)
                 skill.skill.Update();
     }
-}
 
+    public void Reset()
+    {
+        skills = null;
+        initialized = false;
+    }
+}
+[Serializable]
 public class PlayerSkill
 {
     public Skill skill;

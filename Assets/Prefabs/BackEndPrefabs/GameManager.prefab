@@ -56,23 +56,83 @@ MonoBehaviour:
   WorldGen: {fileID: 0}
   playerReference: {fileID: 0}
   PlayerInventory:
+    Items:
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
+    - item: {fileID: 0}
+      quantity: 0
     activeItemIndex: 0
   StartingItems: []
+  PlayerSkills:
+    _skills:
+    - {fileID: 11400000, guid: 0fd5bf46a522b4553a8d16f4d588fcbd, type: 2}
+    - {fileID: 11400000, guid: fae67cd2943444e50bba82d5b94297f5, type: 2}
+    - {fileID: 11400000, guid: f5a34d85cba9042e38a3d374b5c70156, type: 2}
+    - {fileID: 11400000, guid: 2aaf9087299c945beb392153b236a6c6, type: 2}
+    - {fileID: 11400000, guid: 89070869692884e38947da70e649ff80, type: 2}
+    - {fileID: 11400000, guid: 36e04aa0f8ec3434d8b343f2f1ce46b1, type: 2}
+    - {fileID: 11400000, guid: aa0a16643a24c4735b0b4a18e33c6139, type: 2}
+    - {fileID: 11400000, guid: 40f2a8aa88bdb47b09a46718e52b3d71, type: 2}
+    - {fileID: 11400000, guid: 883f420f1f34d4a27b0bda3582124a21, type: 2}
+    - {fileID: 11400000, guid: c13fd7adb64d4485f921ad6ccd617f3c, type: 2}
+    - {fileID: 11400000, guid: b19b303d4f4bf4e90b991d7c343d8265, type: 2}
+    - {fileID: 11400000, guid: 676c9cb8e36b349769e7bf82a43a429a, type: 2}
+    - {fileID: 11400000, guid: 47b71c082817d4a97a1edd5773c701c3, type: 2}
+    initialized: 0
   UserInterfaces:
-  - name: Default
+  - name: PlayerHUD
     keyCode: 0
     userInterface: {fileID: 2335797759092880818, guid: d48c4045f3d28404797d048753e41ed4, type: 3}
-  - name: Pause
+  - name: PauseMenuUI
     keyCode: 27
     userInterface: {fileID: 2002561676770484545, guid: c703d7c3b10ab484889027b521e85c15, type: 3}
-  - name: Inventory
+  - name: InventoryUI
     keyCode: 105
     userInterface: {fileID: 7195239745950500977, guid: ac78ccb6565ea9e4cb25ca688a5ef7c9, type: 3}
-  - name: Vendor
+  - name: VendorUI
     keyCode: 0
     userInterface: {fileID: 9102110979277821931, guid: fec17e0897c93344f90835ccaac4ae05, type: 3}
-  - name: Exchange
+  - name: ExchangeUI
     keyCode: 0
+    userInterface: {fileID: 1361991722362308775, guid: 98bae55e7f062a140b6740d432d40473, type: 3}
+  - name: SkillsUI
+    keyCode: 107
     userInterface: {fileID: 1361991722362308775, guid: 98bae55e7f062a140b6740d432d40473, type: 3}
   PlayerStats:
     CurrentGameMode: 0
@@ -102,8 +162,61 @@ MonoBehaviour:
     playerShotgunLevel: 0
     playerAxeLevel: 0
     playerSwordLevel: 0
+    playerPos:
+    - 0
+    - 0
+    - 0
+    playerRot:
+    - 0
+    - 0
+    - 0
+    - 0
     PlayerInventory:
+      Items:
+      - item: {fileID: 0}
+        quantity: 0
+      - item: {fileID: 0}
+        quantity: 0
+      - item: {fileID: 0}
+        quantity: 0
+      - item: {fileID: 0}
+        quantity: 0
+      - item: {fileID: 0}
+        quantity: 0
+      - item: {fileID: 0}
+        quantity: 0
+      - item: {fileID: 0}
+        quantity: 0
+      - item: {fileID: 0}
+        quantity: 0
+      - item: {fileID: 0}
+        quantity: 0
+      - item: {fileID: 0}
+        quantity: 0
+      - item: {fileID: 0}
+        quantity: 0
+      - item: {fileID: 0}
+        quantity: 0
+      - item: {fileID: 0}
+        quantity: 0
+      - item: {fileID: 0}
+        quantity: 0
+      - item: {fileID: 0}
+        quantity: 0
+      - item: {fileID: 0}
+        quantity: 0
+      - item: {fileID: 0}
+        quantity: 0
+      - item: {fileID: 0}
+        quantity: 0
+      - item: {fileID: 0}
+        quantity: 0
+      - item: {fileID: 0}
+        quantity: 0
       activeItemIndex: 0
+    PlayerSkills:
+      _skills: []
+      initialized: 0
     WorldGenSaveData:
       randomSeed: 1
       seed: 0
