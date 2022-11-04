@@ -13,6 +13,7 @@ public class VendorUI : MonoBehaviour
     public Transform vendorItemTemplate;
     public GameObject PlayerOreCount;
     public GameObject PlayerEssenceCount;
+    public GameObject PlayerCoreCount;
 
     [SerializeField]
     private int SwordCost = 10; //10 previously;
@@ -442,5 +443,6 @@ public class VendorUI : MonoBehaviour
     {
         PlayerOreCount.GetComponent<TextMeshProUGUI>().text = "Total Ores: " + GameManager.Instance.PlayerStats.CurrentOresInBase;
         PlayerEssenceCount.GetComponent<TextMeshProUGUI>().text = "Total Essence: " + GameManager.Instance.PlayerStats.CurrentEssenceInBase;
+        PlayerCoreCount.GetComponent<TextMeshProUGUI>().text = "Total Cores: " + GameManager.Instance.PlayerStats.CurrentBossCoresInBase;
     }
 }

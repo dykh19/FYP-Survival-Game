@@ -1105,13 +1105,13 @@ MonoBehaviour:
   vendorItemTemplate: {fileID: 9102110979514941712}
   PlayerOreCount: {fileID: 1377986783335316499}
   PlayerEssenceCount: {fileID: 1984753988670266648}
+  PlayerCoreCount: {fileID: 4354705184212851782}
   SwordCost: 10
   AxeCost: 10
   RifleCost: 10
   ShotgunCost: 10
   HealthCost: 10
   BaseCost: 25
-  itemIndex: 0
   currencyCount: 0
   playerInventoryUI: {fileID: 0}
   playerInventory:
