@@ -186,6 +186,7 @@ public class GameManager : MonoBehaviour
     {
         CurrentGameState = GameState.INGAME;
         PlayerStats = SaveLoadManager.Instance.ReadPlayerDataFromFile();
+        CurrentDifficulty = PlayerStats.CurrentDifficutly;
 
         LoadWaveCount();
 
