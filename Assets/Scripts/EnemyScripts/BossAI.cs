@@ -36,8 +36,8 @@ public class BossAI : EnemyBehavior
     {
         Health = this.GetComponent<Health>();
         parent_MonSpawn = GetComponentInParent<Monster_Spawner>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        baseObj = GameObject.FindGameObjectWithTag("Base").transform;
+        player = GameObject.FindGameObjectWithTag("Player").transform.root.gameObject;
+        baseObj = GameObject.FindGameObjectWithTag("Base").transform.root.gameObject;
         agent = GetComponent<NavMeshAgent>();
         Damage = GameStats.BaseEnemyDamage[3] * GameStats.EnemyHealthModifier[(int)GameManager.Instance.CurrentDifficulty];
         animatorBoss = GetComponentInChildren<Animator>();
@@ -173,7 +173,7 @@ public class BossAI : EnemyBehavior
         }
     }
 
-    public override void Attack(Transform target)
+    public override void Attack(GameObject target)
     {
         NavMeshPath path = new NavMeshPath();
         NavMesh.CalculatePath(transform.position, transform.position, -1, path);

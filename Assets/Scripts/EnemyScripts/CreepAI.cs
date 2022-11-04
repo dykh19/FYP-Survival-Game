@@ -26,8 +26,8 @@ public class CreepAI : EnemyBehavior
     public void Start()
     {
         parent_MonSpawn = GetComponentInParent<Monster_Spawner>();  //set parent's Monster_Spawner script
-        player = GameObject.FindGameObjectWithTag("Player").transform;  //set player object
-        baseObj = GameObject.FindGameObjectWithTag("Base").transform; //set base object
+        player = GameObject.FindGameObjectWithTag("Player").transform.root.gameObject;  //set player object
+        baseObj = GameObject.FindGameObjectWithTag("Base").transform.root.gameObject; //set base object
         agent = GetComponent<NavMeshAgent>();   //set NavMesh agent
         Damage = GameStats.BaseEnemyDamage[0] * GameStats.EnemyAttackModifier[(int)GameManager.Instance.CurrentDifficulty];
         animatorCreep = GetComponentInChildren<Animator>();
@@ -160,7 +160,7 @@ public class CreepAI : EnemyBehavior
     }
 
     //When player is within monster attack range, monster stops moving and hits the player
-    public override void Attack(Transform target)
+    public override void Attack(GameObject target)
     {
         NavMeshPath path = new NavMeshPath();
         NavMesh.CalculatePath(transform.position, transform.position, -1, path);

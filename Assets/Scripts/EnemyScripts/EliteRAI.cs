@@ -29,8 +29,8 @@ public class EliteRAI : EnemyBehavior
     public void Start()
     {
         parent_MonSpawn = GetComponentInParent<Monster_Spawner>();  //set parent's Monster_Spawner script
-        player = GameObject.FindGameObjectWithTag("Player").transform;  //set player object
-        baseObj = GameObject.FindGameObjectWithTag("Base").transform; //set base object
+        player = GameObject.FindGameObjectWithTag("Player").transform.root.gameObject;  //set player object
+        baseObj = GameObject.FindGameObjectWithTag("Base").transform.root.gameObject; //set base object
         agent = GetComponent<NavMeshAgent>();   //set NavMesh agent
         Damage = GameStats.BaseEnemyDamage[2] * GameStats.EnemyHealthModifier[(int)GameManager.Instance.CurrentDifficulty];
         animatorRAI = GetComponentInChildren<Animator>();
@@ -189,7 +189,7 @@ public class EliteRAI : EnemyBehavior
         agent.path = path;
     }
 
-    public override void Attack(Transform target)
+    public override void Attack(GameObject target)
     {
         agent.SetDestination(transform.position);
         transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));

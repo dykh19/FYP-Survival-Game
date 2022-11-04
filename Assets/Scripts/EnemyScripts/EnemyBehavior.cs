@@ -5,8 +5,8 @@ public class EnemyBehavior : MonoBehaviour
 {
     //Setting up Surface and Identification variables
     public NavMeshAgent agent;
-    public Transform player;
-    public Transform baseObj;
+    public GameObject player;
+    public GameObject baseObj;
     public LayerMask isGround, isPlayer, isBase;
 
     public Vector3 distanceToWalkPoint;
@@ -45,7 +45,7 @@ public class EnemyBehavior : MonoBehaviour
         //Override
     }
 
-    public virtual void Attack(Transform target)
+    public virtual void Attack(GameObject target)
     {
         //Override
     }
