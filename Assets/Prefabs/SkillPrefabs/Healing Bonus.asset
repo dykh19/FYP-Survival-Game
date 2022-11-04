@@ -15,9 +15,13 @@ MonoBehaviour:
   name: Healing Bonus
   icon: {fileID: 21300000, guid: 6b9e718e6de7948d48df6f9eab329bde, type: 3}
   maxLevel: 5
-  prerequisite: {fileID: 11400000, guid: fae67cd2943444e50bba82d5b94297f5, type: 2}
+  prerequisite:
+    skill: {fileID: 11400000, guid: fae67cd2943444e50bba82d5b94297f5, type: 2}
+    level: 3
+  refinedOresRequired: 0
   requirements:
-  - item: {fileID: 11400000, guid: 07d9999ac2c72cf47a2be2aa521addcc, type: 2}
-    quantity: 3
-  - item: {fileID: 11400000, guid: 28078084bc611094cb2d997303a88f1f, type: 2}
+  - item: {fileID: 11400000, guid: 299f0f15ca4b2e943b9540c7185d3c94, type: 2}
     quantity: 2
+  - item: {fileID: 11400000, guid: d0dbaef9bcab8b946900b3ee7c1545dd, type: 2}
+    quantity: 1
+  increasePerLevel: 0.1

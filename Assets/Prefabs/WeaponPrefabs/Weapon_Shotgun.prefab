@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShootType: 1
-  WeaponName: 
+  WeaponName: Shotgun
   WeaponIcon: {fileID: 0}
   WeaponRoot: {fileID: 1505447205160222267}
   WeaponMuzzle: {fileID: 8334323006752503713}
@@ -162,6 +162,7 @@ MonoBehaviour:
   InfiniteAmmo: 1
   MaxAmmo: 48
   damage: 30
+  damageModifier: 0
   bulletLifeTime: 0.3
   WeaponAnimator: {fileID: 0}
   MuzzleFlashPrefab: {fileID: 0}

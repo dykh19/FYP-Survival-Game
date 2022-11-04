@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Movement Speed", menuName = "Skills/Movement Speed")]
 public class MovementSpeed : Skill
 {
-    [Min(0)] public float increasePerLevel = 0.3f;
+    [Min(0)] public float increasePerLevel = 0.05f;
 
     private PlayerCharacterController playerMovement;
     private string description = ".";

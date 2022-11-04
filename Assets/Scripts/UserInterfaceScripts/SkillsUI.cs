@@ -57,14 +57,14 @@ public class SkillsUI : MonoBehaviour, IDragHandler, IBeginDragHandler
         {
             var prerequisite = node.reference.skill.prerequisite;
 
-            if (prerequisite == null)
+            if (prerequisite.skill == null)
             {
                 this.nodes.Add(node);
             }
             else
             {
                 var prerequisiteNode = nodes.FirstOrDefault(
-                    node => node.reference.skill.name == prerequisite.name);
+                    node => node.reference.skill.name == prerequisite.skill.name);
 
                 prerequisiteNode.Add(node);
             }

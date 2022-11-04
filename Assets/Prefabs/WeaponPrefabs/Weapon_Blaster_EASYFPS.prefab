@@ -175,36 +175,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db44466b7453ec24997987c139f5626b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponName: 
+  ShootType: 1
+  WeaponName: Rifle
   WeaponIcon: {fileID: 0}
-  CrosshairDataDefault:
-    CrosshairSprite: {fileID: 0}
-    CrosshairSize: 0
-    CrosshairColor: {r: 0, g: 0, b: 0, a: 0}
-  CrosshairDataTargetInSight:
-    CrosshairSprite: {fileID: 0}
-    CrosshairSize: 0
-    CrosshairColor: {r: 0, g: 0, b: 0, a: 0}
   WeaponRoot: {fileID: 1505447205160222267}
   WeaponMuzzle: {fileID: 8334323006752503713}
-  ShootType: 1
   ProjectilePrefab: {fileID: 8556824025552246513, guid: 3c6b27d949cdda749892906e1f1d1b27, type: 3}
-  DelayBetweenShots: 0.1
+  delayBetweenShots: 0.5
   BulletSpreadAngle: 0
   BulletsPerShot: 1
   RecoilForce: 0.308
   AimZoomRatio: 0.5
   AimOffset: {x: 0, y: 0.09, z: 0}
   AutomaticReload: 1
-  HasPhysicalBullets: 1
   ClipSize: 40
-  EjectionPort: {fileID: 0}
-  ShellCasingEjectionForce: 2
-  ShellPoolSize: 1
   AmmoReloadRate: 1
   AmmoReloadDelay: 2
   InfiniteAmmo: 1
   MaxAmmo: 80
+  damage: 30
+  damageModifier: 0
+  bulletLifeTime: 5
   WeaponAnimator: {fileID: 0}
   MuzzleFlashPrefab: {fileID: 0}
   UnparentMuzzleFlash: 0
@@ -214,6 +205,11 @@ MonoBehaviour:
   ContinuousShootStartSfx: {fileID: 0}
   ContinuousShootLoopSfx: {fileID: 0}
   ContinuousShootEndSfx: {fileID: 0}
+  ReloadCooldownSound: {fileID: 0}
+  CooldownEffect: {fileID: 0}
+  m_AmmoReserve: 0
+  m_CurrentAmmoInClip: 0
+  IsTurret: 0
 --- !u!82 &8090847488450120274
 AudioSource:
   m_ObjectHideFlags: 0

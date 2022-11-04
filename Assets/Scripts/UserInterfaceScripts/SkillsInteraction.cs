@@ -70,7 +70,7 @@ public class SkillsInteraction : MonoBehaviour
 
             bool skillNotMax = skillRef.level < skillRef.skill.maxLevel;
             bool prereqUnlocked = CheckPrerequisiteUnlocked(skillRef);
-            bool playerHasItems = CheckItemsOwned(skillRef.skill.requirements);
+            bool playerHasItems = CheckItemsOwned(skillRef.skill.requirements, skillRef.skill.refinedOresRequired);
 
             if (skillNotMax && prereqUnlocked && playerHasItems)
             {
@@ -116,21 +116,21 @@ public class SkillsInteraction : MonoBehaviour
         return (_string.Length > 0) ? ("\n\n" + _string) : null;
     }
 
-    private static bool CheckItemsOwned(ItemRequirement[] items)
+    private static bool CheckItemsOwned(ItemRequirement[] items, int refinedOres)
     {
         foreach (var target in items)
         {
-            var inventory = GameManager.Instance.PlayerInventory.Items;
-            var ok = inventory.Any(itemRef =>
-            {
-                var exists = itemRef?.item.name == target.item.name;
-                var enough = itemRef?.quantity >= target.quantity;
-
-                return exists && enough;
-            });
+            var ok = false;
+            if (target.item.name == "Monster Essence" && GameManager.Instance.PlayerStats.CurrentEssenceInBase > 0 )
+                ok = true;
+            else if  (target.item.name == "Boss Core" && GameManager.Instance.PlayerStats.CurrentBossCoresInBase > 0)
+                ok = true;
 
             if (!ok) return false;
         }
+
+        if (refinedOres > GameManager.Instance.PlayerStats.CurrentOresInBase)
+            return false;
 
         return true;
     }
@@ -139,8 +139,15 @@ public class SkillsInteraction : MonoBehaviour
     {
         foreach (var target in items)
         {
-            GameManager.Instance.PlayerInventory
-                .RemoveItem(target.item, target.quantity);
+            if (target.item.name == "Monster Essence" && GameManager.Instance.PlayerStats.CurrentEssenceInBase >= target.quantity )
+            {
+                GameManager.Instance.PlayerStats.DeductEssence(target.quantity);
+            }
+            else if (target.item.name == "Boss Core")
+            {
+                GameManager.Instance.PlayerInventory.RemoveItem(target.item, target.quantity);
+            }
+           
         }
 
         if (GameManager.Instance.PlayerStats.CurrentOresInBase >= refinedOres)
@@ -169,6 +176,9 @@ public class SkillsInteraction : MonoBehaviour
 
     private static string GetButtonString(PlayerSkill skillRef)
     {
+        if (skillRef.skill.prerequisite.skill != null)
+            return string.Format("Req: {0}, {1}", skillRef.skill.prerequisite.skill.name, skillRef.skill.prerequisite.level);
+
         if (skillRef.level == 0)
             return "Unlock Skill";
 
@@ -182,12 +192,12 @@ public class SkillsInteraction : MonoBehaviour
     {
         var prerequisite = skillRef.skill.prerequisite;
 
-        if (prerequisite != null)
+        if (prerequisite.skill != null)
         {
             var skills = GameManager.Instance.PlayerSkills.skills;
-            var prereqRef = skills.FirstOrDefault(s => s.skill.name == prerequisite.name);
+            var prereqRef = skills.FirstOrDefault(s => s.skill.name == prerequisite.skill.name);
 
-            return prereqRef.level > 0;
+            return prereqRef.level >= prerequisite.level;
         }
 
         return true;
