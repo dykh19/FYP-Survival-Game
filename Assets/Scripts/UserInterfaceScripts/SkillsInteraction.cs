@@ -40,6 +40,11 @@ public class SkillsInteraction : MonoBehaviour
 
         container.gameObject.SetActive(false);
         background.onClick.AddListener(() => container.gameObject.SetActive(false));
+
+        if (GameManager.Instance.LoadingSavedGame == true)
+        {
+            LoadUpgrades();
+        }
     }
 
     void Update()
@@ -165,7 +170,7 @@ public class SkillsInteraction : MonoBehaviour
             skillRef.skill.OnActivate();
             skillRef.uiElement.color = Color.white;
         }
-
+        
         skillRef.skill.OnLevelUp(skillRef.level);
     }
 
@@ -206,5 +211,22 @@ public class SkillsInteraction : MonoBehaviour
     private static float PadValue(float value, int padValue)
     {
         return (value > 0) ? (value + padValue) : 0;
+    }
+
+    private void LoadUpgrades() 
+    {
+        var loadSkillList = GameManager.Instance.PlayerSkills.skills;
+        foreach (var s in loadSkillList)
+        {
+            if (s.level > 0)
+            {
+                s.skill.OnActivate();
+
+                for (int i = 0; i < s.level; i++)
+                {
+                    s.skill.OnLevelUp(s.level);
+                }
+            }
+        }
     }
 }
