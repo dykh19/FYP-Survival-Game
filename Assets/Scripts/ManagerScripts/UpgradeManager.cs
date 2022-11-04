@@ -25,7 +25,7 @@ public class UpgradeManager : MonoBehaviour
     {
         GameManager.Instance.SaveData += SaveUpgrades;
         playerObject = GameObject.FindGameObjectWithTag("Player");
-        baseObject = GameObject.FindGameObjectWithTag("Base");
+        baseObject = GameObject.FindGameObjectWithTag("Base").transform.root.gameObject;
         playerWeaponManager = playerObject.GetComponent<PlayerWeaponsManager>();
         if (GameManager.Instance.LoadingSavedGame == true)
         {

@@ -159,29 +159,34 @@ public class ExchangeUI : MonoBehaviour
             GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Eddirite) ||
             GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Josephite) ||
             GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Nicholite) ||
-            GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Seanite))
+            GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Seanite) || 
+            GameManager.Instance.PlayerInventory.CheckIfCanRemoveFullItem(Damianite) ||
+            GameManager.Instance.PlayerInventory.CheckIfCanRemoveFullItem(Eddirite) ||
+            GameManager.Instance.PlayerInventory.CheckIfCanRemoveFullItem(Josephite) ||
+            GameManager.Instance.PlayerInventory.CheckIfCanRemoveFullItem(Nicholite) ||
+            GameManager.Instance.PlayerInventory.CheckIfCanRemoveFullItem(Seanite))
             {
-                if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Damianite))
+                if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Damianite) || GameManager.Instance.PlayerInventory.CheckIfCanRemoveFullItem(Damianite))
                 {
                     GameManager.Instance.PlayerInventory.RemoveItem(Damianite, takenItemCost);
                     GameManager.Instance.PlayerStats.AddOres(1);
                 }
-                else if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Eddirite))
+                else if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Eddirite) || GameManager.Instance.PlayerInventory.CheckIfCanRemoveFullItem(Eddirite))
                 {
                     GameManager.Instance.PlayerInventory.RemoveItem(Eddirite, takenItemCost);
                     GameManager.Instance.PlayerStats.AddOres(1);
                 }
-                else if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Josephite))
+                else if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Josephite) || GameManager.Instance.PlayerInventory.CheckIfCanRemoveFullItem(Josephite))
                 {
                     GameManager.Instance.PlayerInventory.RemoveItem(Josephite, takenItemCost);
                     GameManager.Instance.PlayerStats.AddOres(1);
                 }
-                else if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Nicholite))
+                else if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Nicholite) || GameManager.Instance.PlayerInventory.CheckIfCanRemoveFullItem(Nicholite))
                 {
                     GameManager.Instance.PlayerInventory.RemoveItem(Nicholite, takenItemCost);
                     GameManager.Instance.PlayerStats.AddOres(1);
                 }
-                else if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Seanite))
+                else if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Seanite) || GameManager.Instance.PlayerInventory.CheckIfCanRemoveFullItem(Seanite))
                 {
                     GameManager.Instance.PlayerInventory.RemoveItem(Seanite, takenItemCost);
                     GameManager.Instance.PlayerStats.AddOres(1);
