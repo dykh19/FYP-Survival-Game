@@ -121,9 +121,9 @@ public class SkillsInteraction : MonoBehaviour
         foreach (var target in items)
         {
             var ok = false;
-            if (target.item.name == "Monster Essence" && GameManager.Instance.PlayerStats.CurrentEssenceInBase > 0 )
+            if (target.item.name == "Monster Essence" && GameManager.Instance.PlayerStats.CurrentEssenceInBase >= target.quantity )
                 ok = true;
-            else if  (target.item.name == "Boss Core" && GameManager.Instance.PlayerStats.CurrentBossCoresInBase > 0)
+            else if  (target.item.name == "Boss Core" && GameManager.Instance.PlayerStats.CurrentBossCoresInBase >= target.quantity )
                 ok = true;
 
             if (!ok) return false;
