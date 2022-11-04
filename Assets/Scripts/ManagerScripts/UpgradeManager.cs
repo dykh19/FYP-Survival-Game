@@ -199,19 +199,19 @@ public class UpgradeManager : MonoBehaviour
         }
         for (int i = 0; i < playerRifleLevel; i++)
         {
-            UpgradePlayerWeapon(1);
+            UpgradePlayerWeapon(0);
         }
         for (int i = 0; i < playerShotgunLevel; i++)
         {
-            UpgradePlayerWeapon(2);
+            UpgradePlayerWeapon(1);
         }
         for (int i = 0; i < playerAxeLevel; i++)
         {
-            UpgradePlayerWeapon(3);
+            UpgradePlayerWeapon(2);
         }
         for (int i = 0; i < playerSwordLevel; i++)
         {
-            UpgradePlayerWeapon(4);
+            UpgradePlayerWeapon(3);
         }
        
     }
