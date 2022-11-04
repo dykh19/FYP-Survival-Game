@@ -11,6 +11,7 @@ public class MainMenuManager : MonoBehaviour
     public GameObject OptionsUI;
     public GameObject CreditsUI;
     public GameObject NewGameUI;
+    public GameObject ControlsUI;
     public Button EasyButton;
     public Button NormalButton;
     public Button HardButton;
@@ -78,7 +79,15 @@ public class MainMenuManager : MonoBehaviour
         MainMenuUI.SetActive(true);
         OptionsUI.SetActive(false);
         CreditsUI.SetActive(false);
+        ControlsUI.SetActive(false);
         NewGameUI.transform.Find("ModeSelectUI").gameObject.SetActive(false);
         NewGameUI.transform.Find("DifficultySelectUI").gameObject.SetActive(false);
+    }
+
+    //Open controls screen
+    public void OpenControls()
+    {
+        MainMenuUI.SetActive(false);
+        ControlsUI.SetActive(true);
     }
 }
