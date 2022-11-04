@@ -105,6 +105,12 @@ public class WaveTimerManager : MonoBehaviour
         TimeRemaining = TimeValue;
     }
 
+    // Function to set time value
+    public void SetTimeValue(float Time)
+    {
+        TimeValue = Time;
+    }
+
     // Function to show the timer
     public void ShowTimer()
     {

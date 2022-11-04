@@ -13,7 +13,7 @@ public class WaveTime : Skill
 
     public override void OnLevelUp(int level)
     {
-        GameManager.Instance.TimeToNextWave += increasePerLevel;
+        WaveTimerManager.Instance.SetTimeValue(GameManager.Instance.TimeToNextWave + (increasePerLevel * level));
         description = string.Format(" by {0}.", increasePerLevel * level);
     }
 

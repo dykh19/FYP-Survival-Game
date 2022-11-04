@@ -31,7 +31,25 @@ public class Skills
         skills = null;
         initialized = false;
     }
+
+    public void LoadUpgrades() 
+    {
+        var loadSkillList = GameManager.Instance.PlayerSkills.skills;
+        foreach (var s in loadSkillList)
+        {
+            if (s.level > 0)
+            {
+                s.skill.OnActivate();
+                for (int i = 0; i < s.level; i++)
+                {
+                    s.skill.OnLevelUp(i+1);
+                }
+            }
+        }
+    }
 }
+
+
 [Serializable]
 public class PlayerSkill
 {

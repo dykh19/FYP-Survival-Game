@@ -201,6 +201,10 @@ public class GameManager : MonoBehaviour
 
         PlayerInventory = PlayerStats.PlayerInventory;
         PlayerSkills = PlayerStats.PlayerSkills;
+        
+        // Load player skill stats when game load
+        PlayerSkills.LoadUpgrades();
+        
         LoadUserInterfaces();
 
         WorldGen = GameObject.Find("World Generator").GetComponent<WorldGenerator>();
