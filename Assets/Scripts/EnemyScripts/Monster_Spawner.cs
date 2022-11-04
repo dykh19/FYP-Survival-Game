@@ -133,7 +133,7 @@ public class Monster_Spawner : MonoBehaviour
             GameManager.Instance.WinGame();
         }
 
-        if(!isWave && !inWave && ((creepSpawned == 0) || (creepCountToEndWave != 0 && (creepSpawned == creepKilled))))
+        if(!isWave && !inWave && ((creepSpawned == 0) || (creepCountToEndWave != 0 && (creepSpawned == creepKilled + 5))))
         {
             OpenWorldSpawn();
         }
@@ -147,8 +147,8 @@ public class Monster_Spawner : MonoBehaviour
     //Spawning mechanic when !isWave
     public void OpenWorldSpawn()
     {
-        creepCountToEndWave = 30; //Change value here (Previously 30)
-        creepSpawned = 0;
+        creepCountToEndWave = 30 - (creepSpawned - creepKilled); //Change value here (Previously 30)
+        creepSpawned = creepSpawned - creepKilled;
         creepKilled = 0;
         //eliteRCountToEndWave = 2;
         //eliteMCountToEndWave = 2;
