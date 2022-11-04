@@ -102,17 +102,17 @@ public class UpgradeManager : MonoBehaviour
             case 0:
                 {
                     //Set Damage
-                    float newDamage = playerRifleLevel * 5;
+                    float newDamage = playerWeaponManager.m_WeaponSlots[0].GetComponent<RangedWeaponController>().damage + 5;
                     playerWeaponManager.m_WeaponSlots[0].GetComponent<RangedWeaponController>().damage = newDamage;
 
                     //Set Fire Rate
-                    float newFireRate = playerWeaponManager.m_WeaponSlots[0].GetComponent<RangedWeaponController>().delayBetweenShots - (playerRifleLevel * 0.02f);
+                    float newFireRate = playerWeaponManager.m_WeaponSlots[0].GetComponent<RangedWeaponController>().delayBetweenShots - 0.02f;
                     playerWeaponManager.m_WeaponSlots[0].GetComponent<RangedWeaponController>().delayBetweenShots = newFireRate;
                     
                     //Set Range
                     if (playerRifleLevel % 3 == 0)
                     {
-                        float newRange = playerWeaponManager.m_WeaponSlots[0].GetComponent<RangedWeaponController>().bulletLifeTime + (playerRifleLevel * 1f);
+                        float newRange = playerWeaponManager.m_WeaponSlots[0].GetComponent<RangedWeaponController>().bulletLifeTime + 1f;
                         playerWeaponManager.m_WeaponSlots[0].GetComponent<RangedWeaponController>().bulletLifeTime = newRange;
                     }
                     break;
@@ -120,17 +120,17 @@ public class UpgradeManager : MonoBehaviour
             case 1:
                 {
                     //Set Damage
-                    float newDamage = playerShotgunLevel * 5;
+                    float newDamage = playerWeaponManager.m_WeaponSlots[1].GetComponent<RangedWeaponController>().damage + 5;
                     playerWeaponManager.m_WeaponSlots[1].GetComponent<RangedWeaponController>().damage = newDamage;
 
                     //Set Fire Rate
-                    float newFireRate = playerWeaponManager.m_WeaponSlots[1].GetComponent<RangedWeaponController>().delayBetweenShots - (playerShotgunLevel * 0.02f);
+                    float newFireRate = playerWeaponManager.m_WeaponSlots[1].GetComponent<RangedWeaponController>().delayBetweenShots - 0.02f;
                     playerWeaponManager.m_WeaponSlots[1].GetComponent<RangedWeaponController>().delayBetweenShots = newFireRate;
 
                     //Set Range
                     if (playerShotgunLevel % 3 == 0)
                     {
-                        float newRange = playerWeaponManager.m_WeaponSlots[1].GetComponent<RangedWeaponController>().bulletLifeTime + (playerShotgunLevel * 0.5f);
+                        float newRange = playerWeaponManager.m_WeaponSlots[1].GetComponent<RangedWeaponController>().bulletLifeTime + 0.5f;
                         playerWeaponManager.m_WeaponSlots[1].GetComponent<RangedWeaponController>().bulletLifeTime = newRange;
                     }
                     break;
@@ -138,17 +138,17 @@ public class UpgradeManager : MonoBehaviour
             case 2:
                 {
                     //Set Damage
-                    float newDamage = playerAxeLevel * 5;
+                    float newDamage = playerWeaponManager.m_WeaponSlots[2].GetComponent<MeleeWeaponController>().damage + 5;
                     playerWeaponManager.m_WeaponSlots[2].GetComponent<MeleeWeaponController>().damage = newDamage;
 
                     //Set Fire Rate
-                    float newFireRate = playerWeaponManager.m_WeaponSlots[2].GetComponent<MeleeWeaponController>().attackSpeed - (playerAxeLevel * 0.02f);
+                    float newFireRate = playerWeaponManager.m_WeaponSlots[2].GetComponent<MeleeWeaponController>().attackSpeed - 0.02f;
                     playerWeaponManager.m_WeaponSlots[2].GetComponent<MeleeWeaponController>().attackSpeed = newFireRate;
 
                     //Set Range
                     if (playerAxeLevel % 3 == 0)
                     {
-                        float newRange = playerWeaponManager.m_WeaponSlots[2].GetComponent<MeleeWeaponController>().attackRange + (playerAxeLevel * 0.3f);
+                        float newRange = playerWeaponManager.m_WeaponSlots[2].GetComponent<MeleeWeaponController>().attackRange + 0.3f;
                         playerWeaponManager.m_WeaponSlots[2].GetComponent<MeleeWeaponController>().attackRange = newRange;
                     }
                     break;
@@ -156,17 +156,17 @@ public class UpgradeManager : MonoBehaviour
             case 3:
                 {
                     //Set Damage
-                    float newDamage = playerSwordLevel * 5;
+                    float newDamage = playerWeaponManager.m_WeaponSlots[3].GetComponent<MeleeWeaponController>().damage + 5;
                     playerWeaponManager.m_WeaponSlots[3].GetComponent<MeleeWeaponController>().damage = newDamage;
 
                     //Set Fire Rate
-                    float newFireRate = playerWeaponManager.m_WeaponSlots[3].GetComponent<MeleeWeaponController>().attackSpeed - (playerSwordLevel * 0.05f);
+                    float newFireRate = playerWeaponManager.m_WeaponSlots[3].GetComponent<MeleeWeaponController>().attackSpeed - 0.05f;
                     playerWeaponManager.m_WeaponSlots[3].GetComponent<MeleeWeaponController>().attackSpeed = newFireRate;
 
                     //Set Range
                     if (playerSwordLevel % 3 == 0)
                     {
-                        float newRange = playerWeaponManager.m_WeaponSlots[3].GetComponent<MeleeWeaponController>().attackRange + (playerSwordLevel * 0.5f);
+                        float newRange = playerWeaponManager.m_WeaponSlots[3].GetComponent<MeleeWeaponController>().attackRange + 0.5f;
                         playerWeaponManager.m_WeaponSlots[3].GetComponent<MeleeWeaponController>().attackRange = newRange;
                     }
                     break;
@@ -193,9 +193,26 @@ public class UpgradeManager : MonoBehaviour
         playerAxeLevel = GameManager.Instance.PlayerStats.playerAxeLevel;
         playerSwordLevel = GameManager.Instance.PlayerStats.playerSwordLevel;
         UpgradeBase(false);
-        UpgradePlayerWeapon(1);
-        UpgradePlayerWeapon(2);
-        UpgradePlayerWeapon(3);
-        UpgradePlayerWeapon(4);
+        for (int i = 0; i < playerHealthLevel; i++)
+        {
+            UpgradePlayerHealth();
+        }
+        for (int i = 0; i < playerRifleLevel; i++)
+        {
+            UpgradePlayerWeapon(1);
+        }
+        for (int i = 0; i < playerShotgunLevel; i++)
+        {
+            UpgradePlayerWeapon(2);
+        }
+        for (int i = 0; i < playerAxeLevel; i++)
+        {
+            UpgradePlayerWeapon(3);
+        }
+        for (int i = 0; i < playerSwordLevel; i++)
+        {
+            UpgradePlayerWeapon(4);
+        }
+       
     }
 }
