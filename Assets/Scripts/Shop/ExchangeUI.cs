@@ -232,7 +232,12 @@ public class ExchangeUI : MonoBehaviour
             GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Eddirite)  ||
             GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Josephite) ||
             GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Nicholite) ||
-            GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Seanite))
+            GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(Seanite) ||
+            GameManager.Instance.PlayerInventory.CheckIfCanRemoveFullItem(Damianite) ||
+            GameManager.Instance.PlayerInventory.CheckIfCanRemoveFullItem(Eddirite) ||
+            GameManager.Instance.PlayerInventory.CheckIfCanRemoveFullItem(Josephite) ||
+            GameManager.Instance.PlayerInventory.CheckIfCanRemoveFullItem(Nicholite) ||
+            GameManager.Instance.PlayerInventory.CheckIfCanRemoveFullItem(Seanite))
         {
             RawOreToOreExchangeButton.GetComponent<Button>().interactable = true;
             AllRawOreToOreExchangeButton.GetComponent<Button>().interactable = true;
@@ -246,7 +251,7 @@ public class ExchangeUI : MonoBehaviour
             RawOreToOreExchangeButton.GetComponent<Button_UI>().enabled = false;
             AllRawOreToOreExchangeButton.GetComponent<Button_UI>().enabled = false;
         }
-        if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(monsterEss))
+        if (GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(monsterEss) || GameManager.Instance.PlayerInventory.CheckIfCanRemoveFullItem(monsterEss))
         {
             TransferEssenceExchangeButton.GetComponent<Button>().interactable = true;
             TransferEssenceExchangeButton.GetComponent<Button_UI>().enabled = true;
