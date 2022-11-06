@@ -36,6 +36,10 @@ public class Inventory
                     Items[i] = new InventoryItem(newItem, quantity);
                     break;
                 }
+            else
+                {
+                    break;
+                }
         }
 
         InventoryUI.Main?.UpdateUI();
