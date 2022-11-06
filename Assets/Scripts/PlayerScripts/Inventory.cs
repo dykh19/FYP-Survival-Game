@@ -24,20 +24,20 @@ public class Inventory
 
     public void AddItem(GameItem newItem, int quantity = 1)
     {
+        if (CheckInventoryFull())
+        {
+            return;
+        }
         var itemIndex = GetNotFullItemIndex(newItem);
 
         if (itemIndex != -1)
             Items[itemIndex].quantity += quantity;
-        else
+        else 
         {
             for (int i = 0; i < Items.Length; i++)
                 if (Items[i] is null || Items[i].item is null)
                 {
                     Items[i] = new InventoryItem(newItem, quantity);
-                    break;
-                }
-            else
-                {
                     break;
                 }
         }
@@ -107,6 +107,19 @@ public class Inventory
             return true;
         }
         return false;
+    }
+
+    public bool CheckInventoryFull()
+    {
+        bool full = true;
+        for (int i = 0; i < Items.Length; i++)
+        {
+            if (Items[i].item == null || Items[i].quantity != maxItemStack)
+            {
+                full = false;
+            }
+        }
+        return full;
     }
 }
 
