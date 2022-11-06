@@ -195,7 +195,7 @@ public class ExchangeUI : MonoBehaviour
         }
         else if (item == Upgrade.EquipmentExchangeType.TransferEssence && takenItemName == "Monster Essence")
         {
-            while(GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(monsterEss))
+            while(GameManager.Instance.PlayerInventory.CheckIfCanRemoveNotFullItem(monsterEss) || GameManager.Instance.PlayerInventory.CheckIfCanRemoveFullItem(monsterEss))
             {
                 GameManager.Instance.PlayerInventory.RemoveItem(monsterEss, takenItemCost);
                 GameManager.Instance.PlayerStats.AddEssence(1);
