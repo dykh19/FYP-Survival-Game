@@ -114,7 +114,7 @@ public class Inventory
         bool full = true;
         for (int i = 0; i < Items.Length; i++)
         {
-            if (Items[i].item == null || Items[i].quantity != maxItemStack)
+            if (Items[i]?.item == null || Items[i].quantity != maxItemStack)
             {
                 full = false;
             }
