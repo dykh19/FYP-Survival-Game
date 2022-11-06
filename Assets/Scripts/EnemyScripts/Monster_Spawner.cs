@@ -121,7 +121,7 @@ public class Monster_Spawner : MonoBehaviour
                 
             }
 
-            if (creepKilled == creepCountToEndWave && eliteRKilled == eliteRSpawned && eliteMKilled == eliteMSpawned && bossKilled == bossSpawned)
+            if (creepKilled == creepCountToEndWave && eliteRKilled == eliteRCountToEndWave && eliteMKilled == eliteMCountToEndWave && bossKilled == bossCountToEndWave)
             {
                 EndWave();
                 AudioManager.instance.PlayOpenWorld();
