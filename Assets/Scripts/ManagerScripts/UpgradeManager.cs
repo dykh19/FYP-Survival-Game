@@ -75,6 +75,8 @@ public class UpgradeManager : MonoBehaviour
                 }
             case 3:
                 {
+                    baseObject.transform.GetChild(0).gameObject.SetActive(false);
+                    baseObject.transform.GetChild(1).gameObject.SetActive(true);
                     foreach (Transform turret in baseObject.transform.GetChild(1).gameObject.transform)
                     {
                         turret.GetComponentInChildren<RangedWeaponController>().damage = GameStats.PlayerBaseTurretDamage[3];
