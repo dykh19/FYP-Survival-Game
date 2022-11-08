@@ -370,7 +370,7 @@ public class Monster_Spawner : MonoBehaviour
         GameManager.Instance.PlayerStats.CalculateTotalEnemiesKilled();
         GameManager.Instance.PlayerStats.WavesCleared = waveNumber;
         saveGameButton.interactable = true;
-        saveGameButton.GetComponentInChildren<TMP_Text>().SetText("Save Game");
+        saveGameButton.GetComponentInChildren<TMP_Text>().SetText("Save and Quit");
 
         inWave = false;
         waveNumber += 1;
