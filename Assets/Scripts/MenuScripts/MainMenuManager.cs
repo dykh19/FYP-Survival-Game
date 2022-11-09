@@ -17,6 +17,7 @@ public class MainMenuManager : MonoBehaviour
     public Button HardButton;
     public Button NormalModeButton;
     public Button EndlessModeButton;
+    public Button LoadGameButton;
 
     public void Awake()
     {
@@ -25,6 +26,18 @@ public class MainMenuManager : MonoBehaviour
         HardButton.onClick.AddListener(delegate { GameManager.Instance.SetDifficulty(2); });
         NormalModeButton.onClick.AddListener(delegate { GameManager.Instance.SetGameMode(0); });
         EndlessModeButton.onClick.AddListener(delegate { GameManager.Instance.SetGameMode(1); GameManager.Instance.SetDifficulty(1);});
+    }
+
+    private void Start()
+    {
+        if (SaveLoadManager.Instance.ReadPlayerDataFromFile() != null)
+        {
+            LoadGameButton.interactable = true;
+        }
+        else
+        {
+            LoadGameButton.interactable = false;
+        }
     }
 
     //Quit game

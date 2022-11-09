@@ -1757,6 +1757,7 @@ MonoBehaviour:
   HardButton: {fileID: 1531328446}
   NormalModeButton: {fileID: 1931135990}
   EndlessModeButton: {fileID: 1283816857}
+  LoadGameButton: {fileID: 1943973485}
 --- !u!4 &248796908
 Transform:
   m_ObjectHideFlags: 0
