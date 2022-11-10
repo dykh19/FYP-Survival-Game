@@ -28,7 +28,7 @@ public class MainMenuManager : MonoBehaviour
         EndlessModeButton.onClick.AddListener(delegate { GameManager.Instance.SetGameMode(1); GameManager.Instance.SetDifficulty(1);});
     }
 
-    private void Start()
+    private void Update()
     {
         if (SaveLoadManager.Instance.ReadPlayerDataFromFile() != null)
         {
